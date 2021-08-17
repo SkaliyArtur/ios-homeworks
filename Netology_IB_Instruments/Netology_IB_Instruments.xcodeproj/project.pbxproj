@@ -13,6 +13,10 @@
 		66948CE626CBB1030080D3D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66948CE426CBB1030080D3D6 /* Main.storyboard */; };
 		66948CE826CBB1070080D3D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66948CE726CBB1070080D3D6 /* Assets.xcassets */; };
 		66948CEB26CBB1070080D3D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66948CE926CBB1070080D3D6 /* LaunchScreen.storyboard */; };
+		66948CF426CBB1C50080D3D6 /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66948CF326CBB1C50080D3D6 /* ProfileView.xib */; };
+		66948CF726CBB4A50080D3D6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948CF626CBB4A50080D3D6 /* ProfileView.swift */; };
+		66948CFA26CBB6A90080D3D6 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66948CF926CBB6A90080D3D6 /* Profile.storyboard */; };
+		66948CFD26CBB7160080D3D6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948CFC26CBB7160080D3D6 /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		66948CE726CBB1070080D3D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66948CEA26CBB1070080D3D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66948CEC26CBB1070080D3D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66948CF326CBB1C50080D3D6 /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
+		66948CF626CBB4A50080D3D6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		66948CF926CBB6A90080D3D6 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		66948CFC26CBB7160080D3D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +71,10 @@
 				66948CE726CBB1070080D3D6 /* Assets.xcassets */,
 				66948CE926CBB1070080D3D6 /* LaunchScreen.storyboard */,
 				66948CEC26CBB1070080D3D6 /* Info.plist */,
+				66948CF326CBB1C50080D3D6 /* ProfileView.xib */,
+				66948CF926CBB6A90080D3D6 /* Profile.storyboard */,
+				66948CFC26CBB7160080D3D6 /* ProfileViewController.swift */,
+				66948CF626CBB4A50080D3D6 /* ProfileView.swift */,
 			);
 			path = Netology_IB_Instruments;
 			sourceTree = "<group>";
@@ -124,7 +136,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66948CF426CBB1C50080D3D6 /* ProfileView.xib in Resources */,
 				66948CEB26CBB1070080D3D6 /* LaunchScreen.storyboard in Resources */,
+				66948CFA26CBB6A90080D3D6 /* Profile.storyboard in Resources */,
 				66948CE826CBB1070080D3D6 /* Assets.xcassets in Resources */,
 				66948CE626CBB1030080D3D6 /* Main.storyboard in Resources */,
 			);
@@ -137,7 +151,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66948CF726CBB4A50080D3D6 /* ProfileView.swift in Sources */,
 				66948CE326CBB1030080D3D6 /* ViewController.swift in Sources */,
+				66948CFD26CBB7160080D3D6 /* ProfileViewController.swift in Sources */,
 				66948CDF26CBB1030080D3D6 /* AppDelegate.swift in Sources */,
 				66948CE126CBB1030080D3D6 /* SceneDelegate.swift in Sources */,
 			);
