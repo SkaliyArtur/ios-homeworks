@@ -7,15 +7,20 @@
 
 import UIKit
 
+
+
 class PostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Пост"
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .green
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(tap))
         // Do any additional setup after loading the view.
     }
-    
+    @objc func tap() {
+        let infoVC = InfoViewController()
+        self.present(infoVC, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
