@@ -22,11 +22,14 @@ class ProfileHeaderView: UIView {
         
        
         button.setTitle("Test", for: .normal)
-        button.frame = CGRect(x: self.frame.size.width / 2, y: 100, width: 50, height: 50)
+//        button.frame = CGRect(x: self.frame.size.width / 2, y: 100, width: 50, height: 50)
         self.addSubview(button)
         
     }
     
+    override func layoutSubviews() {
+        button.frame = CGRect(x: self.frame.size.width/2 - 50/2, y: 100, width: 50, height: 50)
+    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
