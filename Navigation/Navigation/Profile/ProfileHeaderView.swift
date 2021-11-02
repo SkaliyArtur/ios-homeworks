@@ -9,62 +9,102 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    let name = UILabel()
-    let button = UIButton()
-    let image = UIImageView()
-    let text = UITextField()
-    
+    let avatarImageView: UIImageView = {
+        let image = UIImageView()
+        image.layer.borderWidth = 3
+        image.layer.borderColor = UIColor.white.cgColor
+        image.image = UIImage(named: "MrKrabs.png")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.layer.masksToBounds = false
+        image.clipsToBounds = true
+        return image
+    }()
+    let fullNameLabel: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.text = "Mr. Crabs"
+        nameLabel.textColor = .black
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        nameLabel.textAlignment = NSTextAlignment.center
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        return nameLabel
+    }()
+    let statusLabel: UILabel = {
+        let statusLabel = UILabel()
+        statusLabel.text = "empty"
+        statusLabel.textColor = .gray
+        statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        return statusLabel
+    }()
+    let statusTextField: UITextField = {
+        let textField = UITextField()
+        textField.text = "Waiting for something..."
+        textField.textColor = .black
+        textField.backgroundColor = .white
+        textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        textField.layer.cornerRadius = 12
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    let setStatusButton: UIButton = {
+        let statusButton = UIButton()
+        statusButton.setTitle("Set status", for: .normal)
+        statusButton.backgroundColor = .systemBlue
+        statusButton.layer.cornerRadius = 4
+        statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        statusButton.layer.shadowRadius = 4
+        statusButton.layer.shadowColor = UIColor.black.cgColor
+        statusButton.layer.shadowOpacity = 0.7
+        statusButton.translatesAutoresizingMaskIntoConstraints = false
+        return statusButton
+    }()
+
+   
+    @objc func statusTextChanged(_ textField: UITextField) {
+        setStatusButton.addTarget(self, action: Selector(("statusTextChanged")), for: .editingChanged)
+        statusLabel.text = statusTextField.text
+    }
     @objc func buttonPressed() {
-        print(text.text!)
+        
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        name.text = "Mr. Crabs"
-        name.textColor = .black
-        name.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        name.textAlignment = NSTextAlignment.center
-        self.addSubview(name)
-        
-        image.image = UIImage(named: "MrKrabs.png")
-        self.addSubview(image)
-        
-       
-        button.setTitle("Show status", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 4
-        button.layer.shadowOffset = CGSize(width: 4, height: 4)
-        button.layer.shadowRadius = 4
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.7
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        self.addSubview(button)
-        
-        text.text = "Waiting for something..."
-        text.textColor = .gray
-        text.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        self.addSubview(text)
-        
+        self.addSubview(avatarImageView)
+        self.addSubview(fullNameLabel)
+        self.addSubview(statusLabel)
+        self.addSubview(statusTextField)
+        self.addSubview(setStatusButton)
+        NSLayoutConstraint.activate([
+            avatarImageView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 110),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
+            
+            fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            fullNameLabel.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
+            
+            setStatusButton.topAnchor .constraint(equalTo: avatarImageView.bottomAnchor, constant: 32),
+            setStatusButton.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 16),
+            setStatusButton.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            statusLabel.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: 34),
+            statusLabel.leftAnchor.constraint(equalTo: fullNameLabel.leftAnchor),
+            
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 16),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            statusTextField.leftAnchor.constraint(equalTo: fullNameLabel.leftAnchor)
+            
+        ])
     }
-    
     override func layoutSubviews() {
-        name.bounds.size = name.intrinsicContentSize
-        name.frame = CGRect(x: (self.frame.size.width - name.bounds.width)/2, y: safeAreaInsets.top + 27, width: name.bounds.width, height: name.bounds.height)
+        super.layoutSubviews()
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.height/2
         
-        
-        image.frame = CGRect(x: safeAreaInsets.left + 16, y: safeAreaInsets.top + 16, width: 110, height: 110)
-        image.layer.borderWidth = 3
-        image.layer.masksToBounds = false
-        image.layer.borderColor = UIColor.white.cgColor
-        image.layer.cornerRadius = image.frame.size.width/2
-        image.clipsToBounds = true
-        
-        button.frame = CGRect(x: safeAreaInsets.left + 16, y: image.frame.maxY + 16, width: self.frame.width - 32, height: 50)
-        
-        text.bounds.size = text.intrinsicContentSize
-        text.frame = CGRect(x: name.frame.minX, y: button.frame.minY - 34, width: text.bounds.width, height: text.bounds.height)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
+}
 }
