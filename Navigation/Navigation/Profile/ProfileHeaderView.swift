@@ -38,7 +38,7 @@ class ProfileHeaderView: UIView {
     }()
     let statusTextField: UITextField = {
         let textField = UITextField()
-        textField.text = "Waiting for something..."
+        textField.placeholder = "Waiting for status"
         textField.textColor = .black
         textField.backgroundColor = .white
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -58,16 +58,12 @@ class ProfileHeaderView: UIView {
         statusButton.layer.shadowColor = UIColor.black.cgColor
         statusButton.layer.shadowOpacity = 0.7
         statusButton.translatesAutoresizingMaskIntoConstraints = false
+        statusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return statusButton
     }()
 
-   
-    @objc func statusTextChanged(_ textField: UITextField) {
-        setStatusButton.addTarget(self, action: Selector(("statusTextChanged")), for: .editingChanged)
-        statusLabel.text = statusTextField.text
-    }
     @objc func buttonPressed() {
-        
+        statusLabel.text = statusTextField.text
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,7 +91,8 @@ class ProfileHeaderView: UIView {
             
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 16),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            statusTextField.leftAnchor.constraint(equalTo: fullNameLabel.leftAnchor)
+            statusTextField.leftAnchor.constraint(equalTo: fullNameLabel.leftAnchor),
+            statusTextField.rightAnchor.constraint(equalTo: setStatusButton.rightAnchor)
             
         ])
     }
