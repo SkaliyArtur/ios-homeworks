@@ -21,17 +21,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let profileVC = ProfileViewController()
         let feedVC = FeedViewController()
         
+        let loginVC = LogInViewController()
+        
         
         profileVC.title = "Profile"
         feedVC.title = "Feed"
         feedVC.view.backgroundColor = .blue
-        profileNC = UINavigationController(rootViewController: profileVC)
+        profileNC = UINavigationController(rootViewController: loginVC)
         feedNC = UINavigationController(rootViewController: feedVC)
         profileNC.tabBarItem = .init(title: "Profile", image: UIImage(systemName: "person"), tag: 0)
         feedNC.tabBarItem = .init(title: "Feed", image: UIImage(named: "list.bullet.circle"), tag: 1)
         
         
+        
         tabBar.viewControllers = [profileNC, feedNC]
+        profileNC.isNavigationBarHidden = true
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tabBar

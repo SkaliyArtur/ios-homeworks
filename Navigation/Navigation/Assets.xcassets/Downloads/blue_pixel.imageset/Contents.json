@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "MrKrabs.png",
+      "filename" : "blue_pixel.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "MrKrabs-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "MrKrabs-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
