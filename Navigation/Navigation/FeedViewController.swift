@@ -45,7 +45,7 @@ class FeedViewController: UIViewController {
 
     @objc func tap() {
         let postVC = PostViewController()
-        postVC.title = post.title
+//        postVC.title = post.title
         navigationController?.pushViewController(postVC, animated: true)
     }
     override func viewWillLayoutSubviews() {

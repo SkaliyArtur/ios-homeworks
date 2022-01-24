@@ -9,6 +9,17 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
+//    struct post {
+//        var author: String
+//        var description: String
+//        var image: String
+//        var likes: Int
+//        var views: Int
+//    }
+//
+//    let post1 = Post(author: "King", description: "lol", image: "lol", likes: 5, views: 5)
+
+
     let avatarImageView: UIImageView = {
         let image = UIImageView()
         image.layer.borderWidth = 3
