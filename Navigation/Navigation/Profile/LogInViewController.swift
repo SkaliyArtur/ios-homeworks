@@ -83,7 +83,8 @@ class LogInViewController: UIViewController {
 
     @objc func tap() {
         let profileVC = ProfileViewController()
-        self.present(profileVC, animated: true, completion: nil)
+        navigationController?.pushViewController(profileVC, animated: true)
+//        self.present(profileVC, animated: true, completion: nil)
     }
     
     let loginScrollView: UIScrollView = {

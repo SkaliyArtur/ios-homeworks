@@ -7,17 +7,7 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView {
-    
-//    struct post {
-//        var author: String
-//        var description: String
-//        var image: String
-//        var likes: Int
-//        var views: Int
-//    }
-//
-//    let post1 = Post(author: "King", description: "lol", image: "lol", likes: 5, views: 5)
+class ProfileHeaderView: UITableViewHeaderFooterView {
 
 
     let avatarImageView: UIImageView = {
@@ -76,26 +66,30 @@ class ProfileHeaderView: UIView {
     @objc func buttonPressed() {
         statusLabel.text = statusTextField.text
     }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.addSubview(avatarImageView)
-        self.addSubview(fullNameLabel)
-        self.addSubview(statusLabel)
-        self.addSubview(statusTextField)
-        self.addSubview(setStatusButton)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        contentView.addSubview(avatarImageView)
+        contentView.addSubview(fullNameLabel)
+        contentView.addSubview(statusLabel)
+        contentView.addSubview(statusTextField)
+        contentView.addSubview(setStatusButton)
+        
         NSLayoutConstraint.activate([
-            avatarImageView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 16),
-            avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            avatarImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             avatarImageView.widthAnchor.constraint(equalToConstant: 110),
             avatarImageView.heightAnchor.constraint(equalToConstant: 110),
             
-            fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            fullNameLabel.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
+            
+            fullNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            fullNameLabel.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: 27),
             
             setStatusButton.topAnchor .constraint(equalTo: avatarImageView.bottomAnchor, constant: 32),
-            setStatusButton.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 16),
-            setStatusButton.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -16),
+            setStatusButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
+            setStatusButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            setStatusButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             
             statusLabel.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: 34),
             statusLabel.leftAnchor.constraint(equalTo: fullNameLabel.leftAnchor),
@@ -109,7 +103,8 @@ class ProfileHeaderView: UIView {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.height/2
+        avatarImageView.layer.cornerRadius = 110/2
+        avatarImageView.clipsToBounds = true
         
     }
     required init?(coder: NSCoder) {

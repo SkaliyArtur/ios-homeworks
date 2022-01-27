@@ -10,7 +10,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    let post: Post = .init(title: "Hello world")
+    let postFeed: PostFeed = .init(title: "Hello world")
     
     let newStackView: UIStackView = {
         let stackView = UIStackView()
@@ -45,7 +45,7 @@ class FeedViewController: UIViewController {
 
     @objc func tap() {
         let postVC = PostViewController()
-//        postVC.title = post.title
+        postVC.title = postFeed.title
         navigationController?.pushViewController(postVC, animated: true)
     }
     override func viewWillLayoutSubviews() {

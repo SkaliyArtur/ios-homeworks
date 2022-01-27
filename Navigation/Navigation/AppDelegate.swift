@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let tabBar = UITabBarController()
+        
         var profileNC = UINavigationController()
         var feedNC = UINavigationController()
         let profileVC = ProfileViewController()
@@ -27,8 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileVC.title = "Profile"
         feedVC.title = "Feed"
         feedVC.view.backgroundColor = .blue
+        
         profileNC = UINavigationController(rootViewController: loginVC)
         feedNC = UINavigationController(rootViewController: feedVC)
+        
         profileNC.tabBarItem = .init(title: "Profile", image: UIImage(systemName: "person"), tag: 0)
         feedNC.tabBarItem = .init(title: "Feed", image: UIImage(named: "list.bullet.circle"), tag: 1)
         
