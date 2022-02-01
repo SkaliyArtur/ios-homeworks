@@ -66,9 +66,23 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     @objc func buttonPressed() {
         statusLabel.text = statusTextField.text
     }
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
+        setupProfileHeaderView()
         
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        avatarImageView.layer.cornerRadius = 110/2
+        avatarImageView.clipsToBounds = true
+        
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+}
+    
+    func setupProfileHeaderView() {
         contentView.addSubview(avatarImageView)
         contentView.addSubview(fullNameLabel)
         contentView.addSubview(statusLabel)
@@ -101,13 +115,4 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             
         ])
     }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        avatarImageView.layer.cornerRadius = 110/2
-        avatarImageView.clipsToBounds = true
-        
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-}
 }

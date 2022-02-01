@@ -10,21 +10,18 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
 
     
-// Вариант применения значений ячейки через didSet
+ //Вариант применения значений ячейки через didSet
     
-//    var post: PostStruct? {
-//        didSet {
-//            authorLablel.text = post?.author
-//            descriptionLablel.text = post?.description
-//            imageImageView.image = UIImage(named: post?.image ?? "logo.png")
-//            likesLablel.text = "Likes: \(post?.likes ?? 0)"
-//            viewsLablel.text = "Views: \(post?.views ?? 0)"
-//
-//        }
-//    }
-    
-    
-    
+    var post: PostStruct? {
+        didSet {
+            authorLablel.text = post?.author
+            descriptionLablel.text = post?.description
+            imageImageView.image = UIImage(named: post?.image ?? "logo.png")
+            likesLablel.text = "Likes: \(post?.likes ?? 0)"
+            viewsLablel.text = "Views: \(post?.views ?? 0)"
+
+        }
+    }
     
     let authorLablel: UILabel = {
         var authLabel = UILabel()
@@ -70,7 +67,11 @@ class PostTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
+        setupPostTableViewCell()
         
+    }
+    
+    func setupPostTableViewCell() {
         contentView.addSubview(authorLablel)
         contentView.addSubview(descriptionLablel)
         contentView.addSubview(imageImageView)
@@ -81,8 +82,6 @@ class PostTableViewCell: UITableViewCell {
         descriptionLablel.setContentHuggingPriority(.required, for: .vertical)
         likesLablel.setContentHuggingPriority(.required, for: .vertical)
         viewsLablel.setContentHuggingPriority(.required, for: .vertical)
-        
-        
         
         NSLayoutConstraint.activate([
             authorLablel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
