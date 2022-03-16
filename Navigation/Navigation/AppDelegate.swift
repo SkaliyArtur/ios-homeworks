@@ -19,18 +19,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var profileNC = UINavigationController()
         var feedNC = UINavigationController()
+        
+        
         let profileVC = ProfileViewController()
         let feedVC = FeedViewController()
         
         let loginVC = LogInViewController()
+        
+        let photosVC = PhotosViewController()
         
         
         profileVC.title = "Profile"
         feedVC.title = "Feed"
         feedVC.view.backgroundColor = .blue
         
+        photosVC.title = "Photo Gallery"
+        
         profileNC = UINavigationController(rootViewController: loginVC)
         feedNC = UINavigationController(rootViewController: feedVC)
+        
         
         profileNC.tabBarItem = .init(title: "Profile", image: UIImage(systemName: "person"), tag: 0)
         feedNC.tabBarItem = .init(title: "Feed", image: UIImage(named: "list.bullet.circle"), tag: 1)
@@ -38,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         tabBar.viewControllers = [profileNC, feedNC]
-        profileNC.isNavigationBarHidden = true
+//        profileNC.isNavigationBarHidden = true
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tabBar
