@@ -123,7 +123,7 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         
         
-        
+        view.backgroundColor = .white
         
         view.addSubview(loginScrollView)
         

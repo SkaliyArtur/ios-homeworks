@@ -16,15 +16,35 @@ class ProfileViewController: UIViewController {
     
     var postsData: [PostStruct] = []
     
+//    private var tapAvatar: UITapGestureRecognizer = {
+//       let tap = UITapGestureRecognizer()
+//        tap.numberOfTapsRequired = 1
+//        tap.addTarget(ProfileHeaderView.self, action: #selector(tapProcess))
+//
+//        return tap
+//    }()
+    
+    @objc private func tapProcess() {
+        print("TEST")
+//        NSLayoutConstraint.activate([
+//                                        profileHeaderView.avatarImageView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
+//                                        profileHeaderView.avatarImageView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor)
+//        ])
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGray6
+        
         view.addSubview(tableView)
+        
+        
         
         postsData = PostStruct.posts
      
         setupTableView()
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -74,7 +94,6 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell!
-        
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
 
@@ -113,7 +132,9 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as! ProfileHeaderView
         if section == 0 {
-         return view
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapProcess))
+            view.avatarImageView.addGestureRecognizer(tapGesture)
+            return view
         }
         else {
             return nil

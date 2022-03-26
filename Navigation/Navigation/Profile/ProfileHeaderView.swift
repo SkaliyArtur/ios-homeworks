@@ -16,6 +16,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         image.layer.borderColor = UIColor.white.cgColor
         image.image = UIImage(named: "MrKrabs.png")
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.isUserInteractionEnabled = true
         image.layer.masksToBounds = false
         image.clipsToBounds = true
         return image
@@ -63,9 +64,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return statusButton
     }()
 
+    
+    
     @objc func buttonPressed() {
         statusLabel.text = statusTextField.text
     }
+    
+    
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
