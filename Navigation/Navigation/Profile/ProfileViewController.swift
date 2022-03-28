@@ -13,7 +13,6 @@ class ProfileViewController: UIViewController {
     let tableView = UITableView.init(frame: .zero, style: .grouped)
     let profileHeaderView = ProfileHeaderView()
    
-    
     var postsData: [PostStruct] = []
     
 //    private var tapAvatar: UITapGestureRecognizer = {
@@ -23,12 +22,15 @@ class ProfileViewController: UIViewController {
 //
 //        return tap
 //    }()
-    
+
     @objc private func tapProcess() {
+        profileHeaderView.avatarWidth.constant = 300
+        profileHeaderView.avatarHeight.constant = 300
+        
         print("TEST")
+        
 //        NSLayoutConstraint.activate([
-//                                        profileHeaderView.avatarImageView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
-//                                        profileHeaderView.avatarImageView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor)
+//                                        profileHeaderView.avatarImageView.widthAnchor.constraint(equalTo: view.widthAnchor)
 //        ])
     }
     
@@ -38,8 +40,7 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .systemGray6
         
         view.addSubview(tableView)
-        
-        
+    
         
         postsData = PostStruct.posts
      

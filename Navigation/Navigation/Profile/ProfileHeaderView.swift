@@ -9,7 +9,9 @@ import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
 
-
+     var avatarHeight: NSLayoutConstraint!
+     var avatarWidth: NSLayoutConstraint!
+    
     let avatarImageView: UIImageView = {
         let image = UIImageView()
         image.layer.borderWidth = 3
@@ -86,7 +88,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
 }
-    
+   
     func setupProfileHeaderView() {
         contentView.addSubview(avatarImageView)
         contentView.addSubview(fullNameLabel)
@@ -94,12 +96,17 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(statusTextField)
         contentView.addSubview(setStatusButton)
         
+        avatarWidth = avatarImageView.widthAnchor.constraint(equalToConstant: 110)
+        avatarHeight = avatarImageView.heightAnchor.constraint(equalToConstant: 110)
+
+        NSLayoutConstraint.activate([avatarWidth, avatarHeight])
+        
         NSLayoutConstraint.activate([
             avatarImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 110),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
-            
+//            avatarImageView.widthAnchor.constraint(equalToConstant: 110),
+//            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
+
             
             fullNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             fullNameLabel.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: 27),
