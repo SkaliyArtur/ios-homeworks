@@ -9,8 +9,8 @@ import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
 
-     var avatarHeight: NSLayoutConstraint!
-     var avatarWidth: NSLayoutConstraint!
+//     var avatarHeight: NSLayoutConstraint!
+//     var avatarWidth: NSLayoutConstraint!
     
     let avatarImageView: UIImageView = {
         let image = UIImageView()
@@ -90,22 +90,23 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 }
    
     func setupProfileHeaderView() {
-        contentView.addSubview(avatarImageView)
+        
         contentView.addSubview(fullNameLabel)
         contentView.addSubview(statusLabel)
         contentView.addSubview(statusTextField)
         contentView.addSubview(setStatusButton)
+        contentView.addSubview(avatarImageView)
         
-        avatarWidth = avatarImageView.widthAnchor.constraint(equalToConstant: 110)
-        avatarHeight = avatarImageView.heightAnchor.constraint(equalToConstant: 110)
+//        avatarWidth = avatarImageView.widthAnchor.constraint(equalToConstant: 110)
+//        avatarHeight = avatarImageView.heightAnchor.constraint(equalToConstant: 110)
 
-        NSLayoutConstraint.activate([avatarWidth, avatarHeight])
+//        NSLayoutConstraint.activate([avatarWidth, avatarHeight])
         
         NSLayoutConstraint.activate([
             avatarImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-//            avatarImageView.widthAnchor.constraint(equalToConstant: 110),
-//            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 110),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
 
             
             fullNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
