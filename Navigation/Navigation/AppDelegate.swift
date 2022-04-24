@@ -16,21 +16,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let tabBar = UITabBarController()
+        
         var profileNC = UINavigationController()
         var feedNC = UINavigationController()
+        
+        
         let profileVC = ProfileViewController()
         let feedVC = FeedViewController()
         
+        let loginVC = LogInViewController()
         
-        profileVC.view.backgroundColor = .red
+        let photosVC = PhotosViewController()
+        
+        
+        profileVC.title = "Profile"
+        feedVC.title = "Feed"
         feedVC.view.backgroundColor = .blue
-        profileNC = UINavigationController(rootViewController: profileVC)
+        
+        photosVC.title = "Photo Gallery"
+        
+        profileNC = UINavigationController(rootViewController: loginVC)
         feedNC = UINavigationController(rootViewController: feedVC)
-        profileNC.tabBarItem = .init(title: "Профиль", image: UIImage(systemName: "person"), tag: 0)
-        feedNC.tabBarItem = .init(title: "Лента", image: UIImage(named: "list.bullet.circle"), tag: 1)
+        
+        
+        profileNC.tabBarItem = .init(title: "Profile", image: UIImage(systemName: "person"), tag: 0)
+        feedNC.tabBarItem = .init(title: "Feed", image: UIImage(named: "list.bullet.circle"), tag: 1)
+        
         
         
         tabBar.viewControllers = [profileNC, feedNC]
+//        profileNC.isNavigationBarHidden = true
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tabBar

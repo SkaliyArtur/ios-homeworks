@@ -10,35 +10,51 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    let post: Post = .init(title: "Hello world")
+    let postFeed: PostFeed = .init(title: "Hello world")
     
+    let newStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
+        stackView.spacing = 10
+        return stackView
+    }()
+    let button1: UIButton = {
+        let btn1 = UIButton()
+        btn1.setTitle("btn 1", for: .normal)
+        btn1.backgroundColor = UIColor.red
+        btn1.translatesAutoresizingMaskIntoConstraints = false
+        btn1.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        return btn1
+    }()
+
+    let button2: UIButton = {
+        let btn2 = UIButton()
+        btn2.setTitle("btn 2", for: .normal)
+        btn2.backgroundColor = UIColor.gray
+        btn2.translatesAutoresizingMaskIntoConstraints = false
+        btn2.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        return btn2
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(newStackView)
         
-        let button = UIButton(frame: CGRect(x: 100, y: 200, width: 100, height: 30))
-        button.setTitle("go to post", for: .normal)
-        button.addTarget(self, action: #selector(tap), for: .touchUpInside)
-        view.addSubview(button)
-        
-        // Do any additional setup after loading the view.
     }
 
     @objc func tap() {
         let postVC = PostViewController()
-        postVC.title = post.title
+        postVC.title = postFeed.title
         navigationController?.pushViewController(postVC, animated: true)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillLayoutSubviews() {
+        newStackView.addArrangedSubview(button1)
+        newStackView.addArrangedSubview(button2)
+        NSLayoutConstraint.activate([
+            newStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            newStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
     }
-    */
-
 }
