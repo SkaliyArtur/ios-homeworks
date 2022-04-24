@@ -109,6 +109,10 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .systemGray6
+        #if DEBUG
+        view.backgroundColor = .red
+        #endif
+        
         
         view.addSubview(tableView)
     
