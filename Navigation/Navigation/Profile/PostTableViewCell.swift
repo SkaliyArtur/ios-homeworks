@@ -7,19 +7,27 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
 
     
  //Вариант применения значений ячейки через didSet
+    let imageProcessor = ImageProcessor()
     
     var post: PostStruct? {
         didSet {
             authorLablel.text = post?.author
             descriptionLablel.text = post?.description
-            imageImageView.image = UIImage(named: post?.image ?? "logo.png")
+//            imageImageView.image = UIImage(named: post?.image ?? "logo.png")
             likesLablel.text = "Likes: \(post?.likes ?? 0)"
             viewsLablel.text = "Views: \(post?.views ?? 0)"
+            
+            
+            imageProcessor.processImage(sourceImage: UIImage(named: post!.image)!,
+                                        filter: ColorFilter.allCases.randomElement()!) { [weak self] (image: UIImage?) in
+                            self?.imageImageView.image = image
+                        }
 
         }
     }
