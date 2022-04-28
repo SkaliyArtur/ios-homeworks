@@ -6,14 +6,14 @@
 //
 
 import Foundation
-struct PostStruct {
-        var author: String
-        var description: String
-        var image: String
-        var likes: Int
-        var views: Int
+public struct PostStruct {
+    public var author: String
+    public var description: String
+    public var image: String
+    public var likes: Int
+    public var views: Int
     
-    static let posts = [
+    public static let posts = [
         PostStruct(author: "stranger777", description: "Terality — автоматически масштабируемая альтернатива Pandas", image: "d7536e0a95c1ba5ecc112c400256dc03.jpg", likes: 123, views: 333),
         PostStruct(author: "RiddleRider", description: "Российский микропроцессор Эльбрус 8с", image: "0f62682d881df17779a441be3a3289ce.jpg", likes: 5, views: 1112),
         PostStruct(author: "AKlimenkov", description: "Интроверты против open space", image: "5071e83260856690d52ee7705ac8b597.jpeg", likes: 1234, views: 213),
