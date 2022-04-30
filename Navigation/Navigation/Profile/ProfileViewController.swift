@@ -7,21 +7,20 @@
 
 import UIKit
 import StorageService
+import SnapKit
+
 
 
 class ProfileViewController: UIViewController {
     
     let tableView = UITableView.init(frame: .zero, style: .grouped)
     let profileHeaderView = ProfileHeaderView()
-   
     var postsData: [PostStruct] = []
-    
     var backgroundView: UIView = {
     let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
     var closeBtn: UIButton = {
         let closeBtn = UIButton()
         let img1 = UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
@@ -33,21 +32,24 @@ class ProfileViewController: UIViewController {
         return closeBtn
     }()
     
-    
-    
     func setupBackgroundView() {
         view.addSubview(backgroundView)
         backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        backgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
+        backgroundView.snp.makeConstraints { make in
+            make.bottom.top.leading.trailing.equalTo(view)
+        }
+//        backgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+//        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         backgroundView.addSubview(profileHeaderView.avatarImageView)
-        
         backgroundView.addSubview(closeBtn)
-        closeBtn.topAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
-        closeBtn.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -15).isActive = true
+        closeBtn.snp.makeConstraints { make in
+            make.top.equalTo(backgroundView.safeAreaLayoutGuide.snp.top).inset(15)
+            make.trailing.equalTo(backgroundView.snp.trailing).inset(15)
+        }
+//        closeBtn.topAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
+//        closeBtn.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -15).isActive = true
     }
     
     @objc private func tapProcess() {
@@ -55,20 +57,28 @@ class ProfileViewController: UIViewController {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
             self.setupBackgroundView()
             if UIDevice.current.orientation.isPortrait{
-            NSLayoutConstraint.activate([
-                avatar.widthAnchor.constraint(equalTo: self.view.widthAnchor),
-                avatar.heightAnchor.constraint(equalTo: self.view.widthAnchor),
-                avatar.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-                avatar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            ])
+                avatar.snp.makeConstraints{ make in
+                    make.centerX.centerY.equalTo(self.view)
+                    make.width.height.equalTo(self.view.snp.width)
+                }
+//            NSLayoutConstraint.activate([
+//                avatar.widthAnchor.constraint(equalTo: self.view.widthAnchor),
+//                avatar.heightAnchor.constraint(equalTo: self.view.widthAnchor),
+//                avatar.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+//                avatar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+//            ])
             }
             else {
-                NSLayoutConstraint.activate([
-                    avatar.widthAnchor.constraint(equalTo: self.view.heightAnchor),
-                    avatar.heightAnchor.constraint(equalTo: self.view.heightAnchor),
-                    avatar.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-                    avatar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                ])
+                avatar.snp.makeConstraints{ make in
+                    make.centerX.centerY.equalTo(self.view)
+                    make.width.height.equalTo(self.view.snp.height)
+                }
+//                NSLayoutConstraint.activate([
+//                    avatar.widthAnchor.constraint(equalTo: self.view.heightAnchor),
+//                    avatar.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+//                    avatar.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+//                    avatar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+//                ])
             }
             self.view.layoutIfNeeded()
         } completion: { finished in
@@ -83,7 +93,6 @@ class ProfileViewController: UIViewController {
     @objc private func closeAvatar() {
 
         print("closed")
-        
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
                 self.closeBtn.alpha = 0
             self.profileHeaderView.avatarImageView.layer.cornerRadius = 110/2
@@ -91,34 +100,28 @@ class ProfileViewController: UIViewController {
         } completion: { finished in
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
                 self.profileHeaderView.addSubview(self.profileHeaderView.avatarImageView)
-                
-                self.profileHeaderView.avatarImageView.leftAnchor.constraint(equalTo: self.profileHeaderView.leftAnchor, constant: 16).isActive = true
-                self.profileHeaderView.avatarImageView.topAnchor.constraint(equalTo: self.profileHeaderView.topAnchor, constant: 16).isActive = true
-                self.profileHeaderView.avatarImageView.widthAnchor.constraint(equalToConstant: 110).isActive = true
-                self.profileHeaderView.avatarImageView.heightAnchor.constraint(equalToConstant: 110).isActive = true
+                self.profileHeaderView.avatarImageView.snp.makeConstraints{ make in
+                    make.left.top.equalTo(self.profileHeaderView).inset(16)
+                    make.width.height.equalTo(110)
+                }
+//                self.profileHeaderView.avatarImageView.leftAnchor.constraint(equalTo: self.profileHeaderView.leftAnchor, constant: 16).isActive = true
+//                self.profileHeaderView.avatarImageView.topAnchor.constraint(equalTo: self.profileHeaderView.topAnchor, constant: 16).isActive = true
+//                self.profileHeaderView.avatarImageView.widthAnchor.constraint(equalToConstant: 110).isActive = true
+//                self.profileHeaderView.avatarImageView.heightAnchor.constraint(equalToConstant: 110).isActive = true
                 self.backgroundView.removeFromSuperview()
-                
                 self.view.layoutIfNeeded()
             }
         }
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .systemGray6
         #if DEBUG
         view.backgroundColor = .red
         #endif
-        
-        
         view.addSubview(tableView)
-    
-        
         postsData = PostStruct.posts
-     
         setupTableView()
         
     }
@@ -136,13 +139,14 @@ class ProfileViewController: UIViewController {
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
         tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
-        
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
+        tableView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+        }
+//        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+//        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+//        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+//        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -154,7 +158,6 @@ extension ProfileViewController: UITableViewDataSource {
         return 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch section {
         case 0:
             return 0
@@ -168,7 +171,6 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         var cell: UITableViewCell!
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
@@ -183,14 +185,11 @@ extension ProfileViewController: UITableViewDataSource {
 //        let pos = posts[indexPath.row]
         
 // Вариант применения значений ячейки через didSet
-        
-        
 //        cell.authorLablel.text = pos.author
 //        cell.descriptionLablel.text = pos.description
 //        cell.imageImageView.image = UIImage(named: pos.image)
 //        cell.likesLablel.text = "Likes: \(pos.likes)"
 //        cell.viewsLablel.text = "Views: \(pos.views)"
-    
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -198,19 +197,15 @@ extension ProfileViewController: UITableViewDataSource {
             let photoViewController = PhotosViewController()
             photoViewController.title = "Photo Gallery"
             navigationController?.pushViewController(photoViewController, animated: true)
-
         }
-        
     }
 }
     
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as! ProfileHeaderView
         if section == 0 {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapProcess))
             self.profileHeaderView.avatarImageView.addGestureRecognizer(tapGesture)
-            
             return profileHeaderView
         }
         else {
