@@ -26,8 +26,11 @@
 		66948D3526CD14B80080D3D6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D3426CD14B80080D3D6 /* InfoViewController.swift */; };
 		66948D3A26D67A8E0080D3D6 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */; };
 		66948D3E26D67AAD0080D3D6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D3D26D67AAD0080D3D6 /* ProfileViewController.swift */; };
+		66B00C7E28C67E8700DF5CAB /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B00C7D28C67E8700DF5CAB /* UserService.swift */; };
+		66B00C8428C67F4600DF5CAB /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B00C8328C67F4600DF5CAB /* CurrentUserService.swift */; };
 		66DF8966279DF7FB0030F19F /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF8965279DF7FB0030F19F /* PostTableViewCell.swift */; };
 		66DF8970279F26990030F19F /* PostFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF896F279F26990030F19F /* PostFeed.swift */; };
+		66FFB08628C405DC00019A47 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FFB08528C405DC00019A47 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,9 +93,12 @@
 		66948D3426CD14B80080D3D6 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		66948D3D26D67AAD0080D3D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		66B00C7D28C67E8700DF5CAB /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		66B00C8328C67F4600DF5CAB /* CurrentUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
 		66DF8965279DF7FB0030F19F /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		66DF896F279F26990030F19F /* PostFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFeed.swift; sourceTree = "<group>"; };
 		66DF8977279F2AC70030F19F /* PostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStruct.swift; sourceTree = "<group>"; };
+		66FFB08528C405DC00019A47 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +170,7 @@
 		66948D0A26CC017D0080D3D6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				66B00C7C28C67C0C00DF5CAB /* User */,
 				66948D3826D679A80080D3D6 /* Profile */,
 				66948D0B26CC017D0080D3D6 /* AppDelegate.swift */,
 				66948D1426CC01820080D3D6 /* Assets.xcassets */,
@@ -190,6 +197,16 @@
 				663965C427E286FE001675D8 /* CarsData.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		66B00C7C28C67C0C00DF5CAB /* User */ = {
+			isa = PBXGroup;
+			children = (
+				66FFB08528C405DC00019A47 /* User.swift */,
+				66B00C7D28C67E8700DF5CAB /* UserService.swift */,
+				66B00C8328C67F4600DF5CAB /* CurrentUserService.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,10 +374,13 @@
 				66DF8966279DF7FB0030F19F /* PostTableViewCell.swift in Sources */,
 				66DF8970279F26990030F19F /* PostFeed.swift in Sources */,
 				66948D2826CCE4650080D3D6 /* PostViewController.swift in Sources */,
+				66B00C8428C67F4600DF5CAB /* CurrentUserService.swift in Sources */,
+				66FFB08628C405DC00019A47 /* User.swift in Sources */,
 				663965C527E286FE001675D8 /* CarsData.swift in Sources */,
 				66155EFE27498CB700B408A9 /* LogInViewController.swift in Sources */,
 				66948D0C26CC017D0080D3D6 /* AppDelegate.swift in Sources */,
 				66948D3526CD14B80080D3D6 /* InfoViewController.swift in Sources */,
+				66B00C7E28C67E8700DF5CAB /* UserService.swift in Sources */,
 				66948D3E26D67AAD0080D3D6 /* ProfileViewController.swift in Sources */,
 				66948D2226CCE0580080D3D6 /* FeedViewController.swift in Sources */,
 				66948D3A26D67A8E0080D3D6 /* ProfileHeaderView.swift in Sources */,

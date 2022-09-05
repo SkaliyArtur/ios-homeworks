@@ -14,6 +14,18 @@ class ProfileViewController: UIViewController {
     let tableView = UITableView.init(frame: .zero, style: .grouped)
     let profileHeaderView = ProfileHeaderView()
    
+    //для Задания 3 создал свойство типа User
+    var currentUser: User
+    //для Задания 3 выполнил инициализацию свойства
+    init(currentUser: User) {
+        self.currentUser = currentUser
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var postsData: [PostStruct] = []
     
     var backgroundView: UIView = {
@@ -113,9 +125,12 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .red
         #endif
         
-        
+        self.title = "Profile"
         view.addSubview(tableView)
-    
+        
+        //для Задания 3 вызвал метод, который передаёт значения профиля
+        profileHeaderView.setUser(userAvatar: currentUser.userAvatar, userFullName: currentUser.userFullName, userStatus: currentUser.userStatus)
+
         
         postsData = PostStruct.posts
      
@@ -210,6 +225,7 @@ extension ProfileViewController: UITableViewDelegate {
         if section == 0 {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapProcess))
             self.profileHeaderView.avatarImageView.addGestureRecognizer(tapGesture)
+            
             
             return profileHeaderView
         }
