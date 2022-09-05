@@ -86,7 +86,11 @@ class LogInViewController: UIViewController {
     @objc func tap() {
         
         //для задания 3 добавил объект класса CurrentUserService (добавил данные пользователя + метод проверки + проверки на nil)
+        #if DEBUG
+        let currentUserService = TestUserService()
+        #else
         let currentUserService = CurrentUserService()
+        #endif
             if let login = loginTextField.text, let pass = passwordTextField.text {
                 if let user = currentUserService.getLogin(userLogin: login, userPassword: pass) {
                     let profileVC = ProfileViewController(currentUser: user)
