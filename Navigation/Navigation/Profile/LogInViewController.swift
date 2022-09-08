@@ -21,6 +21,8 @@ extension UIImage {
 
 class LogInViewController: UIViewController {
     
+    
+    
     let vkLogo: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "logo.png")
@@ -82,8 +84,21 @@ class LogInViewController: UIViewController {
     }()
 
     @objc func tap() {
-        let profileVC = ProfileViewController()
-        navigationController?.pushViewController(profileVC, animated: true)
+        
+        //для задания 3 добавил объект класса CurrentUserService (добавил данные пользователя + метод проверки + проверки на nil)
+        #if DEBUG
+        let currentUserService = TestUserService()
+        #else
+        let currentUserService = CurrentUserService()
+        #endif
+            if let login = loginTextField.text, let pass = passwordTextField.text {
+                if let user = currentUserService.getLogin(userLogin: login, userPassword: pass) {
+                    let profileVC = ProfileViewController(currentUser: user)
+                    navigationController?.pushViewController(profileVC, animated: true)
+            }
+        }
+        
+        
 //        self.present(profileVC, animated: true, completion: nil)
     }
     

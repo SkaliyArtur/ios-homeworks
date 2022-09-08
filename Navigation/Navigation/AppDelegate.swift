@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var feedNC = UINavigationController()
         
         
-        let profileVC = ProfileViewController()
+//        let profileVC = ProfileViewController()
         let feedVC = FeedViewController()
         
         let loginVC = LogInViewController()
@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let photosVC = PhotosViewController()
         
         
-        profileVC.title = "Profile"
+//        profileVC.title = "Profile"
         feedVC.title = "Feed"
         feedVC.view.backgroundColor = .blue
         

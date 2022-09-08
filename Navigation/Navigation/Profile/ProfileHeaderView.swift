@@ -11,12 +11,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 
 //     var avatarHeight: NSLayoutConstraint!
 //     var avatarWidth: NSLayoutConstraint!
+//    let userDefault: User = .init(userLogin: "Krabs", userFullName: "Mr. Crabs", userAvatar: UIImage(named: "MrKrabs.png")!, userStatus: "Спанч Боб", userPassword: "321")
     
     let avatarImageView: UIImageView = {
         let image = UIImageView()
         image.layer.borderWidth = 3
         image.layer.borderColor = UIColor.white.cgColor
-        image.image = UIImage(named: "MrKrabs.png")
+//        image.image = UIImage(named: "MrKrabs.png")
         image.translatesAutoresizingMaskIntoConstraints = false
         image.isUserInteractionEnabled = true
         image.layer.masksToBounds = false
@@ -25,7 +26,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     let fullNameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.text = "Mr. Crabs"
+//        nameLabel.text = "Mr. Crabs"
         nameLabel.textColor = .black
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         nameLabel.textAlignment = NSTextAlignment.center
@@ -34,7 +35,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     let statusLabel: UILabel = {
         let statusLabel = UILabel()
-        statusLabel.text = "empty"
+//        statusLabel.text = "empty"
         statusLabel.textColor = .gray
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +74,12 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     
+    //для Задания 3: убрал предустоновленные значения профиля и сделал метод setUser, который присваивает значения свойствам профиля
+    func setUser(userAvatar: UIImage, userFullName: String, userStatus: String ) {
+        avatarImageView.image = userAvatar
+        fullNameLabel.text = userFullName
+        statusLabel.text = userStatus
+    }
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
