@@ -82,7 +82,10 @@ class LogInViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
         return loginButton
     }()
-
+    
+    //Задание 4.1: сделал свойство делегата
+    var loginDelegate: LoginViewControllerDelegate?
+    
     @objc func tap() {
         
         //для задания 3 добавил объект класса CurrentUserService (добавил данные пользователя + метод проверки + проверки на nil)
@@ -92,10 +95,28 @@ class LogInViewController: UIViewController {
         let currentUserService = CurrentUserService()
         #endif
             if let login = loginTextField.text, let pass = passwordTextField.text {
-                if let user = currentUserService.getLogin(userLogin: login, userPassword: pass) {
-                    let profileVC = ProfileViewController(currentUser: user)
-                    navigationController?.pushViewController(profileVC, animated: true)
-            }
+                //                if let user = currentUserService.getLogin(userLogin: login, userPassword: pass) {
+                //                    let profileVC = ProfileViewController(currentUser: user)
+                //                    navigationController?.pushViewController(profileVC, animated: true)
+                //            }
+                //Задание 4.1: добавил проверку логина пароля через делега + проверка на опционал
+                if let delegate = loginDelegate?.delegateCheck(login: login, password: pass) {
+                    if delegate == true {
+                        let profileVC = ProfileViewController(currentUser: currentUserService.user)
+                        navigationController?.pushViewController(profileVC, animated: true)
+                    }
+                    else {
+                        //Задание 4.1: добавил Алерт
+                        let alertVC = UIAlertController(title: "Ошибка", message: "Неверный логин или пароль", preferredStyle: .actionSheet)
+                        let actionOne = UIAlertAction(title: "OK", style: .default)
+                        alertVC.addAction(actionOne)
+                        self.present(alertVC, animated: true, completion: nil)
+                        
+                    }
+                    
+                }
+                
+
         }
         
         
@@ -110,6 +131,7 @@ class LogInViewController: UIViewController {
     }()
     
     let contentView = UIView()
+    
     
     @objc func keyboardWillShow(Notification: NSNotification) {
         if let keyBoardSize = (Notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {

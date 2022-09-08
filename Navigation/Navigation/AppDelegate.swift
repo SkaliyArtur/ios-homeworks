@@ -25,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let feedVC = FeedViewController()
         
         let loginVC = LogInViewController()
+        //Задание 4.1: сделал зависимость контрллера и инспектора
+//        loginVC.loginDelegate = LoginInspector()
+        //Задание 4.2: Фабрика
+        loginVC.loginDelegate = MyLoginFactory().makeLoginInspector()
         
         let photosVC = PhotosViewController()
         
