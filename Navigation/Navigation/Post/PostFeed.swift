@@ -2,6 +2,6 @@
 import Foundation
 
 
-struct PostFeed {
+public struct PostFeed {
     var title: String
 }
