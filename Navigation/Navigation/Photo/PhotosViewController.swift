@@ -6,10 +6,14 @@
 //
 
 import UIKit
+//Задание 5: импортировал фреймворк
+import iOSIntPackage
 
 class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
 
     var carsPhoto: [UIImage] = []
+    //Задание 5: создал экземпляр класса ImagePublisherFacade
+    var imagePublisherFacade = ImagePublisherFacade()
 
     var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -67,9 +71,26 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-
-        carsPhoto = CarsData.carsPhotos
+//        carsPhoto = CarsData.carsPhotos
         setupCollectionView()
+        //Задание 5: подписался на изменение и запустил добавления картинок
+        imagePublisherFacade.subscribe(self)
+        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: CarsData.carsPhotos)
     }
 
+    //Задание 5: отписался от изменений
+    override func viewDidDisappear(_ animated: Bool) {
+        imagePublisherFacade.removeSubscription(for: self)
+    }
+
+}
+
+//Задание 5: через extension подписался на ImageLibrarySubscriber и реализовал функцию: после добавление новой картинки в паблишер - обновляй свой массив, затем перегружаю колекшенВью для появление картинок
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        carsPhoto = images
+        collectionView.reloadData()
+    }
+
+    
 }
