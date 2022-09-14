@@ -53,24 +53,28 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    let setStatusButton: UIButton = {
-        let statusButton = UIButton()
-        statusButton.setTitle("Set status", for: .normal)
+    
+    //Задание 6: применил кастомную кнопку, сократил 4 строк кода ниже
+    let setStatusButton: CustomButton = {
+        let statusButton = CustomButton(title: "Set Status", titleColor: .white)
+//        statusButton.setTitle("Set status", for: .normal)
         statusButton.backgroundColor = .systemBlue
-        statusButton.layer.cornerRadius = 4
+//        statusButton.layer.cornerRadius = 4
         statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
         statusButton.layer.shadowRadius = 4
         statusButton.layer.shadowColor = UIColor.black.cgColor
         statusButton.layer.shadowOpacity = 0.7
-        statusButton.translatesAutoresizingMaskIntoConstraints = false
-        statusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+//        statusButton.translatesAutoresizingMaskIntoConstraints = false
+//        statusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return statusButton
     }()
 
     
-    
-    @objc func buttonPressed() {
+    //Задание 6: переделываю функцию, которая должна вызываться и передавать действия по нажатию кнопки
+    func buttonPressed() {
+        setStatusButton.actionHandler = { [self] in
         statusLabel.text = statusTextField.text
+        }
     }
     
     
@@ -84,6 +88,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupProfileHeaderView()
+        buttonPressed()
         
     }
     override func layoutSubviews() {
