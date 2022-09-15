@@ -65,45 +65,47 @@ class LogInViewController: UIViewController {
     }()
     
     
-    
-    let loginButton: UIButton = {
-        let loginButton = UIButton()
-        loginButton.setTitle("Log in", for: .normal)
+    //Задание 6: применил кастомную кнопку, сократил 6 строк кода ниже
+    let loginButton: CustomButton = {
+        let loginButton = CustomButton(title: "Log in", titleColor: .white)
+//        loginButton.setTitle("Log in", for: .normal)
         let img1 = UIImage(named: "blue_pixel")!.alpha(1)
         let img2 = UIImage(named: "blue_pixel")!.alpha(0.8)
         loginButton.setBackgroundImage(img1, for: .normal)
         loginButton.setBackgroundImage(img2, for: .selected)
         loginButton.setBackgroundImage(img2, for: .highlighted)
         loginButton.setBackgroundImage(img2, for: .disabled)
-        loginButton.setTitleColor(.white, for: .normal)
-        loginButton.clipsToBounds = true
-        loginButton.layer.cornerRadius = 10
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+//        loginButton.setTitleColor(.white, for: .normal)
+//        loginButton.clipsToBounds = true
+//        loginButton.layer.cornerRadius = 10
+//        loginButton.translatesAutoresizingMaskIntoConstraints = false
+//        loginButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
         return loginButton
     }()
     
     //Задание 4.1: сделал свойство делегата
     var loginDelegate: LoginViewControllerDelegate?
-    
-    @objc func tap() {
+
+    //Задание 6: переделываю функцию, которая должна вызываться и передавать действия по нажатию кнопки
+    func tap() {
         
+        loginButton.actionHandler = {
         //для задания 3 добавил объект класса CurrentUserService (добавил данные пользователя + метод проверки + проверки на nil)
         #if DEBUG
         let currentUserService = TestUserService()
         #else
         let currentUserService = CurrentUserService()
         #endif
-            if let login = loginTextField.text, let pass = passwordTextField.text {
+            if let login = self.loginTextField.text, let pass = self.passwordTextField.text {
                 //                if let user = currentUserService.getLogin(userLogin: login, userPassword: pass) {
                 //                    let profileVC = ProfileViewController(currentUser: user)
                 //                    navigationController?.pushViewController(profileVC, animated: true)
                 //            }
                 //Задание 4.1: добавил проверку логина пароля через делега + проверка на опционал
-                if let delegate = loginDelegate?.delegateCheck(login: login, password: pass) {
+                if let delegate = self.loginDelegate?.delegateCheck(login: login, password: pass) {
                     if delegate == true {
                         let profileVC = ProfileViewController(currentUser: currentUserService.user)
-                        navigationController?.pushViewController(profileVC, animated: true)
+                        self.navigationController?.pushViewController(profileVC, animated: true)
                     }
                     else {
                         //Задание 4.1: добавил Алерт
@@ -111,17 +113,13 @@ class LogInViewController: UIViewController {
                         let actionOne = UIAlertAction(title: "OK", style: .default)
                         alertVC.addAction(actionOne)
                         self.present(alertVC, animated: true, completion: nil)
-                        
-                    }
-                    
+                        }
                 }
-                
-
         }
-        
-        
 //        self.present(profileVC, animated: true, completion: nil)
     }
+        
+}
     
     let loginScrollView: UIScrollView = {
     let scrollView = UIScrollView()
@@ -163,6 +161,9 @@ class LogInViewController: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(loginScrollView)
+        
+        //Задание 6: вызываю функцию для передачи замыкания
+        tap()
         
         NSLayoutConstraint.activate([
         loginScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),

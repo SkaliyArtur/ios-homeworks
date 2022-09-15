@@ -37,9 +37,53 @@ class FeedViewController: UIViewController {
         return btn2
     }()
     
+    //Задача 6.2: добавил элементы текстфилд, кнопку, лейбел
+    let textField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "пароль"
+        textField.textColor = .black
+        textField.backgroundColor = .white
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    let checkGuessButton: CustomButton = {
+        let button = CustomButton(title: "проверить", titleColor: .black)
+        button.backgroundColor = .systemGray2
+        return button
+    }()
+    
+    let checkLabel: UILabel = {
+       let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .white
+        return label
+    }()
+    
+    //Задание 6.2: Добавил свойство с классом модели и реализовал функцию кнопки с идентикативностью лейбла
+    var model = FeedModel()
+    
+    func sendText() {
+        checkGuessButton.actionHandler = { [self] in
+            if let text = textField.text {
+                if model.check(word: text) == true {
+                    checkLabel.backgroundColor = .green
+                }
+                else {
+                    checkLabel.backgroundColor = .red
+                }
+            }
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(newStackView)
+        view.addSubview(textField)
+        view.addSubview(checkGuessButton)
+        view.addSubview(checkLabel)
+        sendText()
         
     }
 
@@ -53,8 +97,31 @@ class FeedViewController: UIViewController {
         newStackView.addArrangedSubview(button2)
         NSLayoutConstraint.activate([
             newStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            newStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            newStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            textField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            textField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            textField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            checkGuessButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            checkGuessButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            checkLabel.topAnchor.constraint(equalTo: checkGuessButton.bottomAnchor, constant: 16),
+            checkLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            checkLabel.widthAnchor.constraint(equalTo: checkGuessButton.widthAnchor),
+            checkLabel.heightAnchor.constraint(equalTo: checkGuessButton.heightAnchor)
+            
         ])
         
+    }
+}
+
+//Задание 6.2: сделал модель с проверкой на секретное слово
+class FeedModel {
+    let secretWord = "Джокер"
+    func check(word: String) -> Bool {
+        if word == secretWord {
+            return true
+        } else {
+            return false
+        }
     }
 }
