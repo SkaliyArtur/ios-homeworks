@@ -13,12 +13,15 @@ class ProfileViewController: UIViewController {
     
     let tableView = UITableView.init(frame: .zero, style: .grouped)
     let profileHeaderView = ProfileHeaderView()
-   
+    
+    let coordinator: ProfileCoordinator
+
     //для Задания 3 создал свойство типа User
     var currentUser: User
     //для Задания 3 выполнил инициализацию свойства
-    init(currentUser: User) {
+    init(currentUser: User, coordinator: ProfileCoordinator) {
         self.currentUser = currentUser
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,6 +30,9 @@ class ProfileViewController: UIViewController {
     }
     
     var postsData: [PostStruct] = []
+    
+    
+    
     
     var backgroundView: UIView = {
     let view = UIView()

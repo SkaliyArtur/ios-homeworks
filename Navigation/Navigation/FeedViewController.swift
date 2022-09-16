@@ -10,6 +10,19 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
+    let coordinator: FeedCoordinator
+    
+    init(coordinator: FeedCoordinator) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
     let postFeed: PostFeed = .init(title: "Hello world")
     
     let newStackView: UIStackView = {
@@ -79,6 +92,8 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Feed"
+        self.view.backgroundColor = .blue
         view.addSubview(newStackView)
         view.addSubview(textField)
         view.addSubview(checkGuessButton)
@@ -117,11 +132,5 @@ class FeedViewController: UIViewController {
 //Задание 6.2: сделал модель с проверкой на секретное слово
 class FeedModel {
     let secretWord = "Джокер"
-    func check(word: String) -> Bool {
-        if word == secretWord {
-            return true
-        } else {
-            return false
-        }
-    }
+    func check(word: String) -> Bool { word == secretWord }
 }

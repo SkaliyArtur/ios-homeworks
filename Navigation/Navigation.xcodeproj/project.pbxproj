@@ -20,6 +20,11 @@
 		667948E12815E5DA0021E47D /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF8977279F2AC70030F19F /* PostStruct.swift */; };
 		667982F028CE7D3D009F3207 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 667982EF28CE7D3D009F3207 /* iOSIntPackage */; };
 		667982F628CFD3D9009F3207 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667982F528CFD3D9009F3207 /* CustomButton.swift */; };
+		667982FD28D3C7ED009F3207 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667982FC28D3C7ED009F3207 /* MainCoordinator.swift */; };
+		6679830728D3C8C8009F3207 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679830628D3C8C8009F3207 /* FeedCoordinator.swift */; };
+		6679830B28D3CF70009F3207 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679830A28D3CF70009F3207 /* TabBarController.swift */; };
+		6679830F28D50BC5009F3207 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679830E28D50BC5009F3207 /* Factory.swift */; };
+		6679831D28D531D0009F3207 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679831C28D531D0009F3207 /* ProfileCoordinator.swift */; };
 		667F95D428CA79EA00396212 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F95D328CA79E900396212 /* Checker.swift */; };
 		667F95D828CA7D0600396212 /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F95D728CA7D0500396212 /* LoginViewControllerDelegate.swift */; };
 		667F95DC28CA7F3800396212 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F95DB28CA7F3800396212 /* LoginInspector.swift */; };
@@ -92,6 +97,11 @@
 		667948CC2815E38F0021E47D /* StorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageServiceTests.swift; sourceTree = "<group>"; };
 		667948CE2815E38F0021E47D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		667982F528CFD3D9009F3207 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		667982FC28D3C7ED009F3207 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		6679830628D3C8C8009F3207 /* FeedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCoordinator.swift; sourceTree = "<group>"; };
+		6679830A28D3CF70009F3207 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		6679830E28D50BC5009F3207 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		6679831C28D531D0009F3207 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		667F95D328CA79E900396212 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		667F95D728CA7D0500396212 /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
 		667F95DB28CA7F3800396212 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
@@ -163,6 +173,18 @@
 			path = StorageServiceTests;
 			sourceTree = "<group>";
 		};
+		667982FB28D3C7CC009F3207 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				6679830A28D3CF70009F3207 /* TabBarController.swift */,
+				667982FC28D3C7ED009F3207 /* MainCoordinator.swift */,
+				6679830628D3C8C8009F3207 /* FeedCoordinator.swift */,
+				6679830E28D50BC5009F3207 /* Factory.swift */,
+				6679831C28D531D0009F3207 /* ProfileCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		667F95CF28CA73DA00396212 /* Photo */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +240,7 @@
 		66948D0A26CC017D0080D3D6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				667982FB28D3C7CC009F3207 /* Coordinator */,
 				667F95DF28CA96BD00396212 /* Login */,
 				667F95D028CA740900396212 /* Post */,
 				667F95CF28CA73DA00396212 /* Photo */,
@@ -422,10 +445,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6661963D27B30721006C7690 /* PhotosTableViewCell.swift in Sources */,
+				667982FD28D3C7ED009F3207 /* MainCoordinator.swift in Sources */,
 				663965C227E28251001675D8 /* PhotosCollectionViewCell.swift in Sources */,
+				6679830B28D3CF70009F3207 /* TabBarController.swift in Sources */,
 				663965BF27E2813D001675D8 /* PhotosViewController.swift in Sources */,
 				66DF8966279DF7FB0030F19F /* PostTableViewCell.swift in Sources */,
 				66DF8970279F26990030F19F /* PostFeed.swift in Sources */,
+				6679831D28D531D0009F3207 /* ProfileCoordinator.swift in Sources */,
 				66948D2826CCE4650080D3D6 /* PostViewController.swift in Sources */,
 				66B00C8428C67F4600DF5CAB /* CurrentUserService.swift in Sources */,
 				667F95DC28CA7F3800396212 /* LoginInspector.swift in Sources */,
@@ -438,9 +464,11 @@
 				66155EFE27498CB700B408A9 /* LogInViewController.swift in Sources */,
 				66948D0C26CC017D0080D3D6 /* AppDelegate.swift in Sources */,
 				66948D3526CD14B80080D3D6 /* InfoViewController.swift in Sources */,
+				6679830F28D50BC5009F3207 /* Factory.swift in Sources */,
 				667982F628CFD3D9009F3207 /* CustomButton.swift in Sources */,
 				66B00C7E28C67E8700DF5CAB /* UserService.swift in Sources */,
 				66B00C8828C6AD9D00DF5CAB /* TestUserService.swift in Sources */,
+				6679830728D3C8C8009F3207 /* FeedCoordinator.swift in Sources */,
 				66948D3E26D67AAD0080D3D6 /* ProfileViewController.swift in Sources */,
 				66948D2226CCE0580080D3D6 /* FeedViewController.swift in Sources */,
 				66948D3A26D67A8E0080D3D6 /* ProfileHeaderView.swift in Sources */,

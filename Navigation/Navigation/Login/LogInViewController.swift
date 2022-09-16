@@ -23,6 +23,7 @@ class LogInViewController: UIViewController {
     
     
     
+    
     let vkLogo: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "logo.png")
@@ -104,8 +105,11 @@ class LogInViewController: UIViewController {
                 //Задание 4.1: добавил проверку логина пароля через делега + проверка на опционал
                 if let delegate = self.loginDelegate?.delegateCheck(login: login, password: pass) {
                     if delegate == true {
-                        let profileVC = ProfileViewController(currentUser: currentUserService.user)
-                        self.navigationController?.pushViewController(profileVC, animated: true)
+                        
+                        let profileVC = ProfileCoordinator()
+                        profileVC.startView(navCon: self.navigationController, coordinator: profileVC)
+//                        let profileVC = ProfileViewController(currentUser: currentUserService.user, coordinator: ProfileCoordinator.)
+//                        self.navigationController?.pushViewController(profileVC, animated: true)
                     }
                     else {
                         //Задание 4.1: добавил Алерт
@@ -161,6 +165,7 @@ class LogInViewController: UIViewController {
         view.backgroundColor = .white
         
         view.addSubview(loginScrollView)
+
         
         //Задание 6: вызываю функцию для передачи замыкания
         tap()
