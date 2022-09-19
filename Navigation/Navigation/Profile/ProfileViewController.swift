@@ -13,15 +13,12 @@ class ProfileViewController: UIViewController {
     
     let tableView = UITableView.init(frame: .zero, style: .grouped)
     let profileHeaderView = ProfileHeaderView()
-    
-    let coordinator: ProfileCoordinator
 
     //для Задания 3 создал свойство типа User
     var currentUser: User
     //для Задания 3 выполнил инициализацию свойства
-    init(currentUser: User, coordinator: ProfileCoordinator) {
+    init(currentUser: User) {
         self.currentUser = currentUser
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     

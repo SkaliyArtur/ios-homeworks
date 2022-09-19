@@ -28,7 +28,9 @@ class Factory {
         switch viewController {
         case .profile:
             
-            let controller = LogInViewController()
+            let profileCoordinator = ProfileCoordinator(navigationController: navigationController)
+            let controller = LogInViewController(coordinator: profileCoordinator)
+            controller.loginDelegate = MyLoginFactory().makeLoginInspector()
             navigationController.tabBarItem = .init(title: "Profile", image: UIImage(systemName: "person"), tag: 0)
             navigationController.setViewControllers([controller], animated: true)
             

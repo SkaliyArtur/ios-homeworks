@@ -21,6 +21,16 @@ extension UIImage {
 
 class LogInViewController: UIViewController {
     
+    let coordinator: ProfileCoordinator
+    
+    init(coordinator: ProfileCoordinator) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     
@@ -90,12 +100,11 @@ class LogInViewController: UIViewController {
     //Задание 6: переделываю функцию, которая должна вызываться и передавать действия по нажатию кнопки
     func tap() {
         
-        loginButton.actionHandler = {
         //для задания 3 добавил объект класса CurrentUserService (добавил данные пользователя + метод проверки + проверки на nil)
         #if DEBUG
         let currentUserService = TestUserService()
         #else
-        let currentUserService = CurrentUserService()
+//        let currentUserService = CurrentUserService()
         #endif
             if let login = self.loginTextField.text, let pass = self.passwordTextField.text {
                 //                if let user = currentUserService.getLogin(userLogin: login, userPassword: pass) {
@@ -105,11 +114,7 @@ class LogInViewController: UIViewController {
                 //Задание 4.1: добавил проверку логина пароля через делега + проверка на опционал
                 if let delegate = self.loginDelegate?.delegateCheck(login: login, password: pass) {
                     if delegate == true {
-                        
-                        let profileVC = ProfileCoordinator()
-                        profileVC.startView(navCon: self.navigationController, coordinator: profileVC)
-//                        let profileVC = ProfileViewController(currentUser: currentUserService.user, coordinator: ProfileCoordinator.)
-//                        self.navigationController?.pushViewController(profileVC, animated: true)
+                        self.coordinator.startView()
                     }
                     else {
                         //Задание 4.1: добавил Алерт
@@ -121,7 +126,6 @@ class LogInViewController: UIViewController {
                 }
         }
 //        self.present(profileVC, animated: true, completion: nil)
-    }
         
 }
     
@@ -166,9 +170,11 @@ class LogInViewController: UIViewController {
         
         view.addSubview(loginScrollView)
 
-        
-        //Задание 6: вызываю функцию для передачи замыкания
-        tap()
+        loginButton.actionHandler = { [weak self] in
+            guard let self = self else { return }
+            self.tap()
+        }
+
         
         NSLayoutConstraint.activate([
         loginScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),

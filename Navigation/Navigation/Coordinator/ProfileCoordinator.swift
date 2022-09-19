@@ -10,11 +10,17 @@ import UIKit
 
 class ProfileCoordinator {
  
-    func startView(navCon: UINavigationController?, coordinator: ProfileCoordinator) -> UIViewController {
+    let navigationController: UINavigationController
+    
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
+    
+    
+    func startView() {
         
         let currentUserService = CurrentUserService()
-        let profileVC = ProfileViewController(currentUser: currentUserService.user, coordinator: coordinator)
-        navCon?.pushViewController(profileVC, animated: true)
-        return profileVC
+        let profileVC = ProfileViewController(currentUser: currentUserService.user)
+        navigationController.pushViewController(profileVC, animated: true)
     }
 }
