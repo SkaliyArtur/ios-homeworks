@@ -17,7 +17,6 @@
 		667948CF2815E38F0021E47D /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = 667948BF2815E38F0021E47D /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		667948D22815E38F0021E47D /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 667948BD2815E38F0021E47D /* StorageService.framework */; };
 		667948D32815E38F0021E47D /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 667948BD2815E38F0021E47D /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		667948E12815E5DA0021E47D /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF8977279F2AC70030F19F /* PostStruct.swift */; };
 		667982F028CE7D3D009F3207 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 667982EF28CE7D3D009F3207 /* iOSIntPackage */; };
 		667982F628CFD3D9009F3207 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667982F528CFD3D9009F3207 /* CustomButton.swift */; };
 		667982FD28D3C7ED009F3207 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667982FC28D3C7ED009F3207 /* MainCoordinator.swift */; };
@@ -43,6 +42,9 @@
 		66B00C8828C6AD9D00DF5CAB /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B00C8728C6AD9C00DF5CAB /* TestUserService.swift */; };
 		66DF8966279DF7FB0030F19F /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF8965279DF7FB0030F19F /* PostTableViewCell.swift */; };
 		66DF8970279F26990030F19F /* PostFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF896F279F26990030F19F /* PostFeed.swift */; };
+		66E02E9328DB8DA900ECCD13 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E02E9228DB8DA900ECCD13 /* ProfileViewModel.swift */; };
+		66E02E9828DB8F5500ECCD13 /* ProfilePostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF8977279F2AC70030F19F /* ProfilePostModel.swift */; };
+		66E02EA028DB927100ECCD13 /* PhotoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E02E9F28DB927100ECCD13 /* PhotoCoordinator.swift */; };
 		66FFB08628C405DC00019A47 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FFB08528C405DC00019A47 /* User.swift */; };
 /* End PBXBuildFile section */
 
@@ -122,7 +124,9 @@
 		66B00C8728C6AD9C00DF5CAB /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
 		66DF8965279DF7FB0030F19F /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		66DF896F279F26990030F19F /* PostFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFeed.swift; sourceTree = "<group>"; };
-		66DF8977279F2AC70030F19F /* PostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStruct.swift; sourceTree = "<group>"; };
+		66DF8977279F2AC70030F19F /* ProfilePostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostModel.swift; sourceTree = "<group>"; };
+		66E02E9228DB8DA900ECCD13 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		66E02E9F28DB927100ECCD13 /* PhotoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCoordinator.swift; sourceTree = "<group>"; };
 		66FFB08528C405DC00019A47 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,7 +161,6 @@
 		667948BE2815E38F0021E47D /* StorageService */ = {
 			isa = PBXGroup;
 			children = (
-				66DF8977279F2AC70030F19F /* PostStruct.swift */,
 				667948BF2815E38F0021E47D /* StorageService.h */,
 				667948C02815E38F0021E47D /* Info.plist */,
 			);
@@ -181,6 +184,7 @@
 				6679830628D3C8C8009F3207 /* FeedCoordinator.swift */,
 				6679830E28D50BC5009F3207 /* Factory.swift */,
 				6679831C28D531D0009F3207 /* ProfileCoordinator.swift */,
+				66E02E9F28DB927100ECCD13 /* PhotoCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -208,6 +212,7 @@
 		667F95DF28CA96BD00396212 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				667F95D328CA79E900396212 /* Checker.swift */,
 				66155EFD27498CB700B408A9 /* LogInViewController.swift */,
 				667F95D728CA7D0500396212 /* LoginViewControllerDelegate.swift */,
 				667F95DB28CA7F3800396212 /* LoginInspector.swift */,
@@ -253,7 +258,6 @@
 				663965C427E286FE001675D8 /* CarsData.swift */,
 				66948D2126CCE0580080D3D6 /* FeedViewController.swift */,
 				66948D3426CD14B80080D3D6 /* InfoViewController.swift */,
-				667F95D328CA79E900396212 /* Checker.swift */,
 				667982F528CFD3D9009F3207 /* CustomButton.swift */,
 			);
 			path = Navigation;
@@ -262,8 +266,7 @@
 		66948D3826D679A80080D3D6 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */,
-				66948D3D26D67AAD0080D3D6 /* ProfileViewController.swift */,
+				66E02EA328DB991800ECCD13 /* MVVM Profile */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -277,6 +280,41 @@
 				66B00C8728C6AD9C00DF5CAB /* TestUserService.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		66E02EA328DB991800ECCD13 /* MVVM Profile */ = {
+			isa = PBXGroup;
+			children = (
+				66E02EA528DB992A00ECCD13 /* ViewModel */,
+				66E02EA628DB993000ECCD13 /* View */,
+				66E02EA428DB992300ECCD13 /* Model */,
+			);
+			path = "MVVM Profile";
+			sourceTree = "<group>";
+		};
+		66E02EA428DB992300ECCD13 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				66DF8977279F2AC70030F19F /* ProfilePostModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		66E02EA528DB992A00ECCD13 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				66E02E9228DB8DA900ECCD13 /* ProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		66E02EA628DB993000ECCD13 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */,
+				66948D3D26D67AAD0080D3D6 /* ProfileViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,7 +466,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				667948E12815E5DA0021E47D /* PostStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +483,7 @@
 			files = (
 				6661963D27B30721006C7690 /* PhotosTableViewCell.swift in Sources */,
 				667982FD28D3C7ED009F3207 /* MainCoordinator.swift in Sources */,
+				66E02E9328DB8DA900ECCD13 /* ProfileViewModel.swift in Sources */,
 				663965C227E28251001675D8 /* PhotosCollectionViewCell.swift in Sources */,
 				6679830B28D3CF70009F3207 /* TabBarController.swift in Sources */,
 				663965BF27E2813D001675D8 /* PhotosViewController.swift in Sources */,
@@ -466,7 +504,9 @@
 				66948D3526CD14B80080D3D6 /* InfoViewController.swift in Sources */,
 				6679830F28D50BC5009F3207 /* Factory.swift in Sources */,
 				667982F628CFD3D9009F3207 /* CustomButton.swift in Sources */,
+				66E02EA028DB927100ECCD13 /* PhotoCoordinator.swift in Sources */,
 				66B00C7E28C67E8700DF5CAB /* UserService.swift in Sources */,
+				66E02E9828DB8F5500ECCD13 /* ProfilePostModel.swift in Sources */,
 				66B00C8828C6AD9D00DF5CAB /* TestUserService.swift in Sources */,
 				6679830728D3C8C8009F3207 /* FeedCoordinator.swift in Sources */,
 				66948D3E26D67AAD0080D3D6 /* ProfileViewController.swift in Sources */,
@@ -567,7 +607,6 @@
 		667948D72815E38F0021E47D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JX8TUB5V56;
 				INFOPLIST_FILE = StorageServiceTests/Info.plist;
@@ -587,7 +626,6 @@
 		667948D82815E38F0021E47D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JX8TUB5V56;
 				INFOPLIST_FILE = StorageServiceTests/Info.plist;
@@ -724,7 +762,6 @@
 		66948D1D26CC01820080D3D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -744,7 +781,6 @@
 		66948D1E26CC01820080D3D6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
