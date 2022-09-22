@@ -6,14 +6,14 @@
 //
 
 import UIKit
-import StorageService
+//import StorageService
 
 class PostTableViewCell: UITableViewCell {
 
     
  //Вариант применения значений ячейки через didSet
     
-    var post: PostStruct? {
+    var post: ProfilePostModel? {
         didSet {
             authorLablel.text = post?.author
             descriptionLablel.text = post?.description

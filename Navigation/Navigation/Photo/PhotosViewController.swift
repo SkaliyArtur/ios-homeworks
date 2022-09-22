@@ -71,6 +71,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.title = "Photo Gallery"
 //        carsPhoto = CarsData.carsPhotos
         setupCollectionView()
         //Задание 5: подписался на изменение и запустил добавления картинок
