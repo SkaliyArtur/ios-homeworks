@@ -13,7 +13,10 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
 
     var carsPhoto: [UIImage] = []
     //Задание 5: создал экземпляр класса ImagePublisherFacade
-    var imagePublisherFacade = ImagePublisherFacade()
+//    var imagePublisherFacade = ImagePublisherFacade()
+    
+    
+    let imageProcessor = ImageProcessor()
 
     var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -72,26 +75,39 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "Photo Gallery"
-//        carsPhoto = CarsData.carsPhotos
+        carsPhoto = CarsData.carsPhotos
+        
+        //Задание 8
+        let start = CFAbsoluteTimeGetCurrent()
+        imageProcessor.processImagesOnThread(sourceImages: carsPhoto, filter: .fade, qos: .utility) {_ in
+            let diff = CFAbsoluteTimeGetCurrent() - start
+            print("Took \(diff) seconds")
+        }
+        //Задание 8: результаты
+//        .background = 287 sec
+//        .default = 4.7 sec
+//        .userInitiated = 3.8 sec
+//        .userInteractive = 3.62 sec
+//        .utility = 3.6 sec
+        
         setupCollectionView()
         //Задание 5: подписался на изменение и запустил добавления картинок
-        imagePublisherFacade.subscribe(self)
-        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: CarsData.carsPhotos)
+//        imagePublisherFacade.subscribe(self)
+//        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: CarsData.carsPhotos)
     }
 
     //Задание 5: отписался от изменений
-    override func viewDidDisappear(_ animated: Bool) {
-        imagePublisherFacade.removeSubscription(for: self)
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        imagePublisherFacade.removeSubscription(for: self)
+//    }
 
 }
 
 //Задание 5: через extension подписался на ImageLibrarySubscriber и реализовал функцию: после добавление новой картинки в паблишер - обновляй свой массив, затем перегружаю колекшенВью для появление картинок
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        carsPhoto = images
-        collectionView.reloadData()
-    }
+//extension PhotosViewController: ImageLibrarySubscriber {
+//    func receive(images: [UIImage]) {
+//        carsPhoto = images
+//        collectionView.reloadData()
+//    }
+//}
 
-    
-}
