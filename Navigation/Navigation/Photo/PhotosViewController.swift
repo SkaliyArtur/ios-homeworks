@@ -12,6 +12,7 @@ import iOSIntPackage
 class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
 
     var carsPhoto: [UIImage] = []
+    var carsPhotoProcessed: [UIImage] = []
     //Задание 5: создал экземпляр класса ImagePublisherFacade
 //    var imagePublisherFacade = ImagePublisherFacade()
     
@@ -76,13 +77,31 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
         self.view.backgroundColor = .white
         self.title = "Photo Gallery"
         carsPhoto = CarsData.carsPhotos
+        setupCollectionView()
         
         //Задание 8
+        
+        let group = DispatchGroup()
+        group.enter()
         let start = CFAbsoluteTimeGetCurrent()
-        imageProcessor.processImagesOnThread(sourceImages: carsPhoto, filter: .fade, qos: .utility) {_ in
+        imageProcessor.processImagesOnThread(sourceImages: carsPhoto, filter: .colorInvert, qos: .default) { [self] completion in
+            for carPhoto in completion {
+                if let photo = carPhoto {
+                    carsPhotoProcessed.append(UIImage(cgImage: photo))
+                    
+                }
+            }
+            
             let diff = CFAbsoluteTimeGetCurrent() - start
             print("Took \(diff) seconds")
+            group.leave()
         }
+        
+        group.notify(queue: .main){ [self] in
+            carsPhoto = carsPhotoProcessed
+            collectionView.reloadData()
+        }
+        
         //Задание 8: результаты
 //        .background = 287 sec
 //        .default = 4.7 sec
@@ -90,7 +109,6 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
 //        .userInteractive = 3.62 sec
 //        .utility = 3.6 sec
         
-        setupCollectionView()
         //Задание 5: подписался на изменение и запустил добавления картинок
 //        imagePublisherFacade.subscribe(self)
 //        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: CarsData.carsPhotos)
