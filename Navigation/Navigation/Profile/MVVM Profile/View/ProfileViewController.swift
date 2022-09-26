@@ -27,6 +27,9 @@ class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var timeOutCounter = 5
+    var timer: Timer?
+    
     var backgroundView: UIView = {
     let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -129,6 +132,7 @@ class ProfileViewController: UIViewController {
         profileViewModel.setUser()
         profileViewModel.setPosts()
         setupTableView()
+        createTimer()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -208,4 +212,32 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
-
+extension ProfileViewController {
+    func createTimer() {
+        DispatchQueue.global().async {
+            self.timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.logOut), userInfo: nil, repeats: true)
+            guard let timer = self.timer else {return}
+            
+            RunLoop.current.add(timer, forMode: .common)
+            RunLoop.current.run()
+        }
+      
+    }
+    
+    @objc func logOut() {
+        if timeOutCounter == 1 {
+            DispatchQueue.main.async { [self] in
+                navigationController?.popToRootViewController(animated: false)
+                self.timer?.invalidate()
+                self.timer = nil
+                timeOutCounter = 5
+                print("Log Out: Время сессии истекло")
+            }
+        }
+        else {
+            timeOutCounter -= 1
+            print("Выход через \(timeOutCounter)")
+        }
+    }
+    
+}
