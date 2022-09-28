@@ -84,7 +84,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
         let group = DispatchGroup()
         group.enter()
         let start = CFAbsoluteTimeGetCurrent()
-        imageProcessor.processImagesOnThread(sourceImages: carsPhoto, filter: .tonal, qos: .default) { [self] completion in
+        imageProcessor.processImagesOnThread(sourceImages: carsPhoto, filter: .colorInvert, qos: .default) { [self] completion in
             for carPhoto in completion {
                 if let photo = carPhoto {
                     carsPhotoProcessed.append(UIImage(cgImage: photo))

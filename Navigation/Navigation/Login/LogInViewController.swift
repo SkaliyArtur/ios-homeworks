@@ -22,7 +22,6 @@ extension UIImage {
 class LogInViewController: UIViewController {
     
     let coordinator: ProfileCoordinator
-    var password: String = ""
     
     init(coordinator: ProfileCoordinator) {
         self.coordinator = coordinator
@@ -73,7 +72,6 @@ class LogInViewController: UIViewController {
         pass.autocapitalizationType = .none
         pass.isSecureTextEntry = true
         pass.translatesAutoresizingMaskIntoConstraints = false
-        pass.rightViewMode = UITextField.ViewMode.always
         return pass
     }()
     
@@ -81,32 +79,20 @@ class LogInViewController: UIViewController {
     //Задание 6: применил кастомную кнопку, сократил 6 строк кода ниже
     let loginButton: CustomButton = {
         let loginButton = CustomButton(title: "Log in", titleColor: .white)
+//        loginButton.setTitle("Log in", for: .normal)
         let img1 = UIImage(named: "blue_pixel")!.alpha(1)
         let img2 = UIImage(named: "blue_pixel")!.alpha(0.8)
         loginButton.setBackgroundImage(img1, for: .normal)
         loginButton.setBackgroundImage(img2, for: .selected)
         loginButton.setBackgroundImage(img2, for: .highlighted)
         loginButton.setBackgroundImage(img2, for: .disabled)
+//        loginButton.setTitleColor(.white, for: .normal)
+//        loginButton.clipsToBounds = true
+//        loginButton.layer.cornerRadius = 10
+//        loginButton.translatesAutoresizingMaskIntoConstraints = false
+//        loginButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
         return loginButton
     }()
-    
-    let pickUpButton: CustomButton = {
-        let button = CustomButton(title: "Подобрать пароль", titleColor: .white)
-        let img1 = UIImage(named: "blue_pixel")!.alpha(1)
-        let img2 = UIImage(named: "blue_pixel")!.alpha(0.8)
-        button.setBackgroundImage(img1, for: .normal)
-        button.setBackgroundImage(img2, for: .selected)
-        button.setBackgroundImage(img2, for: .highlighted)
-        button.setBackgroundImage(img2, for: .disabled)
-        return button
-    }()
-    
-    let activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView()
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
-    
     
     //Задание 4.1: сделал свойство делегата
     var loginDelegate: LoginViewControllerDelegate?
@@ -188,27 +174,6 @@ class LogInViewController: UIViewController {
             guard let self = self else { return }
             self.tap()
         }
-        
-        
-        pickUpButton.actionHandler = { [weak self] in
-            guard let self = self else { return }
-            
-            let queue = DispatchQueue.global(qos: .userInteractive)
-            let group = DispatchGroup()
-            
-            group.enter()
-            self.activityIndicator.startAnimating()
-            queue.async {
-                self.bruteForce(passwordToUnlock: self.randomPassword(length: 4))
-                group.leave()
-            }
-            group.notify(queue: .main){ [self] in
-                self.passwordTextField.isSecureTextEntry = false
-                self.passwordTextField.text = self.password
-                self.activityIndicator.stopAnimating()
-                
-            }
-        }
 
         
         NSLayoutConstraint.activate([
@@ -248,88 +213,7 @@ class LogInViewController: UIViewController {
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: authorizationWindow.leadingAnchor).isActive = true
         loginButton.rightAnchor.constraint(equalTo: authorizationWindow.rightAnchor).isActive = true
-//        loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        
-        contentView.addSubview(pickUpButton)
-        pickUpButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 16).isActive = true
-        pickUpButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        pickUpButton.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor).isActive = true
-        pickUpButton.rightAnchor.constraint(equalTo: loginButton.rightAnchor).isActive = true
-        pickUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
             
-        contentView.addSubview(activityIndicator)
-        passwordTextField.rightView = self.activityIndicator
         }
     }
-
-
-extension String {
-var digits:      String { return "0123456789" }
-var lowercase:   String { return "abcdefghijklmnopqrstuvwxyz" }
-var uppercase:   String { return "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }
-var letters:     String { return lowercase + uppercase }
-var printable:   String { return digits + letters }
-
-
-
-mutating func replace(at index: Int, with character: Character) {
-    var stringArray = Array(self)
-    stringArray[index] = character
-    self = String(stringArray)
-}
-}
-
-
-extension LogInViewController {
-    
-    
-    
-    func bruteForce(passwordToUnlock: String) {
-        
-        let ALLOWED_CHARACTERS:   [String] = String().printable.map { String($0) }
-
-        
-
-        // Will strangely ends at 0000 instead of ~~~
-        while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
-            password = generateBruteForce(password, fromArray: ALLOWED_CHARACTERS)
-            // Your stuff here
-    //            print(password)
-            // Your stuff here
-        }
-        print(password)
-    }
-
-    func indexOf(character: Character, _ array: [String]) -> Int {
-    return array.firstIndex(of: String(character))!
-    }
-
-    func characterAt(index: Int, _ array: [String]) -> Character {
-    return index < array.count ? Character(array[index])
-                               : Character("")
-    }
-
-    func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
-    var str: String = string
-
-    if str.count <= 0 {
-        str.append(characterAt(index: 0, array))
-    }
-    else {
-        str.replace(at: str.count - 1,
-                    with: characterAt(index: (indexOf(character: str.last!, array) + 1) % array.count, array))
-
-        if indexOf(character: str.last!, array) == 0 {
-            str = String(generateBruteForce(String(str.dropLast()), fromArray: array)) + String(str.last!)
-        }
-    }
-
-    return str
-    }
-    
-    func randomPassword(length: Int) -> String {
-        let letters = String().printable
-        return String((0..<length).map{ _ in letters.randomElement()! })
-    }
-
-}
