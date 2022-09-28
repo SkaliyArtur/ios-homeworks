@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum loginError: Error {
+    case notCorrect
+}
+
+
 class Checker {
 //Задание 4.1: сделал Singleton
     static let shared = Checker()
@@ -18,15 +23,13 @@ class Checker {
         self.loginSing = "Batman"
         self.passwordSing = "12345"
     }
-    //Задание 4.1: сделал проверку на совпадение введённых логин/пароля
-    func checkerCheck(login: String, password: String) -> Bool {
+    
+    func checkerCheck(login: String, password: String) -> Result<Bool, loginError> {
         if login == loginSing, password == passwordSing {
-            print("OK")
-            return true
+            return .success(true)
         }
         else {
-            print("NE OK")
-            return false
+            return .failure(.notCorrect)
         }
         
     }

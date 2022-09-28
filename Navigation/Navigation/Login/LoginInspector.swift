@@ -9,8 +9,16 @@ import UIKit
 
 struct LoginInspector: LoginViewControllerDelegate {
     func delegateCheck(login: String, password: String) -> Bool {
-        return Checker.shared.checkerCheck(login: login, password: password)
+        switch Checker.shared.checkerCheck(login: login, password: password) {
+        case .success(true):
+            print("Пара логин пароль - верна")
+            return true
+        case .failure(loginError.notCorrect):
+            print("Не правильный логин или пароль")
+            return false
+        case .success(false):
+            print("Не известная ошибка")
+            return false
+        }
     }
-    
- 
 }
