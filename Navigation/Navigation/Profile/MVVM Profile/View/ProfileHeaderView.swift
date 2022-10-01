@@ -7,6 +7,13 @@
 
 import UIKit
 
+
+enum FullNameError: Error {
+    case noName
+    case longName
+    case notEnglish
+}
+
 class ProfileHeaderView: UITableViewHeaderFooterView {
 
 //     var avatarHeight: NSLayoutConstraint!
@@ -79,10 +86,17 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     
     //для Задания 3: убрал предустоновленные значения профиля и сделал метод setUser, который присваивает значения свойствам профиля
-    func setUser(userAvatar: UIImage, userFullName: String, userStatus: String ) {
+    func setHeaderUser(userAvatar: UIImage, userFullName: String, userStatus: String ) throws {
         avatarImageView.image = userAvatar
-        fullNameLabel.text = userFullName
         statusLabel.text = userStatus
+        switch  userFullName.count {
+        case _ where userFullName.count == 0:
+            throw FullNameError.noName
+        case _ where userFullName.count > 10:
+            throw FullNameError.longName
+        default:
+            fullNameLabel.text = userFullName
+        }
     }
     
     override init(reuseIdentifier: String?) {
@@ -131,11 +145,11 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             setStatusButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             
             statusLabel.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: 34),
-            statusLabel.leftAnchor.constraint(equalTo: fullNameLabel.leftAnchor),
+            statusLabel.leftAnchor.constraint(equalTo: avatarImageView.rightAnchor, constant: 16),
             
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 16),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            statusTextField.leftAnchor.constraint(equalTo: fullNameLabel.leftAnchor),
+            statusTextField.leftAnchor.constraint(equalTo: statusLabel.leftAnchor),
             statusTextField.rightAnchor.constraint(equalTo: setStatusButton.rightAnchor)
             
         ])

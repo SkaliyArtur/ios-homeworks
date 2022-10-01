@@ -9,6 +9,9 @@ import UIKit
 //Задание 5: импортировал фреймворк
 import iOSIntPackage
 
+
+
+
 class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource  {
 
     var carsPhoto: [UIImage] = []
@@ -97,6 +100,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
             group.leave()
         }
         
+        
         group.notify(queue: .main){ [self] in
             carsPhoto = carsPhotoProcessed
             collectionView.reloadData()
@@ -128,4 +132,5 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
 //        collectionView.reloadData()
 //    }
 //}
+
 
