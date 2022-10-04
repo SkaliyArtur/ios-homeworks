@@ -17,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainCoordinator: MainCoordinator = MainCoordinatorImp()
         
+        let appConfiguration = AppConfiguration.allCases.randomElement()!
+        NetworkService.request(for: appConfiguration)
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = mainCoordinator.startApplication()
         window?.makeKeyAndVisible()
@@ -24,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
         
     }
+
+    
 
 
 }
