@@ -9,28 +9,52 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
-    let jsonLabel1 = UILabel()
-    let jsonLabel2 = UILabel()
+    let alertButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("AlertButton", for: .normal)
+        button.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let jsonLabel1: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let jsonLabel2: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .darkGray
-        let alertButton = UIButton(frame: CGRect(x: 100, y: 200, width: 100, height: 30))
-        alertButton.setTitle("Alert", for: .normal)
-        alertButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        setupConstraints()
+        dataTaskJSONSerialization()
+        dataTaskJSONDecoder()
+    }
+    
+    func setupConstraints() {
         view.addSubview(alertButton)
-        
-        guard let url1 = URL(string: "https://jsonplaceholder.typicode.com/todos/\(Int.random(in: 1...200))") else {return}
-        dataTaskJSONSerialization(url1)
-        jsonLabel1.frame = CGRect(x: 16, y: 500, width: 400, height: 30)
-        jsonLabel1.textColor = .white
         view.addSubview(jsonLabel1)
-        
-        guard let url2 = URL(string: "https://swapi.dev/api/planets/1") else {return}
-        dataTaskJSONDecoder(url2)
-        jsonLabel2.frame = CGRect(x: 16, y: 600, width: 400, height: 30)
-        jsonLabel2.textColor = .white
         view.addSubview(jsonLabel2)
+        NSLayoutConstraint.activate([
+            alertButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            alertButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            jsonLabel1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            jsonLabel1.topAnchor.constraint(equalTo: alertButton.bottomAnchor, constant: 16),
+            jsonLabel1.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            jsonLabel2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            jsonLabel2.topAnchor.constraint(equalTo: jsonLabel1.bottomAnchor, constant: 16),
+            jsonLabel2.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
     
     @objc func tap() {
@@ -42,17 +66,16 @@ class InfoViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
 
-    func dataTaskJSONSerialization(_ address: URL) {
+    func dataTaskJSONSerialization() {
         let session = URLSession.shared
-        let task = session.dataTask(with: address) {data, _, error in
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/todos/\(Int.random(in: 1...200))") else {return}
+        let task = session.dataTask(with: url) {data, _, error in
             guard let data = data else { return }
             do {
                 if let json = try JSONSerialization.jsonObject(with: data) as? [String:Any] {
                     guard let title = json["title"] as? String else {return}
-                    print("title \(title)")
                     DispatchQueue.main.async {
                         self.jsonLabel1.text = title
-                        print("JSONLABEL \(String(describing: self.jsonLabel1.text))")
                     }
                 }
             } catch let error as NSError {
@@ -62,9 +85,10 @@ class InfoViewController: UIViewController {
         task.resume()
     }
     
-    func dataTaskJSONDecoder(_ address: URL) {
+    func dataTaskJSONDecoder() {
         let session = URLSession.shared
-        let task = session.dataTask(with: address) {data, _, error in
+        guard let url = URL(string: "https://swapi.dev/api/planets/1") else {return}
+        let task = session.dataTask(with: url) {data, _, error in
             do {
                 guard let data = data else { return }
                 let model = try JSONDecoder().decode(JSONModel.self, from: data)
