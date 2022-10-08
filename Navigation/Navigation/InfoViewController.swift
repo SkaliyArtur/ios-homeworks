@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InfoViewController: UIViewController {
+class InfoViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     let alertButton: UIButton = {
         let button = UIButton()
@@ -33,28 +33,60 @@ class InfoViewController: UIViewController {
         return label
     }()
     
+    let tableView: UITableView = {
+        let tableView = UITableView.init(frame: .zero, style: .grouped)
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        tableView.backgroundColor = .darkGray
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .darkGray
         setupConstraints()
         dataTaskJSONSerialization()
-        dataTaskJSONDecoder()
+        dataTaskJSONDecoderPlanet()
     }
     
     func setupConstraints() {
         view.addSubview(alertButton)
         view.addSubview(jsonLabel1)
         view.addSubview(jsonLabel2)
+        view.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
+        
         NSLayoutConstraint.activate([
             alertButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             alertButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             jsonLabel1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             jsonLabel1.topAnchor.constraint(equalTo: alertButton.bottomAnchor, constant: 16),
-            jsonLabel1.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            jsonLabel1.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             jsonLabel2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             jsonLabel2.topAnchor.constraint(equalTo: jsonLabel1.bottomAnchor, constant: 16),
-            jsonLabel2.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            jsonLabel2.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: jsonLabel2.bottomAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            
         ])
+    }
+    
+    var residents: [String] = []
+    var residentsName: [String] = []
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return residents.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
+        cell.textLabel?.textColor = .white
+        cell.backgroundColor = .darkGray
+        cell.textLabel?.text = self.residentsName[indexPath.row]
+        return cell
     }
     
     @objc func tap() {
@@ -85,20 +117,48 @@ class InfoViewController: UIViewController {
         task.resume()
     }
     
-    func dataTaskJSONDecoder() {
+    func dataTaskJSONDecoderPlanet() {
         let session = URLSession.shared
         guard let url = URL(string: "https://swapi.dev/api/planets/1") else {return}
-        let task = session.dataTask(with: url) {data, _, error in
+        let task = session.dataTask(with: url) { [self]data, _, error in
             do {
                 guard let data = data else { return }
-                let model = try JSONDecoder().decode(JSONModel.self, from: data)
-                DispatchQueue.main.async {
-                    self.jsonLabel2.text = "Период обращение планеты \(model.name) = \(model.orbitalPeriod)"
+                let model = try JSONDecoder().decode(JSONModelPlanet.self, from: data)
+                DispatchQueue.main.async { [self] in
+                    jsonLabel2.text = "Период обращение планеты \(model.name) = \(model.orbitalPeriod)"
                 }
+                residents = model.residents
+                dataTaskJSONDecoderResident(session: session)
             } catch let error as NSError {
                     print("error: \(error.localizedDescription)")
             }
         }
         task.resume()
     }
+    
+    func dataTaskJSONDecoderResident(session: URLSession) {
+        let group = DispatchGroup()
+        for resident in residents {
+            guard let url = URL(string: resident) else {return}
+            group.enter()
+            let task = session.dataTask(with: url) {data, _, error in
+                do {
+                    guard let data = data else { return }
+                    let model = try JSONDecoder().decode(JSONModelResident.self, from: data)
+                    self.residentsName.append(model.name)
+                    group.leave()
+                } catch let error as NSError {
+                        print("error: \(error.localizedDescription)")
+                }
+            }
+            task.resume()
+        }
+        group.notify(queue: .main) {
+            self.tableView.reloadData()
+        }
+    }
+}
+
+class TableViewCell: UITableViewCell {
+
 }

@@ -17,8 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let mainCoordinator: MainCoordinator = MainCoordinatorImp()
         
-        let appConfiguration = AppConfiguration.allCases.randomElement()!
-        NetworkService.request(for: appConfiguration)
+        // Отклчил, чтобы не пачкало терминал 
+//        let appConfiguration = AppConfiguration.allCases.randomElement()!
+//        NetworkService.request(for: appConfiguration)
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = mainCoordinator.startApplication()

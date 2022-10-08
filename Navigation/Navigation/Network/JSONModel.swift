@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct JSONModel: Decodable {
+struct JSONModelPlanet: Decodable {
     let name: String
     let rotationPeriod: String
     let orbitalPeriod: String
@@ -51,4 +51,9 @@ struct JSONModel: Decodable {
         url = try container.decode(String.self, forKey: .url)
     }
 }
+
+struct JSONModelResident: Decodable {
+    let name: String
+}
+
 
