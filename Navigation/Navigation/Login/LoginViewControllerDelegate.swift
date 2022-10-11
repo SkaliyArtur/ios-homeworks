@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//Задание 4.1: сделал протокол делегата
+
 protocol LoginViewControllerDelegate {
     func delegateCheck(login: String, password: String) -> Bool
 }

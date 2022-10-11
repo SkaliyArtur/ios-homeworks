@@ -7,6 +7,7 @@
 
 import UIKit
 //import StorageService
+import FirebaseAuth
 
 
 class ProfileViewController: UIViewController {
@@ -143,6 +144,14 @@ class ProfileViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        //Если выходим с профиля - считаем что пользователь разлогинелся
+        do {
+            try Auth.auth().signOut()
+            CheckerService.shared.isSingIn = false
+        } catch {
+            print("Неизвестная ошибка")
+        }
     }
     
     func setupTableView() {

@@ -11,6 +11,8 @@
 		6605AB7928ECC08A00EB89FA /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6605AB7828ECC08900EB89FA /* AppConfiguration.swift */; };
 		6605AB8428F0B4DE00EB89FA /* JSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6605AB8328F0B4DE00EB89FA /* JSONModel.swift */; };
 		6605AB8C28F4A13800EB89FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6605AB8B28F4A13800EB89FA /* GoogleService-Info.plist */; };
+		6605AB9928F4A92700EB89FA /* CheckerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6605AB9828F4A92600EB89FA /* CheckerService.swift */; };
+		6605AB9B28F6028500EB89FA /* AlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6605AB9A28F6028500EB89FA /* AlertExtension.swift */; };
 		66155EFE27498CB700B408A9 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66155EFD27498CB700B408A9 /* LogInViewController.swift */; };
 		663965BF27E2813D001675D8 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663965BE27E2813D001675D8 /* PhotosViewController.swift */; };
 		663965C227E28251001675D8 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663965C127E28251001675D8 /* PhotosCollectionViewCell.swift */; };
@@ -68,6 +70,8 @@
 		6605AB7828ECC08900EB89FA /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		6605AB8328F0B4DE00EB89FA /* JSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONModel.swift; sourceTree = "<group>"; };
 		6605AB8B28F4A13800EB89FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6605AB9828F4A92600EB89FA /* CheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerService.swift; sourceTree = "<group>"; };
+		6605AB9A28F6028500EB89FA /* AlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExtension.swift; sourceTree = "<group>"; };
 		66155EFD27498CB700B408A9 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		663965BE27E2813D001675D8 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		663965C127E28251001675D8 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 				667F95DB28CA7F3800396212 /* LoginInspector.swift */,
 				667F95E028CA972900396212 /* LoginFactory.swift */,
 				667F95E428CA987500396212 /* MyLoginFactory.swift */,
+				6605AB9828F4A92600EB89FA /* CheckerService.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 				66948D2126CCE0580080D3D6 /* FeedViewController.swift */,
 				66948D3426CD14B80080D3D6 /* InfoViewController.swift */,
 				667982F528CFD3D9009F3207 /* CustomButton.swift */,
+				6605AB9A28F6028500EB89FA /* AlertExtension.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -424,6 +430,7 @@
 				667F95DC28CA7F3800396212 /* LoginInspector.swift in Sources */,
 				667F95E128CA972900396212 /* LoginFactory.swift in Sources */,
 				6605AB8428F0B4DE00EB89FA /* JSONModel.swift in Sources */,
+				6605AB9B28F6028500EB89FA /* AlertExtension.swift in Sources */,
 				667F95D428CA79EA00396212 /* Checker.swift in Sources */,
 				667F95E528CA987500396212 /* MyLoginFactory.swift in Sources */,
 				66FFB08628C405DC00019A47 /* User.swift in Sources */,
@@ -432,6 +439,7 @@
 				66155EFE27498CB700B408A9 /* LogInViewController.swift in Sources */,
 				66948D0C26CC017D0080D3D6 /* AppDelegate.swift in Sources */,
 				66948D3526CD14B80080D3D6 /* InfoViewController.swift in Sources */,
+				6605AB9928F4A92700EB89FA /* CheckerService.swift in Sources */,
 				6679830F28D50BC5009F3207 /* Factory.swift in Sources */,
 				667982F628CFD3D9009F3207 /* CustomButton.swift in Sources */,
 				66E02EA028DB927100ECCD13 /* PhotoCoordinator.swift in Sources */,
