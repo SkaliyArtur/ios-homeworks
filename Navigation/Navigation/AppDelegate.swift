@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,8 +27,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = mainCoordinator.startApplication()
         window?.makeKeyAndVisible()
         
+        
+        FirebaseApp.configure()
         return true
         
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        //Если приложение закрывается - считаем что пользователь разлогинен
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("Неизвестная ошибка")
+        }
     }
 
     
