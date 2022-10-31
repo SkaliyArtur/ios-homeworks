@@ -8,14 +8,20 @@
 
 import UIKit
 
+protocol ReloadDataDelegate {
+    func reload()
+}
+
+
 class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let fileManagerService = FileManagerService()
+    let settingsVC = SettingsViewController()
     var rootURL: URL //URL для которого отображаем View
     var files: [URL] = [] //пустой массив URLов, в который мы потом записываем содержимое rootURL
     var viewTitle: String //заголовок rootURL
     
-    
+    var isSorted = UserDefaults.standard.bool(forKey: "sort")
     
     init(rootURL: URL, viewTitle: String) {
         self.rootURL = rootURL
@@ -113,9 +119,10 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
         let addFile = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createFile))
         navigationItem.rightBarButtonItems = [addFile, addDirectory]
         self.title = viewTitle
-
+        settingsVC.delegate = self
         setupTable()
-        files = fileManagerService.contentsOfDirectory(currentDirectory: rootURL)
+        currentDirectorySort()
+
     }
     
     @objc func createDirectory() {
@@ -127,7 +134,7 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [self] _ in
             guard let textField = alert.textFields?[0].text else {return}
             fileManagerService.createDirectory(currentDirectory: rootURL, newDirectoryName: textField)
-            files = fileManagerService.contentsOfDirectory(currentDirectory: rootURL)
+            currentDirectorySort()
             self.table.reloadData()
         }))
         self.present(alert, animated: true, completion: nil)
@@ -140,10 +147,29 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
         let image = info[.imageURL] as! URL
         self.dismiss(animated: true, completion: nil)
         fileManagerService.createFile(currentDirectory: rootURL, newFile: image)
-        files = fileManagerService.contentsOfDirectory(currentDirectory: rootURL)
+        currentDirectorySort()
+        self.table.reloadData()
+    }
+    
+    func currentDirectorySort() {
+        if isSorted == true {
+            files = fileManagerService.contentsOfDirectory(currentDirectory: rootURL).sorted(by: { (URL1: URL, URL2: URL) -> Bool in
+                return URL1.pathComponents.last! < URL2.pathComponents.last!
+            })
+        } else {
+            files = fileManagerService.contentsOfDirectory(currentDirectory: rootURL).sorted(by: { (URL1: URL, URL2: URL) -> Bool in
+                return URL1.pathComponents.last! > URL2.pathComponents.last!
+            })
+        }
+    }
+}
+
+extension ViewControllerFactory: ReloadDataDelegate {
+    func reload() {
         self.table.reloadData()
     }
 }
+
 
 
 

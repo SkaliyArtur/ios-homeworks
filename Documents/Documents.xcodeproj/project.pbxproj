@@ -13,6 +13,10 @@
 		66AAAED528FB400400A3D627 /* FileManagerServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AAAED428FB400400A3D627 /* FileManagerServiceProtocol.swift */; };
 		66AAAED928FB535F00A3D627 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AAAED828FB535F00A3D627 /* FileManagerService.swift */; };
 		66AAAEDC28FB6B2500A3D627 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AAAEDB28FB6B2500A3D627 /* ViewControllerFactory.swift */; };
+		66EA587B2909C85C0044B8E7 /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA587A2909C85C0044B8E7 /* PasswordViewController.swift */; };
+		66EA58802909D3D40044B8E7 /* PasswordKeychainSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA587F2909D3D40044B8E7 /* PasswordKeychainSevice.swift */; };
+		66EA5888290B28C80044B8E7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA5887290B28C80044B8E7 /* SettingsViewController.swift */; };
+		66EA588C290DB59C0044B8E7 /* AlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EA588B290DB59B0044B8E7 /* AlertExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		66AAAED428FB400400A3D627 /* FileManagerServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerServiceProtocol.swift; sourceTree = "<group>"; };
 		66AAAED828FB535F00A3D627 /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		66AAAEDB28FB6B2500A3D627 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
+		66EA587A2909C85C0044B8E7 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
+		66EA587F2909D3D40044B8E7 /* PasswordKeychainSevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordKeychainSevice.swift; path = "/Users/skaliy/Desktop/iOS/ios-homeworks/Documents/Documents/PasswordKeychainSevice.swift"; sourceTree = "<absolute>"; };
+		66EA5887290B28C80044B8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		66EA588B290DB59B0044B8E7 /* AlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,10 +67,14 @@
 				66AAAEBD28FB3CB200A3D627 /* AppDelegate.swift */,
 				66AAAEC628FB3CCA00A3D627 /* Assets.xcassets */,
 				66AAAEC828FB3CCA00A3D627 /* LaunchScreen.storyboard */,
+				66EA587F2909D3D40044B8E7 /* PasswordKeychainSevice.swift */,
 				66AAAECB28FB3CCA00A3D627 /* Info.plist */,
 				66AAAED428FB400400A3D627 /* FileManagerServiceProtocol.swift */,
 				66AAAED828FB535F00A3D627 /* FileManagerService.swift */,
 				66AAAEDB28FB6B2500A3D627 /* ViewControllerFactory.swift */,
+				66EA587A2909C85C0044B8E7 /* PasswordViewController.swift */,
+				66EA5887290B28C80044B8E7 /* SettingsViewController.swift */,
+				66EA588B290DB59B0044B8E7 /* AlertExtension.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -137,9 +149,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				66AAAEDC28FB6B2500A3D627 /* ViewControllerFactory.swift in Sources */,
+				66EA587B2909C85C0044B8E7 /* PasswordViewController.swift in Sources */,
 				66AAAED528FB400400A3D627 /* FileManagerServiceProtocol.swift in Sources */,
+				66EA58802909D3D40044B8E7 /* PasswordKeychainSevice.swift in Sources */,
+				66EA588C290DB59C0044B8E7 /* AlertExtension.swift in Sources */,
 				66AAAEBE28FB3CB200A3D627 /* AppDelegate.swift in Sources */,
 				66AAAED928FB535F00A3D627 /* FileManagerService.swift in Sources */,
+				66EA5888290B28C80044B8E7 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
