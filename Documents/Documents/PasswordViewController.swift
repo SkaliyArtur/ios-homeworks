@@ -14,6 +14,17 @@ class PasswordViewController: UIViewController {
     var savedPassword: String?
     let passwordKeychainService = PasswordKeychainSevice()
     
+    var toUpdatePassword: Bool
+    
+    init(toUpdatePassword: Bool) {
+        self.toUpdatePassword = toUpdatePassword
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let passwordTextField: UITextField = {
        let text = UITextField()
         text.attributedPlaceholder = NSAttributedString(text: "Ваш пароль", aligment: .center, color: .lightGray)
@@ -55,7 +66,8 @@ class PasswordViewController: UIViewController {
         pass1 = nil
         pass2 = nil
         savedPassword = nil
-        if passwordKeychainService.retrivePassword(credentials: Credentials.init(password: "")).status == errSecItemNotFound {
+        
+        if passwordKeychainService.retrivePassword(credentials: Credentials.init(password: "")).status == errSecItemNotFound || toUpdatePassword == true {
             passwordDeleteButton.isEnabled = false
             passwordButton.setTitle("Создать пароль", for: .normal)
             passwordButton.addTarget(self, action: #selector(firstPasswordEnter), for: .touchUpInside)
@@ -97,13 +109,23 @@ class PasswordViewController: UIViewController {
         }
         switch savedPassword {
         case nil:
+            if toUpdatePassword == true {
+                passwordKeychainService.updatePassword(credentials: Credentials.init(password: text))
+                dismiss(animated: true, completion: {
+                    AlertErrorSample.shared.alert(alertTitle: "Пароль обновлён", alertMessage: "Ваш пароль обновлён в Keychain")
+                })
+                
+            } else {
             passwordKeychainService.savePassword(credentials: Credentials.init(password: text))
             tabBarPresent()
             AlertErrorSample.shared.alert(alertTitle: "Пароль создан", alertMessage: "Ваш пароль создан и сохранён в Keychain")
+            }
         case pass2:
             tabBarPresent()
         default:
-            AlertErrorSample.shared.alert(alertTitle: "Ошибка", alertMessage: "Неизвестная ошибка")
+            passwordButton.removeTarget(self, action: #selector(repeatPassword), for: .touchUpInside)
+            AlertErrorSample.shared.alert(alertTitle: "Некорректный пароль", alertMessage: "Пароль не найден")
+            viewWillAppear(true)
         }
     }
     
@@ -140,11 +162,15 @@ class PasswordViewController: UIViewController {
     
     func tabBarPresent() {
         let tabBar = UITabBarController()
-        let documentsViewController = UINavigationController(rootViewController: ViewControllerFactory(rootURL: getDocumentsURL(), viewTitle: getDocumentsURL().lastPathComponent))
-        documentsViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "folder"), tag: 1)
-        let settingsViewController = UINavigationController(rootViewController: SettingsViewController())
-        settingsViewController.tabBarItem = UITabBarItem(title: "Настройки", image: UIImage(systemName: "gear"), tag: 2)
-        tabBar.viewControllers = [documentsViewController, settingsViewController]
+        let docVC = ViewControllerFactory(rootURL: getDocumentsURL(), viewTitle: getDocumentsURL().lastPathComponent)
+        let docNC = UINavigationController(rootViewController: docVC)
+        docNC.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "folder"), tag: 1)
+        let setVC = SettingsViewController()
+        let setNC = UINavigationController(rootViewController: setVC)
+        setNC.tabBarItem = UITabBarItem(title: "Настройки", image: UIImage(systemName: "gear"), tag: 2)
+        setVC.delegate = docVC
+        print("delegate1: \(setVC.delegate)")
+        tabBar.viewControllers = [docNC, setNC]
         view.window?.rootViewController = tabBar
         view.window?.makeKeyAndVisible()
     }

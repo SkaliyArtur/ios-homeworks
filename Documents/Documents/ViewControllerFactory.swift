@@ -16,7 +16,6 @@ protocol ReloadDataDelegate {
 class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     let fileManagerService = FileManagerService()
-    let settingsVC = SettingsViewController()
     var rootURL: URL //URL для которого отображаем View
     var files: [URL] = [] //пустой массив URLов, в который мы потом записываем содержимое rootURL
     var viewTitle: String //заголовок rootURL
@@ -119,10 +118,15 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
         let addFile = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createFile))
         navigationItem.rightBarButtonItems = [addFile, addDirectory]
         self.title = viewTitle
-        settingsVC.delegate = self
         setupTable()
         currentDirectorySort()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        currentDirectorySort()
+        self.table.reloadData()
     }
     
     @objc func createDirectory() {
@@ -166,7 +170,7 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
 
 extension ViewControllerFactory: ReloadDataDelegate {
     func reload() {
-        self.table.reloadData()
+        viewWillAppear(true)
     }
 }
 

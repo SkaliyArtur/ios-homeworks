@@ -10,6 +10,7 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var delegate: ReloadDataDelegate?
+    let passwordKeychainService = PasswordKeychainSevice()
     
     let table: UITableView = {
         let table = UITableView.init(frame: .zero, style: .grouped)
@@ -63,6 +64,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 2 {
+            let passwordVC = PasswordViewController(toUpdatePassword: true)
+            passwordVC.modalPresentationStyle = .automatic
+            present(passwordVC, animated: true, completion: nil)
+        }
+    }
+    
+    
     @objc func switchChanged(_ sender : UISwitch!){
         switch sender.tag {
         case 0:
@@ -74,5 +85,6 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             print("print")
         }
         delegate?.reload()
+        print("delegate: \(delegate)")
     }
 }

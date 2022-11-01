@@ -45,5 +45,16 @@ class PasswordKeychainSevice {
         let status = SecItemCopyMatching(query, &extractedPasswordData)
         return (status, extractedPasswordData as? Data)
     }
+    
+    func updatePassword(credentials: Credentials) {
+            let query = [
+                kSecAttrService: credentials.serviceName,
+                kSecAttrAccount: credentials.account,
+                kSecClass: kSecClassGenericPassword,
+            ] as CFDictionary
+        
+            let attributesToUpdate = [kSecValueData: Data(credentials.password.utf8)] as CFDictionary
+            SecItemUpdate(query, attributesToUpdate)
+    }
 }
 
