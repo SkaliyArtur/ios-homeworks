@@ -9,18 +9,18 @@
 import UIKit
 
 protocol ReloadDataDelegate {
-    func reload()
+    func currentDirectorySort()
 }
 
 
-class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ReloadDataDelegate {
     
     let fileManagerService = FileManagerService()
     var rootURL: URL //URL для которого отображаем View
     var files: [URL] = [] //пустой массив URLов, в который мы потом записываем содержимое rootURL
     var viewTitle: String //заголовок rootURL
     
-    var isSorted = UserDefaults.standard.bool(forKey: "sort")
+    
     
     init(rootURL: URL, viewTitle: String) {
         self.rootURL = rootURL
@@ -32,7 +32,7 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
         fatalError("init(coder:) has not been implemented")
     }
     
-    let table: UITableView = {
+    let tableList: UITableView = {
         let table = UITableView.init(frame: .zero, style: .grouped)
         table.register(UITableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -52,14 +52,22 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) 
         cell.textLabel?.textColor = .black
-        cell.textLabel?.text = "\(self.files[indexPath.row].lastPathComponent)"
+        
         do {
             //Получаем тип файлов, и если он равен директории (папке) - ставим disclosureIndicator
             let fileType = try FileManager.default.attributesOfItem(atPath: "\(self.files[indexPath.row].path)")[FileAttributeKey.type]
+            let fileSize = try FileManager.default.attributesOfItem(atPath: "\(self.files[indexPath.row].path)")[FileAttributeKey.size] as? UInt64 ?? UInt64(0)
             if fileType as! FileAttributeType == FileAttributeType.typeDirectory{
                 cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.text = "\(self.files[indexPath.row].lastPathComponent)"
             } else {
                 cell.accessoryType = .none
+                let showSize = UserDefaults.standard.object(forKey: "size") as? Bool ?? true
+                if showSize == true {
+                    cell.textLabel?.text = "\(ByteCountFormatter.string(fromByteCount: Int64(fileSize), countStyle: .file)) \(self.files[indexPath.row].lastPathComponent)"
+                } else {
+                    cell.textLabel?.text = "\(self.files[indexPath.row].lastPathComponent)"
+                }
             }
         } catch {
             print(error.localizedDescription)
@@ -77,8 +85,9 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
                     return
                 }
                 // по клику на ячейку открываем View, передавая в качестве rootURL - URL выбранной ячейки
-                let view = ViewControllerFactory(rootURL: pathURL as URL, viewTitle: pathURL.lastPathComponent)
-                navigationController?.pushViewController(view, animated: true)
+//                let view = ViewControllerFactory(rootURL: pathURL as URL, viewTitle: pathURL.lastPathComponent)
+                navigationController?.pushViewController(ViewControllerFactory(rootURL: pathURL as URL, viewTitle: pathURL.lastPathComponent), animated: true)
+                
             } else {
                 print("Это не папка")
             }
@@ -93,20 +102,20 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
             let url = files[indexPath.row]
             files.remove(at: indexPath.row)
             fileManagerService.removeContent(currentDirectory: rootURL, toDelete: url)
-            table.deleteRows(at: [indexPath], with: .fade)
+            tableList.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
     func setupTable() {
-        view.addSubview(table)
-        table.dataSource = self
-        table.delegate = self
+        view.addSubview(tableList)
+        tableList.dataSource = self
+        tableList.delegate = self
         picker.delegate = self
         NSLayoutConstraint.activate([
-            table.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            table.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            table.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            table.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            tableList.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableList.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableList.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
@@ -114,19 +123,14 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.delegate = self
         let addDirectory = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"), style: .plain, target: self, action: #selector(createDirectory))
         let addFile = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createFile))
         navigationItem.rightBarButtonItems = [addFile, addDirectory]
-        self.title = viewTitle
         setupTable()
+        self.title = viewTitle
         currentDirectorySort()
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        currentDirectorySort()
-        self.table.reloadData()
+        
     }
     
     @objc func createDirectory() {
@@ -139,7 +143,6 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
             guard let textField = alert.textFields?[0].text else {return}
             fileManagerService.createDirectory(currentDirectory: rootURL, newDirectoryName: textField)
             currentDirectorySort()
-            self.table.reloadData()
         }))
         self.present(alert, animated: true, completion: nil)
         
@@ -148,14 +151,17 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
         present(picker, animated: true)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.imageURL] as! URL
-        self.dismiss(animated: true, completion: nil)
-        fileManagerService.createFile(currentDirectory: rootURL, newFile: image)
+        let imageURL = info[.imageURL] as! URL
+        let originalImage = info[.originalImage] as! UIImage
+        self.dismiss(animated: true) { [self] in
+        fileManagerService.createFile(currentDirectory: rootURL, newFile: imageURL, image: originalImage)
         currentDirectorySort()
-        self.table.reloadData()
+        }
+        
     }
     
     func currentDirectorySort() {
+        let isSorted = UserDefaults.standard.object(forKey: "sort") as? Bool ?? true
         if isSorted == true {
             files = fileManagerService.contentsOfDirectory(currentDirectory: rootURL).sorted(by: { (URL1: URL, URL2: URL) -> Bool in
                 return URL1.pathComponents.last! < URL2.pathComponents.last!
@@ -165,12 +171,11 @@ class ViewControllerFactory: UIViewController, UITableViewDataSource, UITableVie
                 return URL1.pathComponents.last! > URL2.pathComponents.last!
             })
         }
+        tableList.reloadData()
     }
-}
-
-extension ViewControllerFactory: ReloadDataDelegate {
-    func reload() {
-        viewWillAppear(true)
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        currentDirectorySort()
     }
 }
 

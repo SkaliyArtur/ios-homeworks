@@ -14,11 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        UserDefaults.standard.set(true, forKey: "sort")
         let passwordView = PasswordViewController(toUpdatePassword: false)
-        
-        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = passwordView
         window?.makeKeyAndVisible()

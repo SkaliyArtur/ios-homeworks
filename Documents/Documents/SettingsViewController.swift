@@ -47,17 +47,29 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath)
         cell.textLabel?.textColor = .black
         let switchView = UISwitch(frame: .zero)
-        switchView.setOn(true, animated: true)
-        switchView.tag = indexPath.row // for detect which row switch Changed
+        switchView.tag = indexPath.row
         switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
+        let isSorted = UserDefaults.standard.object(forKey: "sort") as? Bool ?? true
+        let showSize = UserDefaults.standard.object(forKey: "size") as? Bool ?? true
         switch indexPath.row {
         case 0:
             cell.accessoryView = switchView
-            cell.textLabel?.text = "Сортировка по алфавиту"
+            if isSorted == true {
+                cell.textLabel?.text = "Сортировка от А до Я"
+                switchView.setOn(true, animated: true)
+            } else {
+                cell.textLabel?.text = "Сортировка от Я до А"
+                switchView.setOn(false, animated: true)
+            }
             return cell
         case 1:
             cell.accessoryView = switchView
             cell.textLabel?.text = "Показывать размер фотографии"
+            if showSize == true {
+                switchView.setOn(true, animated: true)
+            } else {
+                switchView.setOn(false, animated: true)
+            }
             return cell
         default:
             cell.textLabel?.text = "Поменять пароль"
@@ -79,12 +91,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         case 0:
             sender.isOn ? UserDefaults.standard.set(true, forKey: "sort") : UserDefaults.standard.set(false, forKey: "sort")
         case 1:
-          print("table row switch Changed \(sender.tag)")
-          print("The switch is \(sender.isOn ? "ON" : "OFF")")
+            sender.isOn ? UserDefaults.standard.set(true, forKey: "size") : UserDefaults.standard.set(false, forKey: "size")
         default:
             print("print")
         }
-        delegate?.reload()
-        print("delegate: \(delegate)")
+        self.table.reloadData()
+        self.delegate?.currentDirectorySort()
     }
 }

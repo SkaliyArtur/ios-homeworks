@@ -169,7 +169,6 @@ class PasswordViewController: UIViewController {
         let setNC = UINavigationController(rootViewController: setVC)
         setNC.tabBarItem = UITabBarItem(title: "Настройки", image: UIImage(systemName: "gear"), tag: 2)
         setVC.delegate = docVC
-        print("delegate1: \(setVC.delegate)")
         tabBar.viewControllers = [docNC, setNC]
         view.window?.rootViewController = tabBar
         view.window?.makeKeyAndVisible()
