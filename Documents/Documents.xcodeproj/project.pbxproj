@@ -29,7 +29,7 @@
 		66AAAED828FB535F00A3D627 /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		66AAAEDB28FB6B2500A3D627 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		66EA587A2909C85C0044B8E7 /* PasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordViewController.swift; sourceTree = "<group>"; };
-		66EA587F2909D3D40044B8E7 /* PasswordKeychainSevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordKeychainSevice.swift; path = "/Users/skaliy/Desktop/iOS/ios-homeworks/Documents/Documents/PasswordKeychainSevice.swift"; sourceTree = "<absolute>"; };
+		66EA587F2909D3D40044B8E7 /* PasswordKeychainSevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordKeychainSevice.swift; sourceTree = "<group>"; };
 		66EA5887290B28C80044B8E7 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		66EA588B290DB59B0044B8E7 /* AlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
