@@ -14,16 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Функция получения URL корневой папки Documents
-        func getDocumentsURL() -> URL {
-            let documentsURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            let doucmentsURL = documentsURLs[0]
-            return doucmentsURL
-        }
-        // при запуске приложения по умолчанию открываем папку Documents
-        let navVC = UINavigationController(rootViewController: ViewControllerFactory(rootURL: getDocumentsURL(), viewTitle: getDocumentsURL().lastPathComponent))
+        let passwordView = PasswordViewController(toUpdatePassword: false)
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navVC
+        window?.rootViewController = passwordView
         window?.makeKeyAndVisible()
         return true
     }
