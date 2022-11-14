@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import UIKit
 
 protocol CheckerServiceProtocol {
     func checkCredentials(login: String, password: String)
