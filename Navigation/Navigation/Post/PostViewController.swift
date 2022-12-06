@@ -57,6 +57,21 @@ extension PostViewController: UITableViewDataSource {
         cell.post = coreDataService.getContext()[indexPath.row]
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, success) in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
+            cell.post = self.coreDataService.getContext()[indexPath.row]
+            print(cell.post)
+            self.coreDataService.deleteContext(profilePostModel: cell.post!)
+            tableView.reloadData()
+            success(true)
+        }
+        action.backgroundColor = .red
+        action.image = UIImage(systemName: "trash")
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 
 
 }

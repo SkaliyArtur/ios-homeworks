@@ -24,14 +24,16 @@ class CoreDataService {
     lazy var context: NSManagedObjectContext = self.persistentContainer.viewContext
     
     func saveContext(postModel: ProfilePostModel) {
-        
+        if checkPostExists(postModel: postModel) == true {
+            AlertErrorSample.shared.alert(alertTitle: "Дубль поста", alertMessage: "Такой пост уже сохранён")
+        } else {
+        persistentContainer.performBackgroundTask { context in
         let post = PostEntity(context: context)
         post.author = postModel.author
         post.postDescription = postModel.postDescription
         post.image = postModel.image
         post.likes = Int64(postModel.likes)
         post.views = Int64(postModel.views)
-        
             guard context.hasChanges else { return }
             do {
                 try context.save()
@@ -39,6 +41,30 @@ class CoreDataService {
                 print("Unresolved error \(error), \(error.userInfo)")
             }
         }
+        }
+    }
+    
+    func checkPostExists(postModel: ProfilePostModel) -> Bool {
+        let postFetch: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
+        postFetch.predicate = NSPredicate(format: "author == %@", postModel.author)
+        postFetch.predicate = NSPredicate(format: "postDescription == %@", postModel.postDescription)
+        postFetch.predicate = NSPredicate(format: "image == %@", postModel.image)
+        var isExist = false
+        do {
+            let results = try context.fetch(postFetch) as [NSManagedObject]
+            if results.count > 0 {
+                isExist = true
+            } else {
+                isExist = false
+            }
+           
+        } catch {
+            print("error \(error.localizedDescription)")
+        }
+         return isExist
+    }
+    
+    
     
     func getContext() -> [ProfilePostModel]{
         let postFetch: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
@@ -57,5 +83,19 @@ class CoreDataService {
             print("error \(error.localizedDescription)")
         }
         return savedPostsData
+    }
+    
+    func deleteContext(profilePostModel: ProfilePostModel) {
+        let postFetch: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
+        postFetch.predicate = NSPredicate(format: "author == %@", profilePostModel.author)
+        do {
+            let results = try context.fetch(postFetch) as [NSManagedObject]
+            for data in results {
+                context.delete(data)
+            }
+            try context.save()
+        } catch {
+            print("error \(error.localizedDescription)")
+        }
     }
 }
