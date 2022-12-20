@@ -144,6 +144,8 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         
+        loginTextField.text = "1@1.ru"
+        passwordTextField.text = "123456"
         
         view.backgroundColor = .white
         
