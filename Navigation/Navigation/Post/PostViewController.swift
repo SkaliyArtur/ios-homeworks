@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import CoreData
 
 
-class PostViewController: UIViewController, UITableViewDelegate, UINavigationControllerDelegate {
+class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResultsControllerDelegate, UINavigationControllerDelegate {
 
     let tableView = UITableView.init(frame: .zero, style: .grouped)
     let coreDataService = CoreDataService()
@@ -16,10 +17,24 @@ class PostViewController: UIViewController, UITableViewDelegate, UINavigationCon
     var isSorted = false
     var filteredAuthor: String? = nil
     
+    let fetchResultController: NSFetchedResultsController<PostEntity> = {
+        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.coreManager.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        return frc
+    }()
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        tableView.reloadData()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
         navigationController?.delegate = self
+        fetchResultController.delegate = self
+        try? fetchResultController.performFetch()
         setupTableView()
         self.title = "Saved Posts"
         self.view.backgroundColor = .green
@@ -30,14 +45,14 @@ class PostViewController: UIViewController, UITableViewDelegate, UINavigationCon
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(tap))
     }
     
-    func returnPosts() -> [ProfilePostModel] {
-        if isSorted == false {
-            savedPosts = coreDataService.getContext()
-        } else {
-            savedPosts = coreDataService.getContextByAuthor(author: filteredAuthor!)
-        }
-        return savedPosts
-    }
+//    func returnPosts() -> [ProfilePostModel] {
+//        if isSorted == false {
+//            savedPosts = coreDataService.getContext()
+//        } else {
+//            savedPosts = coreDataService.getContextByAuthor(author: filteredAuthor!)
+//        }
+//        return savedPosts
+//    }
     
     @objc func authorSearch() {
         let alert = UIAlertController(title: "Поиск по автору", message: nil, preferredStyle: .alert)
@@ -78,28 +93,38 @@ class PostViewController: UIViewController, UITableViewDelegate, UINavigationCon
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        tableView.reloadData()
+        try? fetchResultController.performFetch()
     }
     
 }
 
 extension PostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        returnPosts().count
+//        returnPosts().count
+        return fetchResultController.sections?[section].numberOfObjects ?? 0
         
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
-        cell.post = returnPosts()[indexPath.row]
+//        cell.post = returnPosts()[indexPath.row]
+        let post = fetchResultController.object(at: indexPath)
+        cell.authorLablel.text = post.author
+        cell.descriptionLablel.text = post.postDescription
+        cell.imageImageView.image = UIImage(named: post.image ?? "logo.png")
+        cell.likesLablel.text = "\(post.likes)"
+        cell.viewsLablel.text = "\(post.views)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, success) in
-            self.coreDataService.deleteContext(profilePostModel: self.returnPosts()[indexPath.row])
-            tableView.reloadData()
+//            self.coreDataService.deleteContext(profilePostModel: self.returnPosts()[indexPath.row])
+//            tableView.reloadData()
 //            self.tableView.deleteRows(at: [indexPath], with: .none)
+            let post = self.fetchResultController.object(at: indexPath)
+            CoreDataService.coreManager.persistentContainer.viewContext.delete(post)
+            try? CoreDataService.coreManager.persistentContainer.viewContext.save()
             success(true)
         }
         action.backgroundColor = .red

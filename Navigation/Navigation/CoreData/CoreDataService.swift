@@ -11,6 +11,9 @@ import CoreData
 
 class CoreDataService {
     
+    
+    static let coreManager = CoreDataService()
+    
     var persistentContainer: NSPersistentContainer = {
           let container = NSPersistentContainer(name: "PostModel")
           container.loadPersistentStores(completionHandler: { (storeDescription, error) in

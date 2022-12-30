@@ -6,12 +6,13 @@
 //
 
 import Foundation
-public struct ProfilePostModel {
+public struct ProfilePostModel: Codable {
     public var author: String
     public var postDescription: String
     public var image: String
     public var likes: Int
     public var views: Int
+    
     
     public static let posts = [
         ProfilePostModel(author: "stranger777", postDescription: "Terality — автоматически масштабируемая альтернатива Pandas", image: "d7536e0a95c1ba5ecc112c400256dc03.jpg", likes: 123, views: 333),
