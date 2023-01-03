@@ -17,12 +17,12 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
     var isSorted = false
     var filteredAuthor: String? = nil
     
-    let fetchResultController: NSFetchedResultsController<PostEntity> = {
-        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.coreManager.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        return frc
-    }()
+//    let fetchResultController: NSFetchedResultsController<PostEntity> = {
+//        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
+//        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataService.context, sectionNameKeyPath: nil, cacheName: nil)
+//        return frc
+//    }()
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         tableView.reloadData()
@@ -32,9 +32,10 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-        navigationController?.delegate = self
-        fetchResultController.delegate = self
-        try? fetchResultController.performFetch()
+        
+//        navigationController?.delegate = self
+        coreDataService.fetchResultController.delegate = self
+        try? coreDataService.fetchResultController.performFetch()
         setupTableView()
         self.title = "Saved Posts"
         self.view.backgroundColor = .green
@@ -92,23 +93,23 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
         self.present(infoVC, animated: true, completion: nil)
     }
     
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        try? fetchResultController.performFetch()
-    }
+//    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+//        try? fetchResultController.performFetch()
+//    }
     
 }
 
 extension PostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        returnPosts().count
-        return fetchResultController.sections?[section].numberOfObjects ?? 0
+        return coreDataService.fetchResultController.sections?[section].numberOfObjects ?? 0
         
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
 //        cell.post = returnPosts()[indexPath.row]
-        let post = fetchResultController.object(at: indexPath)
+        let post = coreDataService.fetchResultController.object(at: indexPath)
         cell.authorLablel.text = post.author
         cell.descriptionLablel.text = post.postDescription
         cell.imageImageView.image = UIImage(named: post.image ?? "logo.png")
@@ -122,7 +123,7 @@ extension PostViewController: UITableViewDataSource {
 //            self.coreDataService.deleteContext(profilePostModel: self.returnPosts()[indexPath.row])
 //            tableView.reloadData()
 //            self.tableView.deleteRows(at: [indexPath], with: .none)
-            let post = self.fetchResultController.object(at: indexPath)
+            let post = self.coreDataService.fetchResultController.object(at: indexPath)
             CoreDataService.coreManager.persistentContainer.viewContext.delete(post)
             try? CoreDataService.coreManager.persistentContainer.viewContext.save()
             success(true)
