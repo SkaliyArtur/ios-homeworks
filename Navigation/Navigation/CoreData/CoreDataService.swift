@@ -24,23 +24,23 @@ class CoreDataService {
           return container
       }()
     
-//    lazy var context.viewContext: NSManagedObjectContext = self.persistentContainer.viewContext
+    lazy var context: NSManagedObjectContext = persistentContainer.viewContext
     
     
     
     
-    let fetchResultController: NSFetchedResultsController<PostEntity> = {
-        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.coreManager.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        return frc
-    }()
+//    let fetchResultController: NSFetchedResultsController<PostEntity> = {
+//        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
+//        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.coreManager.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+//        return frc
+//    }()
     
     func saveContext(postModel: ProfilePostModel) {
         if checkPostExists(postModel: postModel) == true {
             AlertErrorSample.shared.alert(alertTitle: "Дубль поста", alertMessage: "Такой пост уже сохранён")
         } else {
-        persistentContainer.performBackgroundTask { context in
+//        persistentContainer.performBackgroundTask { context in
         let post = PostEntity(context: context)
         post.author = postModel.author
         post.postDescription = postModel.postDescription
@@ -53,7 +53,7 @@ class CoreDataService {
             } catch let error as NSError {
                 print("Unresolved error \(error), \(error.userInfo)")
             }
-        }
+//        }
         }
     }
     
