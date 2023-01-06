@@ -11,6 +11,9 @@ import CoreData
 
 class CoreDataService {
     
+    
+    static let coreManager = CoreDataService()
+    
     var persistentContainer: NSPersistentContainer = {
           let container = NSPersistentContainer(name: "PostModel")
           container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -21,13 +24,23 @@ class CoreDataService {
           return container
       }()
     
-    lazy var context: NSManagedObjectContext = self.persistentContainer.viewContext
+    lazy var context: NSManagedObjectContext = persistentContainer.viewContext
+    
+    
+    
+    
+//    let fetchResultController: NSFetchedResultsController<PostEntity> = {
+//        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
+//        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.coreManager.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+//        return frc
+//    }()
     
     func saveContext(postModel: ProfilePostModel) {
         if checkPostExists(postModel: postModel) == true {
             AlertErrorSample.shared.alert(alertTitle: "Дубль поста", alertMessage: "Такой пост уже сохранён")
         } else {
-        persistentContainer.performBackgroundTask { context in
+//        persistentContainer.performBackgroundTask { context in
         let post = PostEntity(context: context)
         post.author = postModel.author
         post.postDescription = postModel.postDescription
@@ -40,7 +53,7 @@ class CoreDataService {
             } catch let error as NSError {
                 print("Unresolved error \(error), \(error.userInfo)")
             }
-        }
+//        }
         }
     }
     
@@ -49,7 +62,7 @@ class CoreDataService {
         postFetch.predicate = NSPredicate(format: "author == %@ AND postDescription == %@ AND image == %@", postModel.author, postModel.postDescription, postModel.image)
         var isExist = false
         do {
-            let results = try context.fetch(postFetch) as [NSManagedObject]
+            let results = try persistentContainer.viewContext.fetch(postFetch) as [NSManagedObject]
             if results.count > 0 {
                 isExist = true
             } else {
@@ -67,7 +80,7 @@ class CoreDataService {
         let postFetch: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
         var savedPostsData: [ProfilePostModel] = []
         do {
-            let savedPosts = try context.fetch(postFetch)
+            let savedPosts = try persistentContainer.viewContext.fetch(postFetch)
             for data in savedPosts as [NSManagedObject] {
                 savedPostsData.append(.init(
                                             author: data.value(forKey: "author") as! String,
@@ -87,7 +100,7 @@ class CoreDataService {
         postFetch.predicate = NSPredicate(format: "author == %@", author)
         var savedPostsData: [ProfilePostModel] = []
         do {
-            let savedPosts = try context.fetch(postFetch)
+            let savedPosts = try persistentContainer.viewContext.fetch(postFetch)
             for data in savedPosts as [NSManagedObject] {
                 savedPostsData.append(.init(
                                             author: data.value(forKey: "author") as! String,
@@ -106,11 +119,11 @@ class CoreDataService {
         let postFetch: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
         postFetch.predicate = NSPredicate(format: "author == %@ AND postDescription == %@ AND image == %@", profilePostModel.author, profilePostModel.postDescription, profilePostModel.image)
         do {
-            let results = try context.fetch(postFetch) as [NSManagedObject]
+            let results = try persistentContainer.viewContext.fetch(postFetch) as [NSManagedObject]
             for data in results {
-                context.delete(data)
+                persistentContainer.viewContext.delete(data)
             }
-            try context.save()
+            try persistentContainer.viewContext.save()
         } catch {
             print("error \(error.localizedDescription)")
         }

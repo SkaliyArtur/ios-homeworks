@@ -214,6 +214,7 @@ extension ProfileViewController: UITableViewDataSource {
         guard let indexPath = tableView.indexPathForRow(at: sender.location(in: self.tableView)) else {return}
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
         cell.post = profileViewModel.postsData[indexPath.row]
+//        CoreDataService.coreManager.persistentContainer.viewContext.save()
         coreDataService.saveContext(
             postModel: .init(
                 author: profileViewModel.postsData[indexPath.row].author,
