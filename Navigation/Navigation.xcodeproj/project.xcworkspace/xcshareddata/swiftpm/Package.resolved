@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/firebase/firebase-ios-sdk.git",
         "state": {
           "branch": null,
-          "revision": "f0926478fda955aef0dfbf99263b5c24b2ca5db4",
-          "version": "10.1.0"
+          "revision": "dce2e1abc6c0d5e830ff1cffe3f8633fda64001e",
+          "version": "10.3.0"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/google/gtm-session-fetcher.git",
         "state": {
           "branch": null,
-          "revision": "5ccda3981422a84186387dbb763ba739178b529c",
-          "version": "2.3.0"
+          "revision": "96d7cc73a71ce950723aa3c50ce4fb275ae180b8",
+          "version": "3.1.0"
         }
       },
       {
@@ -107,6 +107,24 @@
           "branch": null,
           "revision": "3e4e743631e86c8c70dbc6efdc7beaa6e90fd3bb",
           "version": "2.1.1"
+        }
+      },
+      {
+        "package": "RealmDatabase",
+        "repositoryURL": "https://github.com/realm/realm-core",
+        "state": {
+          "branch": null,
+          "revision": "472d325a2e844fcb48c400db74e6b9646f92ca93",
+          "version": "11.15.0"
+        }
+      },
+      {
+        "package": "Realm",
+        "repositoryURL": "https://github.com/realm/realm-swift.git",
+        "state": {
+          "branch": null,
+          "revision": "41fe221e2209ad31bee35593513d957dc3e6e458",
+          "version": "10.25.2"
         }
       },
       {

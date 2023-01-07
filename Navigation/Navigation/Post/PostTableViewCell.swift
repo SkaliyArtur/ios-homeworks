@@ -16,7 +16,7 @@ class PostTableViewCell: UITableViewCell {
     var post: ProfilePostModel? {
         didSet {
             authorLablel.text = post?.author
-            descriptionLablel.text = post?.postDescription
+            descriptionLablel.text = post?.description
             imageImageView.image = UIImage(named: post?.image ?? "logo.png")
             likesLablel.text = "Likes: \(post?.likes ?? 0)"
             viewsLablel.text = "Views: \(post?.views ?? 0)"

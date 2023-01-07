@@ -7,6 +7,9 @@
 
 import UIKit
 import FirebaseAuth
+import Foundation
+import RealmSwift
+
 
 extension UIImage {
 
@@ -93,6 +96,7 @@ class LogInViewController: UIViewController {
     }()
     
     var loginDelegate: LoginViewControllerDelegate?
+    let realmModel = RealmLoginModel()
 
     func tap() {
         //Проверяем, что поля не пустые
@@ -102,6 +106,17 @@ class LogInViewController: UIViewController {
         }
         //Вызываем делегата на проверку валидности логина/пароль и если всё ок - открываем профиль
         if self.loginDelegate?.delegateCheck(login: login, password: pass) == true {
+            do {
+                let realm = try Realm()
+                realmModel.login = login
+                realmModel.password = pass
+                realmModel.isAuthorized = true
+                try realm.write() {
+                realm.add(realmModel)
+                }
+            } catch {
+                print("error: \(error.localizedDescription)")
+            }
             self.coordinator.startView()
         } else {
             return
@@ -144,8 +159,6 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        loginTextField.text = "1@1.ru"
-        passwordTextField.text = "123456"
         
         view.backgroundColor = .white
         
