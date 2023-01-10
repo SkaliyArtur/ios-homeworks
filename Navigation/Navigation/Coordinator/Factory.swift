@@ -34,7 +34,7 @@ class Factory {
             controller.loginDelegate = MyLoginFactory().makeLoginInspector()
             navigationController.tabBarItem = .init(title: "Profile", image: UIImage(systemName: "person"), tag: 0)
             do {
-                let realm = try Realm()
+                let realm = try Realm(configuration: Realm.Configuration(encryptionKey: EncryptionClass().getKey()))
                 let authData = Array(realm.objects(RealmLoginModel.self).filter("isAuthorized = true"))
                 if authData.count >= 1 {
                     profileCoordinator.startView()
@@ -42,7 +42,7 @@ class Factory {
                     navigationController.setViewControllers([controller], animated: true)
                 }
             } catch {
-                print("error: \(error.localizedDescription)")
+                print("Factory REALM error: \(error.localizedDescription)")
             }
             
         case .feed:

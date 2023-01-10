@@ -96,7 +96,11 @@ class LogInViewController: UIViewController {
     }()
     
     var loginDelegate: LoginViewControllerDelegate?
+    
+    
+    
     let realmModel = RealmLoginModel()
+    
 
     func tap() {
         //Проверяем, что поля не пустые
@@ -107,7 +111,7 @@ class LogInViewController: UIViewController {
         //Вызываем делегата на проверку валидности логина/пароль и если всё ок - открываем профиль
         if self.loginDelegate?.delegateCheck(login: login, password: pass) == true {
             do {
-                let realm = try Realm()
+                let realm = try Realm(configuration: Realm.Configuration(encryptionKey: EncryptionClass().getKey()))
                 realmModel.login = login
                 realmModel.password = pass
                 realmModel.isAuthorized = true
@@ -115,7 +119,7 @@ class LogInViewController: UIViewController {
                 realm.add(realmModel)
                 }
             } catch {
-                print("error: \(error.localizedDescription)")
+                print("REALM error: \(error.localizedDescription)")
             }
             self.coordinator.startView()
         } else {

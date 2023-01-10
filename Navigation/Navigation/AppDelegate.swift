@@ -17,6 +17,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        //Отчистить Keychain
+//        let secItemClasses = [kSecClassGenericPassword,
+//            kSecClassInternetPassword,
+//            kSecClassCertificate,
+//            kSecClassKey,
+//            kSecClassIdentity]
+//        for secItemClass in secItemClasses {
+//            let query: NSDictionary = [
+//                kSecClass as String: secItemClass,
+//                kSecAttrSynchronizable as String: kSecAttrSynchronizableAny
+//            ]
+//            SecItemDelete(query)
+//            print("Deleted: \(query)")
+//        }
+        
         
         func getDocumentsDirectory() -> URL {
                     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
