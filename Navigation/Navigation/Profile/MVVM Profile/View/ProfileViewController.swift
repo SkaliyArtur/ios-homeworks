@@ -7,14 +7,15 @@
 
 import UIKit
 //import StorageService
+import FirebaseAuth
 
 
 class ProfileViewController: UIViewController {
     
     let tableView = UITableView.init(frame: .zero, style: .grouped)
-    
     let profileViewModel: ProfileViewModel
     let photoCoordinator: PhotoCoordinator
+    let coreDataService = CoreDataService()
     
     init(photoCoordinator: PhotoCoordinator, profileViewModel: ProfileViewModel) {
         self.photoCoordinator = photoCoordinator
@@ -143,6 +144,14 @@ class ProfileViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        
+        //Если выходим с профиля - считаем что пользователь разлогинелся
+        do {
+            try Auth.auth().signOut()
+            CheckerService.shared.isSingIn = false
+        } catch {
+            print("Неизвестная ошибка")
+        }
     }
     
     func setupTableView() {
@@ -184,6 +193,9 @@ extension ProfileViewController: UITableViewDataSource {
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
             cell.post = profileViewModel.postsData[indexPath.row]
+            let tap = UITapGestureRecognizer(target: self, action: #selector(addPost))
+            tap.numberOfTapsRequired = 2
+            cell.addGestureRecognizer(tap)
             return cell
         }
         if indexPath.section == 1 {
@@ -196,6 +208,21 @@ extension ProfileViewController: UITableViewDataSource {
         if indexPath.section == 1 {
             photoCoordinator.startView()
         }
+    }
+    
+    @objc func addPost(_ sender: UITapGestureRecognizer) {
+        guard let indexPath = tableView.indexPathForRow(at: sender.location(in: self.tableView)) else {return}
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
+        cell.post = profileViewModel.postsData[indexPath.row]
+//        CoreDataService.coreManager.persistentContainer.viewContext.save()
+        coreDataService.saveContext(
+            postModel: .init(
+                author: profileViewModel.postsData[indexPath.row].author,
+                postDescription: profileViewModel.postsData[indexPath.row].postDescription,
+                image: profileViewModel.postsData[indexPath.row].image,
+                likes: profileViewModel.postsData[indexPath.row].likes,
+                views: profileViewModel.postsData[indexPath.row].views)
+        )
     }
 }
     

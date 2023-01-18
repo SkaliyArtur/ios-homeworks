@@ -9,19 +9,6 @@ import UIKit
 
 
 class FeedViewController: UIViewController {
-
-    let coordinator: FeedCoordinator
-    
-    init(coordinator: FeedCoordinator) {
-        self.coordinator = coordinator
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
     
     let postFeed: PostFeed = .init(title: "Hello world")
     

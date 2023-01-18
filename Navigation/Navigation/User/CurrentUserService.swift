@@ -7,13 +7,14 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
 
 class CurrentUserService: UserService {
     
-    let user: User = .init(userLogin: "Ivan", userFullName: "Ivanov Ivan Ivanovich", userAvatar: UIImage(named: "batmanAvatar.png")!, userStatus: "Best of the best", userPassword: "123")
+    let user: User = .init(userLogin: "Ivan", userFullName: "Batman", userAvatar: UIImage(named: "batmanAvatar.png")!, userStatus: "Best of the best", userPassword: "123")
     
     func getLogin(userLogin: String, userPassword: String) -> User? {
-        
+
         if userLogin == user.userLogin, userPassword == user.userPassword {
             return user
         }
