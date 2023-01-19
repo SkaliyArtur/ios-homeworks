@@ -42,6 +42,7 @@
 		66B00C8828C6AD9D00DF5CAB /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B00C8728C6AD9C00DF5CAB /* TestUserService.swift */; };
 		66B5B14529789A6E00BE2939 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 66B5B14429789A6E00BE2939 /* FirebaseAuth */; };
 		66B5B14829789B0C00BE2939 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 66B5B14729789B0C00BE2939 /* iOSIntPackage */; };
+		66B5B14B29789DD200BE2939 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B5B14A29789DD200BE2939 /* MapViewController.swift */; };
 		66BB0680292430C900F70A46 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BB067F292430C900F70A46 /* CoreDataService.swift */; };
 		66DF8966279DF7FB0030F19F /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF8965279DF7FB0030F19F /* PostTableViewCell.swift */; };
 		66DF8970279F26990030F19F /* PostFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DF896F279F26990030F19F /* PostFeed.swift */; };
@@ -100,6 +101,7 @@
 		66B00C7D28C67E8700DF5CAB /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		66B00C8328C67F4600DF5CAB /* CurrentUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
 		66B00C8728C6AD9C00DF5CAB /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
+		66B5B14A29789DD200BE2939 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		66BB067F292430C900F70A46 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		66DF8965279DF7FB0030F19F /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		66DF896F279F26990030F19F /* PostFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFeed.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		66948D0A26CC017D0080D3D6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				66B5B14929789D8100BE2939 /* Map */,
 				66103A7529242E5D00D04ECF /* CoreData */,
 				6605AB8228F0B4BF00EB89FA /* Network */,
 				667982FB28D3C7CC009F3207 /* Coordinator */,
@@ -245,6 +248,14 @@
 				66B00C8728C6AD9C00DF5CAB /* TestUserService.swift */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		66B5B14929789D8100BE2939 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				66B5B14A29789DD200BE2939 /* MapViewController.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		66E02EA328DB991800ECCD13 /* MVVM Profile */ = {
@@ -368,6 +379,7 @@
 				663965C227E28251001675D8 /* PhotosCollectionViewCell.swift in Sources */,
 				6679830B28D3CF70009F3207 /* TabBarController.swift in Sources */,
 				663965BF27E2813D001675D8 /* PhotosViewController.swift in Sources */,
+				66B5B14B29789DD200BE2939 /* MapViewController.swift in Sources */,
 				66103A7829242E6D00D04ECF /* PostModel.xcdatamodeld in Sources */,
 				66DF8966279DF7FB0030F19F /* PostTableViewCell.swift in Sources */,
 				66DF8970279F26990030F19F /* PostFeed.swift in Sources */,
