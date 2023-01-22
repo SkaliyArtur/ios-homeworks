@@ -13,6 +13,7 @@ class Factory {
         case profile
         case feed
         case postFeed
+        case map
     }
     
     let navigationController: UINavigationController
@@ -44,6 +45,12 @@ class Factory {
             let controller = PostViewController()
             navigationController.tabBarItem = .init(title: "Posts", image: UIImage(systemName: "star"), tag: 2)
             navigationController.setViewControllers([controller], animated: true)
+            
+        case .map:
+            let controller = MapViewController()
+            navigationController.tabBarItem = .init(title: "Map", image: UIImage(systemName: "map"), tag: 3)
+            navigationController.setViewControllers([controller], animated: true)
+            
         }
     }
 }
