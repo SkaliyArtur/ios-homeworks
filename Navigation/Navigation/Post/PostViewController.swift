@@ -115,7 +115,7 @@ extension PostViewController: UITableViewDataSource {
         cell.authorLablel.text = post.author
         cell.descriptionLablel.text = post.postDescription
         cell.imageImageView.image = UIImage(named: post.image ?? "logo.png")
-        cell.likesLablel.text = "Likes: \(post.likes)"
+        cell.likesLablel.text = String(format: "Likes".localized, post.likes)
         cell.viewsLablel.text = "Views: \(post.views)"
         return cell
     }
