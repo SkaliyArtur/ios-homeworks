@@ -54,7 +54,7 @@ class LogInViewController: UIViewController {
     }()
     let loginTextField: UITextField = {
         let login = UITextField()
-        login.placeholder = " Email or phone"
+        login.placeholder = NSLocalizedString(" Email or phone", comment: "")
         login.textColor = .black
         login.backgroundColor = .systemGray6
         login.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -68,7 +68,7 @@ class LogInViewController: UIViewController {
     }()
     let passwordTextField: UITextField = {
         let pass = UITextField()
-        pass.placeholder = " Password"
+        pass.placeholder = NSLocalizedString(" Password", comment: "")
         pass.textColor = .black
         pass.backgroundColor = .systemGray6
         pass.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -82,7 +82,7 @@ class LogInViewController: UIViewController {
     
     
     let loginButton: CustomButton = {
-        let loginButton = CustomButton(title: "Log in", titleColor: .white)
+        let loginButton = CustomButton(title: NSLocalizedString("Log in", comment: ""), titleColor: .white)
         let img1 = UIImage(named: "blue_pixel")!.alpha(1)
         let img2 = UIImage(named: "blue_pixel")!.alpha(0.8)
         loginButton.setBackgroundImage(img1, for: .normal)
@@ -97,7 +97,7 @@ class LogInViewController: UIViewController {
     func tap() {
         //Проверяем, что поля не пустые
         guard let login = self.loginTextField.text, let pass = self.passwordTextField.text, !login.isEmpty, !pass.isEmpty else {
-            AlertErrorSample.shared.alert(alertTitle: "Ошибка заполнение", alertMessage: "Поля email и пароль должны быть заполнены")
+            AlertErrorSample.shared.alert(alertTitle: NSLocalizedString("Fill error", comment: ""), alertMessage: NSLocalizedString("Email and password fields must be filled", comment: ""))
             return
         }
         //Вызываем делегата на проверку валидности логина/пароль и если всё ок - открываем профиль

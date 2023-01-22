@@ -37,7 +37,7 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
         fetchResultController.delegate = self
         try? fetchResultController.performFetch()
         setupTableView()
-        self.title = "Saved Posts"
+        self.title = "Posts".localized
         self.view.backgroundColor = .green
         tableView.backgroundColor = .green
         let authorFilterBtn = UIBarButtonItem(image: UIImage(systemName: "eye"), style: .plain, target: self, action: #selector(authorSearch))
@@ -56,12 +56,12 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
 //    }
     
     @objc func authorSearch() {
-        let alert = UIAlertController(title: "Поиск по автору", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Search by author".localized, message: nil, preferredStyle: .alert)
         alert.addTextField { (textField) in
-            textField.placeholder = "Имя автора"
+            textField.placeholder = "Author name".localized
         }
-        alert.addAction(UIAlertAction(title: "Отменить", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Применить", style: .default, handler: { [self] _ in
+        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel))
+        alert.addAction(UIAlertAction(title: "Apply".localized, style: .default, handler: { [self] _ in
             guard let textField = alert.textFields?[0].text else {return}
             filteredAuthor = textField
             isSorted = true
@@ -115,13 +115,13 @@ extension PostViewController: UITableViewDataSource {
         cell.authorLablel.text = post.author
         cell.descriptionLablel.text = post.postDescription
         cell.imageImageView.image = UIImage(named: post.image ?? "logo.png")
-        cell.likesLablel.text = "\(post.likes)"
-        cell.viewsLablel.text = "\(post.views)"
+        cell.likesLablel.text = "Likes: \(post.likes)"
+        cell.viewsLablel.text = "Views: \(post.views)"
         return cell
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, success) in
+        let action = UIContextualAction(style: .normal, title: "Delete".localized) { (action, view, success) in
 //            self.coreDataService.deleteContext(profilePostModel: self.returnPosts()[indexPath.row])
 //            tableView.reloadData()
 //            self.tableView.deleteRows(at: [indexPath], with: .none)

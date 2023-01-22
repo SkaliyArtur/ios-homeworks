@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by Artur Skaliy on 22.01.2023.
+  
+*/
+//NSLocalizedString("Feed", comment: "")
+"Profile" = "Профиль";
+"Feed" = "Лента";
+"Posts" = "Посты";
+"Map" = "Карта";
+"New Point" = "Новая точка";
+"Double post" = "Дубль поста";
+"Post already exists" = "Такой пост уже существует";
+"Photo Gallery" = "Фото Галерея";
+" Email or phone" = " Email или телефон";
+" Password" = "Пароль";
+"Log in" = "Войти";
+"Fill error" = "Ошибка заполнение";
+"Email and password fields must be filled" = "Поля email и пароль должны быть заполнены";
+"Registration error" = "Ошибка регистрации";
+"User not found" = "Пользователь не найден";
+"Do you want to create account?" = "Хотите создать аккаунт?";
+"No" = "Нет";
+"Yes" = "Да";
+"Log in error" = "Ошибка входа";
+"Account created" = "Аккаунт создан";
+"Account have been created!" = "Поздравляем! Ваш аккаунт успешно создан!";
+"Search by author" = "Поиск по автору";
+"Author name" = "Имя автора";
+"Cancel" = "Отменить";
+"Apply" = "Применить";
+"Delete" = "Удалить";
+"Photos" = "Фото";
+"Error" = "Ошибка";
+"Long name" = "Cлишком длинное имя";
+"Name is empty" = "Имя отсутствует";
+"Waiting for status" = "Введите статус";
+"Set Status" = "Установить статус";
+"Hello world" = "Привет мир";
+"Check" = "Проверить";
+
+
+
+

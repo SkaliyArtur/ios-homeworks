@@ -21,9 +21,9 @@ class ProfileViewModel {
         do {
             try profileHeaderView.setHeaderUser(userAvatar: currentUser.userAvatar, userFullName: currentUser.userFullName, userStatus: currentUser.userStatus)
         } catch FullNameError.longName {
-            AlertErrorSample.shared.alert(alertTitle: "Ошибка", alertMessage: "Cлишком длинное имя")
+            AlertErrorSample.shared.alert(alertTitle: "Error".localized, alertMessage: "Long name".localized)
         } catch FullNameError.noName {
-            AlertErrorSample.shared.alert(alertTitle: "Ошибка", alertMessage: "Имя отсутствует")
+            AlertErrorSample.shared.alert(alertTitle: "Error".localized, alertMessage: "Name is empty".localized)
         } catch {
             print("Не известная ошибка")
         }
