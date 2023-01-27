@@ -123,7 +123,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         #if DEBUG
         view.backgroundColor = .red
         #endif

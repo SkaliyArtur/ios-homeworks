@@ -12,7 +12,7 @@ class PhotosTableViewCell: UITableViewCell {
     
     let photosLabel: UILabel = {
         var label = UILabel()
-        label.textColor = .black
+        label.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         label.text = "Photos".localized
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -23,7 +23,7 @@ class PhotosTableViewCell: UITableViewCell {
        let icon = UIImageView()
         icon.image = UIImage(systemName: "arrow.right")
         icon.translatesAutoresizingMaskIntoConstraints = false
-        icon.tintColor = .black
+        icon.tintColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         return icon
     }()
     
