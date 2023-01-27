@@ -13,7 +13,7 @@ class PhotosTableViewCell: UITableViewCell {
     let photosLabel: UILabel = {
         var label = UILabel()
         label.textColor = .black
-        label.text = "Photos"
+        label.text = "Photos".localized
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

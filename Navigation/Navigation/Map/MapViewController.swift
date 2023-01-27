@@ -52,7 +52,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             let pointCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
             let pointAnnotation = MKPointAnnotation()
             pointAnnotation.coordinate = pointCoordinate
-            pointAnnotation.title = "New Point"
+            pointAnnotation.title = NSLocalizedString("New Point", comment: "")
             mapView.addAnnotation(pointAnnotation)
         }
         if longGesture.state != UIGestureRecognizer.State.began {

@@ -38,7 +38,7 @@ class CoreDataService {
     
     func saveContext(postModel: ProfilePostModel) {
         if checkPostExists(postModel: postModel) == true {
-            AlertErrorSample.shared.alert(alertTitle: "Дубль поста", alertMessage: "Такой пост уже сохранён")
+            AlertErrorSample.shared.alert(alertTitle: NSLocalizedString("Double post", comment: ""), alertMessage: NSLocalizedString("Post already exists", comment: ""))
         } else {
 //        persistentContainer.performBackgroundTask { context in
         let post = PostEntity(context: context)

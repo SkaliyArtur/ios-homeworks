@@ -20,7 +20,7 @@ class PhotoCoordinator {
     func startView() {
         
         let photoViewController = PhotosViewController()
-        photoViewController.title = "Photo Gallery"
+        photoViewController.title = NSLocalizedString("Photo Gallery", comment: "")
         navigationController.pushViewController(photoViewController, animated: true)
     }
 }

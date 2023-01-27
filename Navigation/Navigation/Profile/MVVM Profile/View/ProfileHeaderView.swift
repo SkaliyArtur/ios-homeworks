@@ -50,7 +50,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     let statusTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Waiting for status"
+        textField.placeholder = "Waiting for status".localized
         textField.textColor = .black
         textField.backgroundColor = .white
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -63,7 +63,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     //Задание 6: применил кастомную кнопку, сократил 4 строк кода ниже
     let setStatusButton: CustomButton = {
-        let statusButton = CustomButton(title: "Set Status", titleColor: .white)
+        let statusButton = CustomButton(title: "Set Status".localized, titleColor: .white)
 //        statusButton.setTitle("Set status", for: .normal)
         statusButton.backgroundColor = .systemBlue
 //        statusButton.layer.cornerRadius = 4

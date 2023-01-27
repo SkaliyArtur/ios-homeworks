@@ -78,7 +78,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.title = "Photo Gallery"
+        self.title = "Photo Gallery".localized
         carsPhoto = CarsData.carsPhotos
         setupCollectionView()
         

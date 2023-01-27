@@ -128,7 +128,7 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .red
         #endif
         
-        self.title = "Profile"
+        self.title = "Profile".localized
         view.addSubview(tableView)
         profileViewModel.setUser()
         profileViewModel.setPosts()
