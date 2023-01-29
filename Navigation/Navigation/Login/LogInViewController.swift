@@ -55,8 +55,8 @@ class LogInViewController: UIViewController {
     let loginTextField: UITextField = {
         let login = UITextField()
         login.placeholder = NSLocalizedString(" Email or phone", comment: "")
-        login.textColor = .black
-        login.backgroundColor = .systemGray6
+        login.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
+        login.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         login.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         login.autocapitalizationType = .none
         login.layer.borderWidth = 0.5
@@ -69,8 +69,8 @@ class LogInViewController: UIViewController {
     let passwordTextField: UITextField = {
         let pass = UITextField()
         pass.placeholder = NSLocalizedString(" Password", comment: "")
-        pass.textColor = .black
-        pass.backgroundColor = .systemGray6
+        pass.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
+        pass.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         pass.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         pass.autocapitalizationType = .none
         pass.isSecureTextEntry = true
@@ -111,7 +111,7 @@ class LogInViewController: UIViewController {
     let loginScrollView: UIScrollView = {
     let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         return scrollView
     }()
     
@@ -147,7 +147,7 @@ class LogInViewController: UIViewController {
         loginTextField.text = "1@1.ru"
         passwordTextField.text = "123456"
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         
         view.addSubview(loginScrollView)
 

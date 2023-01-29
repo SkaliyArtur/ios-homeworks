@@ -38,8 +38,8 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
         try? fetchResultController.performFetch()
         setupTableView()
         self.title = "Posts".localized
-        self.view.backgroundColor = .green
-        tableView.backgroundColor = .green
+        self.view.backgroundColor = UIColor.createColor(lightMode: .green, darkMode: .black)
+        tableView.backgroundColor = UIColor.createColor(lightMode: .green, darkMode: .black)
         let authorFilterBtn = UIBarButtonItem(image: UIImage(systemName: "eye"), style: .plain, target: self, action: #selector(authorSearch))
         let clearFilterBtn = UIBarButtonItem(image: UIImage(systemName: "eye.slash"), style: .plain, target: self, action: #selector(clearFilter))
         navigationItem.leftBarButtonItems = [authorFilterBtn, clearFilterBtn]

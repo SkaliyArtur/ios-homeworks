@@ -40,7 +40,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
         collection.dataSource = self
         collection.delegate = self
         collection.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PhotosCollectionViewCell.self))
-        collection.backgroundColor = .white
+        collection.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         return collection
     }()
     
@@ -77,7 +77,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         self.title = "Photo Gallery".localized
         carsPhoto = CarsData.carsPhotos
         setupCollectionView()
