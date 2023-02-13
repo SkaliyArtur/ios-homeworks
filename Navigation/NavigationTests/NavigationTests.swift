@@ -10,24 +10,37 @@ import XCTest
 
 class NavigationTests: XCTestCase {
     
-    var checkerService: LoginInspector?
-    var checkerService2: CheckerService?
+    lazy var checkerService: LoginInspector = {
+       return LoginInspector()
+    }()
 
+//    override init(checkerService: LoginInspector) {
+//        self.checkerService = checkerService
+//    }
+//
+//      required init?(coder aDecoder: NSCoder) {
+//          fatalError("init(coder:) has not been implemented")
+//      }
+
+    
     func testVladitaion() {
     
         let login = "1@1.ru"
         let password = "123456"
         
-        guard let result = checkerService?.delegateCheck(login: login, password: password) else {return}
+//        let expect = expectation(description: "test")
+       
 //        var result: Bool {
-////            guard let result = checkerService?.delegateCheck(login: login, password: password) else {return true}
-//            guard let result = checkerService2?.checkCredentials(login: login, password: password) else {return false}
-//            guard let sign = checkerService2?.isSingIn else {return false}
-//            expectationn.fulfill()
-//            return sign
+           
+            let result = checkerService.delegateCheck(login: login, password: password)
+//            waitForExpectations(timeout: 5)
+//            expect.fulfill()
+//            return result
+            
 //        }
-////        waitForExpectations(timeout: 30)
-//        XCTAssertEqual(result, true)
+        
+        
+        XCTAssertEqual(result, true)
     }
     
 //    func testVladitaion2() {

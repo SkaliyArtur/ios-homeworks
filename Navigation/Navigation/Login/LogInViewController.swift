@@ -93,6 +93,8 @@ class LogInViewController: UIViewController {
     }()
     
     var loginDelegate: LoginViewControllerDelegate?
+    
+    var checkerService: CheckerService?
 
     func tap() {
         //Проверяем, что поля не пустые
@@ -101,6 +103,21 @@ class LogInViewController: UIViewController {
             return
         }
         //Вызываем делегата на проверку валидности логина/пароль и если всё ок - открываем профиль
+//        self.checkerService?.checkCredentials(login: login, password: pass) {
+//            if checkerService?.isSingIn == true {
+//                self.coordinator.startView()
+//            } else {
+//                print("ERRROR")
+//            }
+//        }
+        
+//        self.loginDelegate?.delegateCheck(login: login, password: pass) {
+//            if CheckerService.shared.isSingIn == true {
+//                self.coordinator.startView()
+//            } else {
+//                return
+//            }
+//        }
         if self.loginDelegate?.delegateCheck(login: login, password: pass) == true {
             self.coordinator.startView()
         } else {
