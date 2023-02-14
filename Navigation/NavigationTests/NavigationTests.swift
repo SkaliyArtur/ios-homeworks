@@ -33,7 +33,6 @@ class NavigationTests: XCTestCase {
             result = true
             XCTAssertEqual(result, true)
          }
-         }
         }
         checkerService.checkCredentials(login: login, password: password, using: myCompletionHandler)
     }
