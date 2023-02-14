@@ -10,8 +10,8 @@ import XCTest
 
 class NavigationTests: XCTestCase {
     
-    lazy var checkerService: LoginInspector = {
-       return LoginInspector()
+    lazy var checkerService: CheckerService = {
+       return CheckerService()
     }()
 
 //    override init(checkerService: LoginInspector) {
@@ -25,23 +25,28 @@ class NavigationTests: XCTestCase {
     
     func testVladitaion() {
     
-        let login = "1@1.ru"
+        let login = "1222@1.ru"
         let password = "123456"
-        
+        var result = false
+        let myCompletionHandler: (Bool) -> Void = { doneWorking in
+         if doneWorking {
+            result = true
+            XCTAssertEqual(result, true)
+         }
+         }
+        }
+        checkerService.checkCredentials(login: login, password: password, using: myCompletionHandler)
+    }
+}
 //        let expect = expectation(description: "test")
        
 //        var result: Bool {
-           
-            let result = checkerService.delegateCheck(login: login, password: password)
+  
 //            waitForExpectations(timeout: 5)
 //            expect.fulfill()
 //            return result
             
 //        }
-        
-        
-        XCTAssertEqual(result, true)
-    }
     
 //    func testVladitaion2() {
 //
@@ -58,4 +63,3 @@ class NavigationTests: XCTestCase {
 //        XCTAssertEqual(result, false)
 //    }
 
-}

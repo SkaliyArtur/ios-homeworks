@@ -103,13 +103,17 @@ class LogInViewController: UIViewController {
             return
         }
         //Вызываем делегата на проверку валидности логина/пароль и если всё ок - открываем профиль
-//        self.checkerService?.checkCredentials(login: login, password: pass) {
-//            if checkerService?.isSingIn == true {
-//                self.coordinator.startView()
-//            } else {
-//                print("ERRROR")
-//            }
-//        }
+       let myCompletionHandler: (Bool) -> Void = { doneWorking in
+        if doneWorking {
+            self.coordinator.startView()
+        } else {
+            print("LOG IN ERROR")
+        }
+          
+      }
+      
+      //Вызываем проверку
+        CheckerService.shared.checkCredentials(login: login, password: pass, using: myCompletionHandler)
         
 //        self.loginDelegate?.delegateCheck(login: login, password: pass) {
 //            if CheckerService.shared.isSingIn == true {
@@ -118,11 +122,16 @@ class LogInViewController: UIViewController {
 //                return
 //            }
 //        }
-        if self.loginDelegate?.delegateCheck(login: login, password: pass) == true {
-            self.coordinator.startView()
-        } else {
-            return
-        }
+        
+//        if self.loginDelegate?.delegateCheck(login: login, password: pass) == true {
+//            self.coordinator.startView()
+//        } else {
+//            return
+//        }
+        
+        
+        
+        
 }
     
     let loginScrollView: UIScrollView = {
