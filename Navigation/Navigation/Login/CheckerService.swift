@@ -10,7 +10,7 @@ import FirebaseAuth
 import UIKit
 
 protocol CheckerServiceProtocol {
-    func checkCredentials(login: String, password: String)
+    func checkCredentials(login: String, password: String, using complition: @escaping (Bool)->())
     func signUp(login: String, password: String)
 }
 
@@ -21,10 +21,12 @@ class CheckerService: CheckerServiceProtocol {
     //Признак успешного логина
     var isSingIn: Bool = false
     
-    func checkCredentials(login: String, password: String) {
+    
+    func checkCredentials(login: String, password: String, using completionHandler: @escaping (Bool)->()) {
         Auth.auth().signIn(withEmail: login, password: password) { [self] result, error in
             if let error = error {
                 print("error: \(error)")
+                completionHandler(false)
                 let err = error as NSError
                 switch err.code {
                 //Если ошибка, что пользователь не найден - предлагаем создать
@@ -40,6 +42,7 @@ class CheckerService: CheckerServiceProtocol {
             } else {
                 //Если логин пароль валидны - меня признак логина
                 isSingIn = true
+                completionHandler(true)
             }
         }
     }

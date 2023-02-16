@@ -92,7 +92,7 @@ class LogInViewController: UIViewController {
         return loginButton
     }()
     
-    var loginDelegate: LoginViewControllerDelegate?
+    var checkerService: CheckerServiceProtocol?
 
     func tap() {
         //Проверяем, что поля не пустые
@@ -100,11 +100,14 @@ class LogInViewController: UIViewController {
             AlertErrorSample.shared.alert(alertTitle: NSLocalizedString("Fill error", comment: ""), alertMessage: NSLocalizedString("Email and password fields must be filled", comment: ""))
             return
         }
-        //Вызываем делегата на проверку валидности логина/пароль и если всё ок - открываем профиль
-        if self.loginDelegate?.delegateCheck(login: login, password: pass) == true {
-            self.coordinator.startView()
-        } else {
-            return
+        
+    //Вызываем проверку
+        checkerService?.checkCredentials(login: login, password: pass) { doneWorking in
+            if doneWorking {
+                self.coordinator.startView()
+            } else {
+                print("LOG IN ERROR")
+            }
         }
 }
     
