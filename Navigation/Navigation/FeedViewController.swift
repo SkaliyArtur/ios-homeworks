@@ -19,6 +19,7 @@ class FeedViewController: UIViewController {
         stackView.spacing = 10
         return stackView
     }()
+    
     let button1: UIButton = {
         let btn1 = UIButton()
         btn1.setTitle("btn 1", for: .normal)
