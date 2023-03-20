@@ -34,7 +34,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     let fullNameLabel: UILabel = {
         let nameLabel = UILabel()
 //        nameLabel.text = "Mr. Crabs"
-        nameLabel.textColor = .black
+        nameLabel.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         nameLabel.textAlignment = NSTextAlignment.center
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -43,16 +43,16 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     let statusLabel: UILabel = {
         let statusLabel = UILabel()
 //        statusLabel.text = "empty"
-        statusLabel.textColor = .gray
+        statusLabel.textColor = UIColor.createColor(lightMode: .gray, darkMode: .white)
         statusLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         return statusLabel
     }()
     let statusTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Waiting for status"
-        textField.textColor = .black
-        textField.backgroundColor = .white
+        textField.placeholder = " Waiting for status".localized
+        textField.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
+        textField.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .systemGray4)
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         textField.layer.cornerRadius = 12
         textField.layer.borderWidth = 1
@@ -63,7 +63,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     //Задание 6: применил кастомную кнопку, сократил 4 строк кода ниже
     let setStatusButton: CustomButton = {
-        let statusButton = CustomButton(title: "Set Status", titleColor: .white)
+        let statusButton = CustomButton(title: "Set Status".localized, titleColor: .white)
 //        statusButton.setTitle("Set status", for: .normal)
         statusButton.backgroundColor = .systemBlue
 //        statusButton.layer.cornerRadius = 4

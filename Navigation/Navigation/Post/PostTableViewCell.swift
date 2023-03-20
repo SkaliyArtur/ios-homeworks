@@ -18,7 +18,8 @@ class PostTableViewCell: UITableViewCell {
             authorLablel.text = post?.author
             descriptionLablel.text = post?.postDescription
             imageImageView.image = UIImage(named: post?.image ?? "logo.png")
-            likesLablel.text = "Likes: \(post?.likes ?? 0)"
+            likesLablel.text = String(format: "Likes".localized, post?.likes ?? 0)
+//            likesLablel.text = "Likes".localized + "\(post?.likes ?? 0)"
             viewsLablel.text = "Views: \(post?.views ?? 0)"
 
         }
@@ -26,7 +27,7 @@ class PostTableViewCell: UITableViewCell {
     
     let authorLablel: UILabel = {
         var authLabel = UILabel()
-        authLabel.textColor = .black
+        authLabel.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         authLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         authLabel.numberOfLines = 2
         authLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -45,14 +46,14 @@ class PostTableViewCell: UITableViewCell {
     let imageImageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
-        image.backgroundColor = .black
+        image.backgroundColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
     let likesLablel: UILabel = {
         var likeLabel = UILabel()
-        likeLabel.textColor = .black
+        likeLabel.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         likeLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         likeLabel.translatesAutoresizingMaskIntoConstraints = false
         return likeLabel
@@ -60,7 +61,7 @@ class PostTableViewCell: UITableViewCell {
     
     let viewsLablel: UILabel = {
         var viewLabel = UILabel()
-        viewLabel.textColor = .black
+        viewLabel.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
         viewLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         viewLabel.translatesAutoresizingMaskIntoConstraints = false
         return viewLabel

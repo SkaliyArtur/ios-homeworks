@@ -54,9 +54,9 @@ class LogInViewController: UIViewController {
     }()
     let loginTextField: UITextField = {
         let login = UITextField()
-        login.placeholder = " Email or phone"
-        login.textColor = .black
-        login.backgroundColor = .systemGray6
+        login.placeholder = NSLocalizedString(" Email or phone", comment: "")
+        login.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
+        login.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         login.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         login.autocapitalizationType = .none
         login.layer.borderWidth = 0.5
@@ -68,9 +68,9 @@ class LogInViewController: UIViewController {
     }()
     let passwordTextField: UITextField = {
         let pass = UITextField()
-        pass.placeholder = " Password"
-        pass.textColor = .black
-        pass.backgroundColor = .systemGray6
+        pass.placeholder = NSLocalizedString(" Password", comment: "")
+        pass.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
+        pass.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
         pass.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         pass.autocapitalizationType = .none
         pass.isSecureTextEntry = true
@@ -82,7 +82,7 @@ class LogInViewController: UIViewController {
     
     
     let loginButton: CustomButton = {
-        let loginButton = CustomButton(title: "Log in", titleColor: .white)
+        let loginButton = CustomButton(title: NSLocalizedString("Log in", comment: ""), titleColor: .white)
         let img1 = UIImage(named: "blue_pixel")!.alpha(1)
         let img2 = UIImage(named: "blue_pixel")!.alpha(0.8)
         loginButton.setBackgroundImage(img1, for: .normal)
@@ -92,26 +92,48 @@ class LogInViewController: UIViewController {
         return loginButton
     }()
     
-    var loginDelegate: LoginViewControllerDelegate?
+    let faceIdButton: UIButton = {
+        let faceIdButton = UIButton()
+        faceIdButton.translatesAutoresizingMaskIntoConstraints = false
+        faceIdButton.addTarget(self, action: #selector(faceIdButtonTap), for: .touchUpInside)
+        return faceIdButton
+    }()
+    
+    var checkerService: CheckerServiceProtocol?
+    var localAuthService: LocalAuthorizationService?
+    
+    @objc func faceIdButtonTap() {
+        localAuthService?.authorizeIfPossible() { doneWorking in
+            if doneWorking {
+                self.coordinator.startView()
+            } else {
+                print("LOG IN ERROR")
+            }
+            
+        }
+    }
 
     func tap() {
         //Проверяем, что поля не пустые
         guard let login = self.loginTextField.text, let pass = self.passwordTextField.text, !login.isEmpty, !pass.isEmpty else {
-            AlertErrorSample.shared.alert(alertTitle: "Ошибка заполнение", alertMessage: "Поля email и пароль должны быть заполнены")
+            AlertErrorSample.shared.alert(alertTitle: NSLocalizedString("Fill error", comment: ""), alertMessage: NSLocalizedString("Email and password fields must be filled", comment: ""))
             return
         }
-        //Вызываем делегата на проверку валидности логина/пароль и если всё ок - открываем профиль
-        if self.loginDelegate?.delegateCheck(login: login, password: pass) == true {
-            self.coordinator.startView()
-        } else {
-            return
+        
+    //Вызываем проверку
+        checkerService?.checkCredentials(login: login, password: pass) { doneWorking in
+            if doneWorking {
+                self.coordinator.startView()
+            } else {
+                
+            }
         }
 }
     
     let loginScrollView: UIScrollView = {
     let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         return scrollView
     }()
     
@@ -147,7 +169,7 @@ class LogInViewController: UIViewController {
         loginTextField.text = "1@1.ru"
         passwordTextField.text = "123456"
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         
         view.addSubview(loginScrollView)
 
@@ -155,6 +177,8 @@ class LogInViewController: UIViewController {
             guard let self = self else { return }
             self.tap()
         }
+        
+       
 
         
         NSLayoutConstraint.activate([
@@ -190,11 +214,36 @@ class LogInViewController: UIViewController {
         authorizationWindow.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         
         contentView.addSubview(loginButton)
+        
+        
+        
+        switch localAuthService?.checkBiometryType() {
+        case .face:
+            faceIdButton.setBackgroundImage(UIImage(systemName: "faceid"), for: .normal)
+            buttonSetup()
+        case .touch:
+            faceIdButton.setBackgroundImage(UIImage(systemName: "touchid"), for: .normal)
+            buttonSetup()
+        default:
+            loginButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
+            loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            loginButton.leadingAnchor.constraint(equalTo: authorizationWindow.leadingAnchor).isActive = true
+            loginButton.trailingAnchor.constraint(equalTo: authorizationWindow.trailingAnchor).isActive = true
+            loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        }
+        
+        }
+    func buttonSetup() {
+        contentView.addSubview(faceIdButton)
         loginButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: authorizationWindow.leadingAnchor).isActive = true
-        loginButton.rightAnchor.constraint(equalTo: authorizationWindow.rightAnchor).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: faceIdButton.leadingAnchor, constant: -10).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-            
-        }
+        faceIdButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
+        faceIdButton.widthAnchor.constraint(equalToConstant: 55).isActive = true
+        faceIdButton.trailingAnchor.constraint(equalTo: authorizationWindow.trailingAnchor).isActive = true
+        faceIdButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
+    }
     }

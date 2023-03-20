@@ -10,7 +10,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    let postFeed: PostFeed = .init(title: "Hello world")
+    let postFeed: PostFeed = .init(title: "Hello world".localized)
     
     let newStackView: UIStackView = {
         let stackView = UIStackView()
@@ -19,6 +19,7 @@ class FeedViewController: UIViewController {
         stackView.spacing = 10
         return stackView
     }()
+    
     let button1: UIButton = {
         let btn1 = UIButton()
         btn1.setTitle("btn 1", for: .normal)
@@ -40,7 +41,7 @@ class FeedViewController: UIViewController {
     //Задача 6.2: добавил элементы текстфилд, кнопку, лейбел
     let textField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "пароль"
+        textField.placeholder = " Password".localized
         textField.textColor = .black
         textField.backgroundColor = .white
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +49,7 @@ class FeedViewController: UIViewController {
     }()
     
     let checkGuessButton: CustomButton = {
-        let button = CustomButton(title: "проверить", titleColor: .black)
+        let button = CustomButton(title: "Check".localized, titleColor: .black)
         button.backgroundColor = .systemGray2
         return button
     }()
@@ -79,7 +80,7 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Feed"
+        self.title = "Feed".localized
         self.view.backgroundColor = .blue
         view.addSubview(newStackView)
         view.addSubview(textField)
