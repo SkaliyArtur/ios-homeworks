@@ -92,7 +92,26 @@ class LogInViewController: UIViewController {
         return loginButton
     }()
     
+    let faceIdButton: UIButton = {
+        let faceIdButton = UIButton()
+        faceIdButton.translatesAutoresizingMaskIntoConstraints = false
+        faceIdButton.addTarget(self, action: #selector(faceIdButtonTap), for: .touchUpInside)
+        return faceIdButton
+    }()
+    
     var checkerService: CheckerServiceProtocol?
+    var localAuthService: LocalAuthorizationService?
+    
+    @objc func faceIdButtonTap() {
+        localAuthService?.authorizeIfPossible() { doneWorking in
+            if doneWorking {
+                self.coordinator.startView()
+            } else {
+                print("LOG IN ERROR")
+            }
+            
+        }
+    }
 
     func tap() {
         //Проверяем, что поля не пустые
@@ -106,7 +125,7 @@ class LogInViewController: UIViewController {
             if doneWorking {
                 self.coordinator.startView()
             } else {
-                print("LOG IN ERROR")
+                
             }
         }
 }
@@ -158,6 +177,8 @@ class LogInViewController: UIViewController {
             guard let self = self else { return }
             self.tap()
         }
+        
+       
 
         
         NSLayoutConstraint.activate([
@@ -193,11 +214,36 @@ class LogInViewController: UIViewController {
         authorizationWindow.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
         
         contentView.addSubview(loginButton)
+        
+        
+        
+        switch localAuthService?.checkBiometryType() {
+        case .face:
+            faceIdButton.setBackgroundImage(UIImage(systemName: "faceid"), for: .normal)
+            buttonSetup()
+        case .touch:
+            faceIdButton.setBackgroundImage(UIImage(systemName: "touchid"), for: .normal)
+            buttonSetup()
+        default:
+            loginButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
+            loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            loginButton.leadingAnchor.constraint(equalTo: authorizationWindow.leadingAnchor).isActive = true
+            loginButton.trailingAnchor.constraint(equalTo: authorizationWindow.trailingAnchor).isActive = true
+            loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        }
+        
+        }
+    func buttonSetup() {
+        contentView.addSubview(faceIdButton)
         loginButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: authorizationWindow.leadingAnchor).isActive = true
-        loginButton.rightAnchor.constraint(equalTo: authorizationWindow.rightAnchor).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: faceIdButton.leadingAnchor, constant: -10).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-            
-        }
+        faceIdButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
+        faceIdButton.widthAnchor.constraint(equalToConstant: 55).isActive = true
+        faceIdButton.trailingAnchor.constraint(equalTo: authorizationWindow.trailingAnchor).isActive = true
+        faceIdButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
+    }
     }
