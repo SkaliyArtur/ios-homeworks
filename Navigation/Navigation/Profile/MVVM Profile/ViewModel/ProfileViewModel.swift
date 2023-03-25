@@ -29,8 +29,8 @@ class ProfileViewModel {
         }
     }
     
-    func setPosts() {
-        postsData = ProfilePostModel.posts
-    }
+//    func setPosts() {
+//        postsData = ProfilePostModel.posts
+//    }
 }
 

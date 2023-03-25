@@ -43,6 +43,7 @@ class CheckerService: CheckerServiceProtocol {
                 //Если логин пароль валидны - меня признак логина
                 isSingIn = true
                 completionHandler(true)
+                currentUserData(login: login, password: password)
             }
         }
     }
@@ -56,6 +57,13 @@ class CheckerService: CheckerServiceProtocol {
                     AlertErrorSample.shared.alert(alertTitle: "Account created".localized, alertMessage: "Account have been created!".localized)
                 }
             }
+    }
+    
+    func currentUserData(login: String, password: String){
+        let user = Auth.auth().currentUser
+        let email = user?.email
+        let displayName = user?.displayName
+        print("USER EMAIL: \(email), \(displayName)")
     }
 }
 

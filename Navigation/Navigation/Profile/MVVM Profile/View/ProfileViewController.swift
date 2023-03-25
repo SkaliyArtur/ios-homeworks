@@ -48,6 +48,24 @@ class ProfileViewController: UIViewController {
         return closeBtn
     }()
     
+    var getBtn: UIButton = {
+        let closeBtn = UIButton()
+        let img1 = UIImage(systemName: "newspaper")
+        closeBtn.setImage(img1, for: .normal)
+        closeBtn.tintColor = .black
+        closeBtn.translatesAutoresizingMaskIntoConstraints = false
+        closeBtn.addTarget(self, action: #selector(getNews), for: .touchUpInside)
+        return closeBtn
+    }()
+    
+    
+    
+    @objc func getNews() {
+        dataTaskNewsJSONDecoder()
+        print("Button TAPPED")
+        
+    }
+    
     
     
     func setupBackgroundView() {
@@ -130,8 +148,9 @@ class ProfileViewController: UIViewController {
         
         self.title = "Profile".localized
         view.addSubview(tableView)
+        view.addSubview(getBtn)
         profileViewModel.setUser()
-        profileViewModel.setPosts()
+//        profileViewModel.setPosts()
         setupTableView()
 //        createTimer()
         
@@ -160,7 +179,12 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        
+        getBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        getBtn.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        getBtn.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        getBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        tableView.topAnchor.constraint(equalTo: getBtn.bottomAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -224,6 +248,32 @@ extension ProfileViewController: UITableViewDataSource {
                 views: profileViewModel.postsData[indexPath.row].views)
         )
     }
+    
+    func dataTaskNewsJSONDecoder() {
+        let session = URLSession.shared
+        let group = DispatchGroup()
+        guard let url = URL(string: "https://api.worldnewsapi.com/search-news?api-key=cef09b93847f45e1b39d668fe205bdd6&text=batman") else {return}
+        group.enter()
+            let task = session.dataTask(with: url) {data, _, error in
+                do {
+                    guard let data = data else { return }
+                    let model = try JSONDecoder().decode(NewsJSONModel.self, from: data)
+                    for news in model.news {
+                        self.profileViewModel.postsData.append(.init(author: news.author ?? "no author", postDescription: news.title, image: news.image, likes: news.id, views: 0))
+                    }
+                    group.leave()
+                } catch let error as NSError {
+                        print("error: \(error.localizedDescription) OR \(error)")
+                }
+            }
+            task.resume()
+        group.notify(queue: .main) {
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+    
 }
     
 extension ProfileViewController: UITableViewDelegate {
@@ -268,3 +318,23 @@ extension ProfileViewController: UITableViewDelegate {
 //    }
 //
 //}
+extension UIImageView {
+    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() { [weak self] in
+                self?.image = image
+            }
+        }.resume()
+    }
+    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloaded(from: url, contentMode: mode)
+    }
+}

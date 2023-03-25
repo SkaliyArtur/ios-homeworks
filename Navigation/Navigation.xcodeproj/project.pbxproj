@@ -27,6 +27,7 @@
 		6679830B28D3CF70009F3207 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679830A28D3CF70009F3207 /* TabBarController.swift */; };
 		6679830F28D50BC5009F3207 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679830E28D50BC5009F3207 /* Factory.swift */; };
 		6679831D28D531D0009F3207 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6679831C28D531D0009F3207 /* ProfileCoordinator.swift */; };
+		667CAE5229CF8FCA00BA5F9C /* NewsNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667CAE5129CF8FCA00BA5F9C /* NewsNetworkService.swift */; };
 		667F95D428CA79EA00396212 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F95D328CA79E900396212 /* Checker.swift */; };
 		667F95D828CA7D0600396212 /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F95D728CA7D0500396212 /* LoginViewControllerDelegate.swift */; };
 		667F95DC28CA7F3800396212 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F95DB28CA7F3800396212 /* LoginInspector.swift */; };
@@ -40,6 +41,7 @@
 		66948D3526CD14B80080D3D6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D3426CD14B80080D3D6 /* InfoViewController.swift */; };
 		66948D3A26D67A8E0080D3D6 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */; };
 		66948D3E26D67AAD0080D3D6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D3D26D67AAD0080D3D6 /* ProfileViewController.swift */; };
+		66A2348029CF86AB0037D54A /* NewsJSONModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A2347F29CF86AA0037D54A /* NewsJSONModel.swift */; };
 		66B00C7E28C67E8700DF5CAB /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B00C7D28C67E8700DF5CAB /* UserService.swift */; };
 		66B00C8428C67F4600DF5CAB /* CurrentUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B00C8328C67F4600DF5CAB /* CurrentUserService.swift */; };
 		66B00C8828C6AD9D00DF5CAB /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B00C8728C6AD9C00DF5CAB /* TestUserService.swift */; };
@@ -104,6 +106,7 @@
 		6679830A28D3CF70009F3207 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		6679830E28D50BC5009F3207 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		6679831C28D531D0009F3207 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		667CAE5129CF8FCA00BA5F9C /* NewsNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsNetworkService.swift; sourceTree = "<group>"; };
 		667F95D328CA79E900396212 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		667F95D728CA7D0500396212 /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
 		667F95DB28CA7F3800396212 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
@@ -119,6 +122,7 @@
 		66948D3426CD14B80080D3D6 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		66948D3D26D67AAD0080D3D6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		66A2347F29CF86AA0037D54A /* NewsJSONModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsJSONModel.swift; sourceTree = "<group>"; };
 		66B00C7D28C67E8700DF5CAB /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		66B00C8328C67F4600DF5CAB /* CurrentUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserService.swift; sourceTree = "<group>"; };
 		66B00C8728C6AD9C00DF5CAB /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
@@ -165,6 +169,20 @@
 				6605AB8328F0B4DE00EB89FA /* JSONModel.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		660FC25A29C8FE9E00B37A4B /* ToDelete */ = {
+			isa = PBXGroup;
+			children = (
+				66B5B14929789D8100BE2939 /* Map */,
+				667F95D728CA7D0500396212 /* LoginViewControllerDelegate.swift */,
+				667F95DB28CA7F3800396212 /* LoginInspector.swift */,
+				667F95E428CA987500396212 /* MyLoginFactory.swift */,
+				667F95E028CA972900396212 /* LoginFactory.swift */,
+				66948D2126CCE0580080D3D6 /* FeedViewController.swift */,
+				66948D3426CD14B80080D3D6 /* InfoViewController.swift */,
+			);
+			path = ToDelete;
 			sourceTree = "<group>";
 		};
 		66103A7529242E5D00D04ECF /* CoreData */ = {
@@ -222,10 +240,6 @@
 			children = (
 				667F95D328CA79E900396212 /* Checker.swift */,
 				66155EFD27498CB700B408A9 /* LogInViewController.swift */,
-				667F95D728CA7D0500396212 /* LoginViewControllerDelegate.swift */,
-				667F95DB28CA7F3800396212 /* LoginInspector.swift */,
-				667F95E028CA972900396212 /* LoginFactory.swift */,
-				667F95E428CA987500396212 /* MyLoginFactory.swift */,
 				6605AB9828F4A92600EB89FA /* CheckerService.swift */,
 				6676FB8629A154E70048CCD0 /* LocalAuthorizationService.swift */,
 			);
@@ -255,8 +269,9 @@
 		66948D0A26CC017D0080D3D6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				66A2347D29CE47A40037D54A /* News */,
+				660FC25A29C8FE9E00B37A4B /* ToDelete */,
 				66C36488297DD207007C3022 /* Extensions */,
-				66B5B14929789D8100BE2939 /* Map */,
 				66103A7529242E5D00D04ECF /* CoreData */,
 				6605AB8228F0B4BF00EB89FA /* Network */,
 				667982FB28D3C7CC009F3207 /* Coordinator */,
@@ -271,9 +286,6 @@
 				66948D1626CC01820080D3D6 /* LaunchScreen.storyboard */,
 				66948D1926CC01820080D3D6 /* Info.plist */,
 				6605AB8B28F4A13800EB89FA /* GoogleService-Info.plist */,
-				66948D2126CCE0580080D3D6 /* FeedViewController.swift */,
-				66948D3426CD14B80080D3D6 /* InfoViewController.swift */,
-				667982F528CFD3D9009F3207 /* CustomButton.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -284,6 +296,15 @@
 				66E02EA328DB991800ECCD13 /* MVVM Profile */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		66A2347D29CE47A40037D54A /* News */ = {
+			isa = PBXGroup;
+			children = (
+				66A2347F29CF86AA0037D54A /* NewsJSONModel.swift */,
+				667CAE5129CF8FCA00BA5F9C /* NewsNetworkService.swift */,
+			);
+			path = News;
 			sourceTree = "<group>";
 		};
 		66B00C7C28C67C0C00DF5CAB /* User */ = {
@@ -310,6 +331,7 @@
 			children = (
 				6605AB9A28F6028500EB89FA /* AlertExtension.swift */,
 				66C36489297DD22F007C3022 /* StringExtension.swift */,
+				667982F528CFD3D9009F3207 /* CustomButton.swift */,
 				6603D39F2984011B009F9C10 /* UIColorExtension.swift */,
 			);
 			path = Extensions;
@@ -484,6 +506,7 @@
 				66C3648A297DD22F007C3022 /* StringExtension.swift in Sources */,
 				6679831D28D531D0009F3207 /* ProfileCoordinator.swift in Sources */,
 				66948D2826CCE4650080D3D6 /* PostViewController.swift in Sources */,
+				667CAE5229CF8FCA00BA5F9C /* NewsNetworkService.swift in Sources */,
 				6605AB7528ECBEE400EB89FA /* NetworkService.swift in Sources */,
 				66B00C8428C67F4600DF5CAB /* CurrentUserService.swift in Sources */,
 				667F95DC28CA7F3800396212 /* LoginInspector.swift in Sources */,
@@ -496,6 +519,7 @@
 				663965C527E286FE001675D8 /* CarsData.swift in Sources */,
 				667F95D828CA7D0600396212 /* LoginViewControllerDelegate.swift in Sources */,
 				66155EFE27498CB700B408A9 /* LogInViewController.swift in Sources */,
+				66A2348029CF86AB0037D54A /* NewsJSONModel.swift in Sources */,
 				66948D0C26CC017D0080D3D6 /* AppDelegate.swift in Sources */,
 				6603D3A02984011B009F9C10 /* UIColorExtension.swift in Sources */,
 				66948D3526CD14B80080D3D6 /* InfoViewController.swift in Sources */,

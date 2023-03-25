@@ -17,7 +17,7 @@ class PostTableViewCell: UITableViewCell {
         didSet {
             authorLablel.text = post?.author
             descriptionLablel.text = post?.postDescription
-            imageImageView.image = UIImage(named: post?.image ?? "logo.png")
+            imageImageView.downloaded(from: post!.image)
             likesLablel.text = String(format: "Likes".localized, post?.likes ?? 0)
 //            likesLablel.text = "Likes".localized + "\(post?.likes ?? 0)"
             viewsLablel.text = "Views: \(post?.views ?? 0)"
