@@ -10,9 +10,9 @@ import UIKit
 class TabBarController: UITabBarController {
 
     private let profileVC = Factory(navigationController: UINavigationController(), viewController: .profile)
-    private let feedVC = Factory(navigationController: UINavigationController(), viewController: .feed)
-    private let postVC = Factory(navigationController: UINavigationController(), viewController: .postFeed)
-    private let mapVC = Factory(navigationController: UINavigationController(), viewController: .map)
+//    private let feedVC = Factory(navigationController: UINavigationController(), viewController: .feed)
+//    private let postVC = Factory(navigationController: UINavigationController(), viewController: .postFeed)
+//    private let mapVC = Factory(navigationController: UINavigationController(), viewController: .map)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +23,9 @@ class TabBarController: UITabBarController {
     func setControllers() {
         viewControllers = [
             profileVC.navigationController,
-            feedVC.navigationController,
-            postVC.navigationController,
-            mapVC.navigationController
+//            feedVC.navigationController,
+//            postVC.navigationController,
+//            mapVC.navigationController
         ]
     }
 }

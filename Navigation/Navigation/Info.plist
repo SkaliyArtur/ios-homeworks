@@ -31,6 +31,10 @@
 	<string>Нужен доступ, чтобы сдать ДЗ</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Нужен доступ, чтобы сдать ДЗ</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>OpenSans-Regular.ttf</string>
+	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
