@@ -16,7 +16,6 @@ class LogInViewController: UIViewController {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -27,7 +26,6 @@ class LogInViewController: UIViewController {
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
-    
     let authStackView: UIStackView = {
        let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,57 +36,26 @@ class LogInViewController: UIViewController {
         stackView.clipsToBounds = true
         return stackView
     }()
+    let loginTextField = CustomTextField(placeHolder: AppConstants.UIElements.emailPlaceHolder)
+    let passwordTextField = CustomTextField(placeHolder: AppConstants.UIElements.passwordPlaceHolder)
     
-    let loginTextField: CustomTextField = {
-        let textField = CustomTextField(placeHolder: AppConstants.UIElements.emailPlaceHolder)
-        return textField
-    }()
+    let loginButton = CustomButton(
+            title: AppConstants.UIElements.loginButtonText,
+            titleColorEnable: AppConstants.Colors.textColorInverted,
+            titleColorDisable: AppConstants.Colors.darkPurpleSecondateColorNormal)
     
-//    let loginTextField: UITextField = {
-//        let textField = UITextField()
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        textField.layer.cornerRadius = AppConstants.UIElements.cornerRadius
-//        textField.textColor = AppConstants.UIElements.textFieldTextColor
-//        textField.font = UIFont(name: "OpenSans-Regular", size: 16)
-//        return textField
-//    }()
-    
-    let passwordTextField: CustomTextField = {
-        let textField = CustomTextField(placeHolder: AppConstants.UIElements.passwordPlaceHolder)
-        return textField
-    }()
-    
-//    let passwordTextField: UITextField = {
-//        let textField = UITextField()
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        textField.layer.cornerRadius = AppConstants.UIElements.cornerRadius
-//        textField.textColor = AppConstants.UIElements.textFieldTextColor
-//        return textField
-//    }()
-    
-    
-    let loginButton: CustomButton = {
-        let loginButton = CustomButton(title: NSLocalizedString("Log in", comment: ""), titleColor: .white)
-        let img1 = UIImage(named: "blue_pixel")!.alpha(1)
-        let img2 = UIImage(named: "blue_pixel")!.alpha(0.8)
-        loginButton.setBackgroundImage(img1, for: .normal)
-        loginButton.setBackgroundImage(img2, for: .selected)
-        loginButton.setBackgroundImage(img2, for: .highlighted)
-        loginButton.setBackgroundImage(img2, for: .disabled)
-        return loginButton
-    }()
-    
-    let faceIdButton: UIButton = {
+ 
+    let authTypeButton: UIButton = {
         let faceIdButton = UIButton()
         faceIdButton.translatesAutoresizingMaskIntoConstraints = false
-        faceIdButton.addTarget(self, action: #selector(faceIdButtonTap), for: .touchUpInside)
+        faceIdButton.addTarget(self, action: #selector(authTypeButtonTap), for: .touchUpInside)
         return faceIdButton
     }()
     
     var checkerService: CheckerServiceProtocol?
     var localAuthService: LocalAuthorizationService?
     
-    @objc func faceIdButtonTap() {
+    @objc func authTypeButtonTap() {
         localAuthService?.authorizeIfPossible() { doneWorking in
             if doneWorking {
                 self.coordinator.startView()
@@ -159,14 +126,17 @@ class LogInViewController: UIViewController {
         
         loginTextField.text = "1@1.ru"
         passwordTextField.text = "123456"
-        
         view.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         constraintSetup()
-        
+
         loginButton.actionHandler = { [weak self] in
             guard let self = self else { return }
             self.tap()
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        loginButton.setButtonColors()
     }
     
     func constraintSetup() {
@@ -176,8 +146,6 @@ class LogInViewController: UIViewController {
         contentView.addSubview(getNewsLogoImageView)
         contentView.addSubview(authStackView)
         contentView.addSubview(loginButton)
-//        authStackView.addSubview(loginTextField)
-//        authStackView.addSubview(passwordTextField)
         authStackView.addArrangedSubview(loginTextField)
         authStackView.addArrangedSubview(passwordTextField)
         
@@ -196,40 +164,43 @@ class LogInViewController: UIViewController {
         getNewsLogoImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: AppConstants.ConstraintConstants.loginLogoTop),
         getNewsLogoImageView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginWidth),
         getNewsLogoImageView.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginHeight),
-            getNewsLogoImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+        getNewsLogoImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
         authStackView.topAnchor.constraint(equalTo: getNewsLogoImageView.bottomAnchor, constant: AppConstants.ConstraintConstants.loginAuthStackViewTop),
         authStackView.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewHeight),
-        authStackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: AppConstants.ConstraintConstants.leadingTrailing),
-        authStackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -AppConstants.ConstraintConstants.leadingTrailing),
+        authStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewWidth),
+        authStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
 
         switch localAuthService?.checkBiometryType() {
         case .face:
-            faceIdButton.setBackgroundImage(UIImage(systemName: "faceid"), for: .normal)
-            buttonSetup()
+            authButtonSetup(image: UIImage(named: AppConstants.Asssets.faceID), height: AppConstants.ConstraintConstants.faceIDSizes.height, width: AppConstants.ConstraintConstants.faceIDSizes.width)
         case .touch:
-            faceIdButton.setBackgroundImage(UIImage(systemName: "touchid"), for: .normal)
-            buttonSetup()
+            authButtonSetup(image: UIImage(named: AppConstants.Asssets.touchID), height: AppConstants.ConstraintConstants.touchIDSizes.height, width: AppConstants.ConstraintConstants.touchIDSizes.width)
         default:
-            loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: 16).isActive = true
-            loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            loginButton.leadingAnchor.constraint(equalTo: authStackView.leadingAnchor).isActive = true
+            loginButtonConstaintSetup()
             loginButton.trailingAnchor.constraint(equalTo: authStackView.trailingAnchor).isActive = true
-            loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         }
     }
-    func buttonSetup() {
-        contentView.addSubview(faceIdButton)
-        loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: 16).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    func loginButtonConstaintSetup() {
+        loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: AppConstants.UIElements.verticalSpacing).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.buttonHeight).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: authStackView.leadingAnchor).isActive = true
-        loginButton.trailingAnchor.constraint(equalTo: faceIdButton.leadingAnchor, constant: -10).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        faceIdButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: 16).isActive = true
-        faceIdButton.widthAnchor.constraint(equalToConstant: 55).isActive = true
-        faceIdButton.trailingAnchor.constraint(equalTo: authStackView.trailingAnchor).isActive = true
-        faceIdButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-
     }
+    
+    func authButtonSetup(image: UIImage?, height: CGFloat, width: CGFloat) {
+        contentView.addSubview(authTypeButton)
+        guard let img = image else {return}
+        authTypeButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
+        authTypeButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
+        
+        loginButtonConstaintSetup()
+        loginButton.trailingAnchor.constraint(equalTo: authTypeButton.leadingAnchor, constant: -AppConstants.UIElements.verticalSpacing).isActive = true
+        
+        authTypeButton.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor).isActive = true
+        authTypeButton.widthAnchor.constraint(equalToConstant: width).isActive = true
+        authTypeButton.heightAnchor.constraint(equalToConstant: height).isActive = true
+        authTypeButton.trailingAnchor.constraint(equalTo: authStackView.trailingAnchor).isActive = true
     }
+}

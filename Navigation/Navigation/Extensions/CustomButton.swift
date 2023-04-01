@@ -9,17 +9,19 @@ import UIKit
 
 class CustomButton: UIButton {
 
-    //Задание 6: сделал замыкание, в которое будет передаваться действия для функции нажатия
+    //замыкание, в которое будет передаваться действия для функции нажатия
     var actionHandler: (() -> Void)?
     
-    //Задание 6: инициализировал основные параметры кнопки (которые чаще всего употребляются)
-    init(title: String, titleColor: UIColor) {
+    init(title: String, titleColorEnable: UIColor, titleColorDisable: UIColor) {
         super.init(frame: .zero)
         self.setTitle(title, for: .normal)
-        self.setTitleColor(titleColor, for: .normal)
+        self.titleLabel?.font = AppConstants.UIElements.textFontBold
+        self.setTitleColor(titleColorEnable, for: .normal)
+        self.setTitleColor(titleColorDisable, for: .disabled)
+        
         self.translatesAutoresizingMaskIntoConstraints = false
         self.clipsToBounds = true
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = AppConstants.UIElements.cornerRadius
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
@@ -27,8 +29,14 @@ class CustomButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //Задание 6: реализовал функцию, в которой будет вызываться действия передаваемые из замыкания
+    //реализовал функцию, в которой будет вызываться действия передаваемые из замыкания
     @objc private func buttonTapped(_: UIButton) {
         actionHandler?()
+    }
+    
+    func setButtonColors() {
+        self.setBackground(AppConstants.Colors.purpleColorNormal, for: .normal)
+        self.setBackground(AppConstants.Colors.purpleColorSelected, for: .selected)
+        self.setBackground(AppConstants.Colors.colorDisabled, for: .disabled)
     }
 }

@@ -48,8 +48,8 @@ class FeedViewController: UIViewController {
         return textField
     }()
     
-    let checkGuessButton: CustomButton = {
-        let button = CustomButton(title: "Check".localized, titleColor: .black)
+    let checkGuessButton: UIButton = {
+        let button = UIButton()
         button.backgroundColor = .systemGray2
         return button
     }()
@@ -65,16 +65,16 @@ class FeedViewController: UIViewController {
     var model = FeedModel()
     
     func sendText() {
-        checkGuessButton.actionHandler = { [self] in
-            if let text = textField.text {
-                if model.check(word: text) == true {
-                    checkLabel.backgroundColor = .green
-                }
-                else {
-                    checkLabel.backgroundColor = .red
-                }
-            }
-        }
+//        checkGuessButton.actionHandler = { [self] in
+//            if let text = textField.text {
+//                if model.check(word: text) == true {
+//                    checkLabel.backgroundColor = .green
+//                }
+//                else {
+//                    checkLabel.backgroundColor = .red
+//                }
+//            }
+//        }
     }
     
     

@@ -18,3 +18,15 @@ extension UIColor {
         }
     }
 }
+
+extension UIColor {
+    func createOnePixelImage() -> UIImage? {
+        let size = CGSize(width: 1, height: 1)
+        UIGraphicsBeginImageContext(size)
+        defer { UIGraphicsEndImageContext() }
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        context.setFillColor(cgColor)
+        context.fill(CGRect(origin: .zero, size: size))
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}

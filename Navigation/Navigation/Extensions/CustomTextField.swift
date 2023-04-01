@@ -13,12 +13,12 @@ class CustomTextField: UITextField {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = AppConstants.UIElements.cornerRadius
-        self.textColor = AppConstants.UIElements.textFieldTextColor
-        self.backgroundColor = AppConstants.UIElements.textFielddBackgroundColor
-        self.font = AppConstants.UIElements.textFont
+        self.textColor = AppConstants.Colors.textColorStandart
+        self.backgroundColor = AppConstants.Colors.grayColor
+        self.font = AppConstants.UIElements.textFontRegular
         self.autocapitalizationType = .none
         self.leftViewMode = .always
-        self.leftView = AppConstants.UIElements.textInPlaceHolderView
+        self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

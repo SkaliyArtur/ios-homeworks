@@ -11,8 +11,8 @@ import UIKit
 class Factory {
     enum Views {
         case profile
-//        case feed
-//        case postFeed
+        case feed
+        case postFeed
 //        case map
     }
     
@@ -38,14 +38,14 @@ class Factory {
             navigationController.tabBarItem = .init(title: NSLocalizedString("Profile", comment: ""), image: UIImage(systemName: "person"), tag: 0)
             navigationController.setViewControllers([controller], animated: true)
             
-//        case .feed:
-//            let controller = FeedViewController()
-//            navigationController.tabBarItem = .init(title: NSLocalizedString("Feed", comment: ""), image: UIImage(systemName: "list.bullet"), tag: 1)
-//            navigationController.setViewControllers([controller], animated: true)
-//
-//        case .postFeed:
-//            let controller = PostViewController()
-//            navigationController.tabBarItem = .init(title: NSLocalizedString("Posts", comment: ""), image: UIImage(systemName: "star"), tag: 2)
+        case .feed:
+            let controller = FeedViewController()
+            navigationController.tabBarItem = .init(title: NSLocalizedString("Feed", comment: ""), image: UIImage(systemName: "list.bullet"), tag: 1)
+            navigationController.setViewControllers([controller], animated: true)
+
+        case .postFeed:
+            let controller = PostViewController()
+            navigationController.tabBarItem = .init(title: NSLocalizedString("Posts", comment: ""), image: UIImage(systemName: "star"), tag: 2)
 //            navigationController.setViewControllers([controller], animated: true)
 //
 //        case .map:

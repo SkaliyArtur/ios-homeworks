@@ -62,8 +62,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
     
     //Задание 6: применил кастомную кнопку, сократил 4 строк кода ниже
-    let setStatusButton: CustomButton = {
-        let statusButton = CustomButton(title: "Set Status".localized, titleColor: .white)
+    let setStatusButton: UIButton = {
+        let statusButton = UIButton()
 //        statusButton.setTitle("Set status", for: .normal)
         statusButton.backgroundColor = .systemBlue
 //        statusButton.layer.cornerRadius = 4
@@ -79,9 +79,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     //Задание 6: переделываю функцию, которая должна вызываться и передавать действия по нажатию кнопки
     func buttonPressed() {
-        setStatusButton.actionHandler = { [self] in
-        statusLabel.text = statusTextField.text
-        }
+//        setStatusButton.actionHandler = { [self] in
+//        statusLabel.text = statusTextField.text
+//        }
     }
     
     

@@ -19,13 +19,49 @@ struct AppConstants {
         static let loginWidth: CGFloat = 219.49
         static let loginAuthStackViewTop: CGFloat = 192.26
         static let loginAuthStackViewHeight: CGFloat = 96
+        static let loginAuthStackViewWidth: CGFloat = 360
         
         static let leadingTrailing: CGFloat = 15
+        static let buttonHeight: CGFloat = 44
+        
+        static let faceIDSizes = CGSize(width: 29, height: 29)
+        static let touchIDSizes = CGSize(width: 23.29, height: 29.74)
         
     }
     //для файлов из папки Assets
     struct Asssets {
         static let getNewsLogo = "getNewsLogo"
+        static let faceID = "faceID"
+        static let touchID = "touchID"
+    }
+    //цвета
+    struct Colors {
+        static let purpleColorNormal = UIColor.createColor(
+            lightMode: UIColor(red: 0.558, green: 0.471, blue: 1, alpha: 1),
+            darkMode: .white)
+        static let purpleColorSelected = UIColor.createColor(
+            lightMode: UIColor(red: 0.416, green: 0.361, blue: 0.698, alpha: 1),
+            darkMode: UIColor(red: 0.89, green: 0.867, blue: 1, alpha: 1))
+        static let colorDisabled = UIColor.createColor(
+            lightMode: UIColor(red: 0.839, green: 0.835, blue: 0.882, alpha: 1),
+            darkMode: UIColor(red: 0.367, green: 0.36, blue: 0.4, alpha: 1))
+        static let darkPurpleSecondateColorNormal = UIColor(red: 0.58, green: 0.569, blue: 0.671, alpha: 1)
+        static let purpleSecondaryColorNormal = UIColor.createColor(
+            lightMode: UIColor(red: 0.883, green: 0.888, blue: 1, alpha: 1),
+            darkMode: darkPurpleSecondateColorNormal)
+        static let purpleSecondaryColorSelected = UIColor.createColor(
+            lightMode: UIColor(red: 0.772, green: 0.777, blue: 0.913, alpha: 1),
+            darkMode: UIColor(red: 0.457, green: 0.447, blue: 0.533, alpha: 1))
+        static let grayColor = UIColor.createColor(
+            lightMode: UIColor(red: 0.937, green: 0.953, blue: 0.98, alpha: 1),
+            darkMode: UIColor(red: 0.216, green: 0.224, blue: 0.239, alpha: 1))
+        static let textColorStandart = UIColor.createColor(
+            lightMode: .black,
+            darkMode: .white)
+        static let textColorInverted = UIColor.createColor(
+            lightMode: .white,
+            darkMode: .black)
+        
     }
     //для UI элементов
     struct UIElements {
@@ -34,11 +70,11 @@ struct AppConstants {
         
         static let emailPlaceHolder = NSLocalizedString("Email", comment: "")
         static let passwordPlaceHolder = NSLocalizedString("Password", comment: "")
+        static let loginButtonText = NSLocalizedString("Log in", comment: "")
         
-        static let textFielddBackgroundColor = UIColor.createColor(lightMode: UIColor(red: 0.937, green: 0.953, blue: 0.98, alpha: 1), darkMode: UIColor(red: 0.216, green: 0.224, blue: 0.239, alpha: 1))
-        static let textFieldTextColor = UIColor.createColor(lightMode: .black, darkMode: .white)
-        static let textFont = UIFont(name: "OpenSans-Regular", size: 16)
-        static let textInPlaceHolderView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))
+        static let textFontRegular = UIFont(name: "OpenSans-Regular", size: 16)
+        static let textFontBold = UIFont(name: "OpenSans-Bold", size: 16)
+        
     }
 
 }
