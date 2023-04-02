@@ -39,10 +39,11 @@
 		6689F76829D61D22004D684C /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6689F76729D61D21004D684C /* OpenSans-Regular.ttf */; };
 		6689F77229D8BD6C004D684C /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6689F77129D8BD6B004D684C /* OpenSans-Bold.ttf */; };
 		6689F77829D8EAAA004D684C /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689F77729D8EAAA004D684C /* UIButtonExtension.swift */; };
+		6689F77E29DA277B004D684C /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689F77D29DA277B004D684C /* UIImageViewExtension.swift */; };
 		66948D0C26CC017D0080D3D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D0B26CC017D0080D3D6 /* AppDelegate.swift */; };
 		66948D1526CC01820080D3D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66948D1426CC01820080D3D6 /* Assets.xcassets */; };
 		66948D1826CC01820080D3D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66948D1626CC01820080D3D6 /* LaunchScreen.storyboard */; };
-		66948D2226CCE0580080D3D6 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D2126CCE0580080D3D6 /* FeedViewController.swift */; };
+		66948D2226CCE0580080D3D6 /* FeedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D2126CCE0580080D3D6 /* FeedsViewController.swift */; };
 		66948D2826CCE4650080D3D6 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D2726CCE4650080D3D6 /* PostViewController.swift */; };
 		66948D3526CD14B80080D3D6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D3426CD14B80080D3D6 /* InfoViewController.swift */; };
 		66948D3A26D67A8E0080D3D6 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */; };
@@ -124,12 +125,13 @@
 		6689F76729D61D21004D684C /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		6689F77129D8BD6B004D684C /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		6689F77729D8EAAA004D684C /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		6689F77D29DA277B004D684C /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		66948D0826CC017D0080D3D6 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66948D0B26CC017D0080D3D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66948D1426CC01820080D3D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66948D1726CC01820080D3D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66948D1926CC01820080D3D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		66948D2126CCE0580080D3D6 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		66948D2126CCE0580080D3D6 /* FeedsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsViewController.swift; sourceTree = "<group>"; };
 		66948D2726CCE4650080D3D6 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		66948D3426CD14B80080D3D6 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -191,7 +193,6 @@
 				667F95DB28CA7F3800396212 /* LoginInspector.swift */,
 				667F95E428CA987500396212 /* MyLoginFactory.swift */,
 				667F95E028CA972900396212 /* LoginFactory.swift */,
-				66948D2126CCE0580080D3D6 /* FeedViewController.swift */,
 				66948D3426CD14B80080D3D6 /* InfoViewController.swift */,
 			);
 			path = ToDelete;
@@ -222,7 +223,6 @@
 				667982FC28D3C7ED009F3207 /* MainCoordinator.swift */,
 				6679830E28D50BC5009F3207 /* Factory.swift */,
 				6679831C28D531D0009F3207 /* ProfileCoordinator.swift */,
-				66E02E9F28DB927100ECCD13 /* PhotoCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -230,6 +230,7 @@
 		667CAE5429D38F5400BA5F9C /* Feeds */ = {
 			isa = PBXGroup;
 			children = (
+				66948D2126CCE0580080D3D6 /* FeedsViewController.swift */,
 			);
 			path = Feeds;
 			sourceTree = "<group>";
@@ -360,6 +361,7 @@
 		66B5B14929789D8100BE2939 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				66E02E9F28DB927100ECCD13 /* PhotoCoordinator.swift */,
 				66B5B14A29789DD200BE2939 /* MapViewController.swift */,
 			);
 			path = Map;
@@ -375,6 +377,7 @@
 				6603D39F2984011B009F9C10 /* UIColorExtension.swift */,
 				667CAE5A29D3969D00BA5F9C /* UIImageExtension.swift */,
 				6689F77729D8EAAA004D684C /* UIButtonExtension.swift */,
+				6689F77D29DA277B004D684C /* UIImageViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				66DF8970279F26990030F19F /* PostFeed.swift in Sources */,
 				66C3648A297DD22F007C3022 /* StringExtension.swift in Sources */,
 				6679831D28D531D0009F3207 /* ProfileCoordinator.swift in Sources */,
+				6689F77E29DA277B004D684C /* UIImageViewExtension.swift in Sources */,
 				66948D2826CCE4650080D3D6 /* PostViewController.swift in Sources */,
 				667CAE5229CF8FCA00BA5F9C /* NewsNetworkService.swift in Sources */,
 				6605AB7528ECBEE400EB89FA /* NetworkService.swift in Sources */,
@@ -581,7 +585,7 @@
 				66B00C8828C6AD9D00DF5CAB /* TestUserService.swift in Sources */,
 				66948D3E26D67AAD0080D3D6 /* ProfileViewController.swift in Sources */,
 				667CAE5829D394AC00BA5F9C /* AppConstants.swift in Sources */,
-				66948D2226CCE0580080D3D6 /* FeedViewController.swift in Sources */,
+				66948D2226CCE0580080D3D6 /* FeedsViewController.swift in Sources */,
 				66948D3A26D67A8E0080D3D6 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -45,7 +45,7 @@ class LogInViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.layer.cornerRadius = AppConstants.UIElements.cornerRadius
         stackView.axis = .vertical
-        stackView.spacing = AppConstants.UIElements.verticalSpacing
+        stackView.spacing = AppConstants.UIElements.spacingBetweenElements
         stackView.distribution = .fillEqually
         stackView.clipsToBounds = true
         return stackView
@@ -54,8 +54,8 @@ class LogInViewController: UIViewController {
     let passwordTextField = CustomTextField(placeHolder: AppConstants.UIElements.passwordPlaceHolder)
     let loginButton = CustomButton(
             title: AppConstants.UIElements.loginButtonText,
-            titleColorEnable: AppConstants.Colors.textColorInverted,
-            titleColorDisable: AppConstants.Colors.darkPurpleSecondateColorNormal)
+            titleColorEnable: AppConstants.Colors.colorStandartInverted,
+            titleColorDisable: AppConstants.Colors.darkPurpleSecondaryColorNormal)
     let authTypeButton: UIButton = {
         let faceIdButton = UIButton()
         faceIdButton.translatesAutoresizingMaskIntoConstraints = false
@@ -125,6 +125,7 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         
         loginTextField.text = "1@1.ru"
+        passwordTextField.isSecureTextEntry = true
         passwordTextField.text = "123456"
         view.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         constraintSetup()
@@ -184,7 +185,7 @@ class LogInViewController: UIViewController {
     }
     //Настройка якорей кнопки Логина (которые не зависят от наличия биометрии)
     func loginButtonConstaintSetup() {
-        loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: AppConstants.UIElements.verticalSpacing).isActive = true
+        loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.buttonHeight).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: authStackView.leadingAnchor).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
@@ -197,7 +198,7 @@ class LogInViewController: UIViewController {
         authTypeButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
         
         loginButtonConstaintSetup()
-        loginButton.trailingAnchor.constraint(equalTo: authTypeButton.leadingAnchor, constant: -AppConstants.UIElements.verticalSpacing).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: authTypeButton.leadingAnchor, constant: -AppConstants.UIElements.spacingBetweenElements).isActive = true
         
         authTypeButton.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor).isActive = true
         authTypeButton.widthAnchor.constraint(equalToConstant: width).isActive = true

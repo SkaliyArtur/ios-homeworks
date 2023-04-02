@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class ProfileViewController: UIViewController {
 
-    let tableView = UITableView.init(frame: .zero, style: .grouped)
+   
     let profileViewModel = ProfileViewModel(currentUser: .init(userLogin: "Krabs", userFullName: "Mr. Crabs", userAvatar: UIImage(named: "MrKrabs.png")!, userStatus: "1", userPassword: "1"))
 //    let photoCoordinator = PhotoCoordinator(navigationController: UINavigationController())
     let coreDataService = CoreDataService()
@@ -61,7 +61,7 @@ class ProfileViewController: UIViewController {
     
     
     @objc func getNews() {
-        dataTaskNewsJSONDecoder()
+//        dataTaskNewsJSONDecoder()
         print("Button TAPPED")
         
     }
@@ -141,13 +141,9 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
-        #if DEBUG
-        view.backgroundColor = .red
-        #endif
+        view.backgroundColor = AppConstants.Colors.colorStandart
         
-        self.title = "Profile".localized
-        view.addSubview(tableView)
+//        view.addSubview(tableView)
         view.addSubview(getBtn)
         profileViewModel.setUser()
 //        profileViewModel.setPosts()
@@ -174,23 +170,23 @@ class ProfileViewController: UIViewController {
     }
     
     func setupTableView() {
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
-        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
-        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+//        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
+//        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+//        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
+//
+//        tableView.translatesAutoresizingMaskIntoConstraints = false
         
         getBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         getBtn.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         getBtn.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         getBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        tableView.topAnchor.constraint(equalTo: getBtn.bottomAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
-        tableView.dataSource = self
-        tableView.delegate = self
+//        tableView.topAnchor.constraint(equalTo: getBtn.bottomAnchor).isActive = true
+//        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+//        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+//        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+//
+//        tableView.dataSource = self
+//        tableView.delegate = self
     }
 }
 
@@ -217,9 +213,9 @@ extension ProfileViewController: UITableViewDataSource {
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
             cell.post = profileViewModel.postsData[indexPath.row]
-            let tap = UITapGestureRecognizer(target: self, action: #selector(addPost))
-            tap.numberOfTapsRequired = 2
-            cell.addGestureRecognizer(tap)
+//            let tap = UITapGestureRecognizer(target: self, action: #selector(addPost))
+//            tap.numberOfTapsRequired = 2
+//            cell.addGestureRecognizer(tap)
             return cell
         }
         if indexPath.section == 1 {
@@ -234,43 +230,6 @@ extension ProfileViewController: UITableViewDataSource {
         }
     }
     
-    @objc func addPost(_ sender: UITapGestureRecognizer) {
-        guard let indexPath = tableView.indexPathForRow(at: sender.location(in: self.tableView)) else {return}
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
-        cell.post = profileViewModel.postsData[indexPath.row]
-//        CoreDataService.coreManager.persistentContainer.viewContext.save()
-        coreDataService.saveContext(
-            postModel: .init(
-                author: profileViewModel.postsData[indexPath.row].author,
-                postDescription: profileViewModel.postsData[indexPath.row].postDescription,
-                image: profileViewModel.postsData[indexPath.row].image,
-                likes: profileViewModel.postsData[indexPath.row].likes,
-                views: profileViewModel.postsData[indexPath.row].views)
-        )
-    }
-    
-    func dataTaskNewsJSONDecoder() {
-        let session = URLSession.shared
-        let group = DispatchGroup()
-        guard let url = URL(string: "https://api.worldnewsapi.com/search-news?api-key=cef09b93847f45e1b39d668fe205bdd6&text=batman") else {return}
-        group.enter()
-            let task = session.dataTask(with: url) {data, _, error in
-                do {
-                    guard let data = data else { return }
-                    let model = try JSONDecoder().decode(NewsJSONModel.self, from: data)
-//                    for news in model.news {
-//                        self.profileViewModel.postsData.append(.init(author: news.author ?? "no author", postDescription: news.title, image: news.image, likes: news.id, views: 0))
-//                    }
-                    group.leave()
-                } catch let error as NSError {
-                        print("error: \(error.localizedDescription) OR \(error)")
-                }
-            }
-            task.resume()
-        group.notify(queue: .main) {
-            self.tableView.reloadData()
-        }
-    }
     
     
     
@@ -289,52 +248,3 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
-//extension ProfileViewController {
-//    func createTimer() {
-//        DispatchQueue.global().async {
-//            self.timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.logOut), userInfo: nil, repeats: true)
-//            guard let timer = self.timer else {return}
-//
-//            RunLoop.current.add(timer, forMode: .common)
-//            RunLoop.current.run()
-//        }
-//
-//    }
-//
-//    @objc func logOut() {
-//        if timeOutCounter == 1 {
-//            DispatchQueue.main.async { [self] in
-//                navigationController?.popToRootViewController(animated: false)
-//                self.timer?.invalidate()
-//                self.timer = nil
-//                timeOutCounter = 100
-//                print("Log Out: Время сессии истекло")
-//            }
-//        }
-//        else {
-//            timeOutCounter -= 1
-//            print("Выход через \(timeOutCounter)")
-//        }
-//    }
-//
-//}
-extension UIImageView {
-    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() { [weak self] in
-                self?.image = image
-            }
-        }.resume()
-    }
-    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
-    }
-}

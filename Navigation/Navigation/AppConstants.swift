@@ -48,20 +48,20 @@ struct AppConstants {
         static let colorDisabled = UIColor.createColor(
             lightMode: UIColor(red: 0.839, green: 0.835, blue: 0.882, alpha: 1),
             darkMode: UIColor(red: 0.367, green: 0.36, blue: 0.4, alpha: 1))
-        static let darkPurpleSecondateColorNormal = UIColor(red: 0.58, green: 0.569, blue: 0.671, alpha: 1)
+        static let darkPurpleSecondaryColorNormal = UIColor(red: 0.58, green: 0.569, blue: 0.671, alpha: 1)
         static let purpleSecondaryColorNormal = UIColor.createColor(
             lightMode: UIColor(red: 0.883, green: 0.888, blue: 1, alpha: 1),
-            darkMode: darkPurpleSecondateColorNormal)
+            darkMode: darkPurpleSecondaryColorNormal)
         static let purpleSecondaryColorSelected = UIColor.createColor(
             lightMode: UIColor(red: 0.772, green: 0.777, blue: 0.913, alpha: 1),
             darkMode: UIColor(red: 0.457, green: 0.447, blue: 0.533, alpha: 1))
         static let grayColor = UIColor.createColor(
             lightMode: UIColor(red: 0.937, green: 0.953, blue: 0.98, alpha: 1),
             darkMode: UIColor(red: 0.216, green: 0.224, blue: 0.239, alpha: 1))
-        static let textColorStandart = UIColor.createColor(
+        static let colorStandart = UIColor.createColor(
             lightMode: .black,
             darkMode: .white)
-        static let textColorInverted = UIColor.createColor(
+        static let colorStandartInverted = UIColor.createColor(
             lightMode: .white,
             darkMode: .black)
         static let tabBarColor = UIColor.createColor(
@@ -73,11 +73,14 @@ struct AppConstants {
     //для UI элементов
     struct UIElements {
         static let cornerRadius: CGFloat = 4
-        static let verticalSpacing: CGFloat = 8
+        static let spacingBetweenElements: CGFloat = 8
+        static let tabBarLineHeight: CGFloat = 1 
         
         static let emailPlaceHolder = NSLocalizedString("Email", comment: "")
         static let passwordPlaceHolder = NSLocalizedString("Password", comment: "")
         static let loginButtonText = NSLocalizedString("Log in", comment: "")
+        static let searchForFeedPlaceHolder = NSLocalizedString("Search for feeds", comment: "")
+        static let searchForFeedText = NSLocalizedString("Get", comment: "")
         
         static let textFontRegular = UIFont(name: "OpenSans-Regular", size: 16)
         static let textFontBold = UIFont(name: "OpenSans-Bold", size: 16)

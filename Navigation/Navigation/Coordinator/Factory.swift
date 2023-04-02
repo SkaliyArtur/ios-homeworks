@@ -37,9 +37,11 @@ class Factory {
             navigationController.tabBarItem = .init(title: NSLocalizedString("Profile", comment: ""), image: UIImage(named: AppConstants.Asssets.profile), tag: 0)
             navigationController.setViewControllers([controller], animated: true)
             
+            
         case .feeds:
-            let controller = FeedViewController()
+            let controller = FeedsViewController()
             navigationController.tabBarItem = .init(title: NSLocalizedString("Feeds", comment: ""), image: UIImage(named: AppConstants.Asssets.feeds), tag: 1)
+            navigationController.setNavigationBarHidden(true, animated: false)
             navigationController.setViewControllers([controller], animated: true)
 
         case .favorites:

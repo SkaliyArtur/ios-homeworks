@@ -13,9 +13,12 @@ class CustomTextField: UITextField {
         super.init(frame: .zero)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.layer.cornerRadius = AppConstants.UIElements.cornerRadius
-        self.textColor = AppConstants.Colors.textColorStandart
+        self.textColor = AppConstants.Colors.colorStandart
         self.backgroundColor = AppConstants.Colors.grayColor
         self.font = AppConstants.UIElements.textFontRegular
+        self.attributedPlaceholder = NSAttributedString(
+            string: placeHolder,
+            attributes: [NSAttributedString.Key.foregroundColor: AppConstants.Colors.darkPurpleSecondaryColorNormal])
         self.autocapitalizationType = .none
         self.leftViewMode = .always
         self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 0))

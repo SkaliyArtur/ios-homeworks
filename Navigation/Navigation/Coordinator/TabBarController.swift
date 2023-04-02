@@ -44,7 +44,7 @@ class TabBarController: UITabBarController {
             tabBar.backgroundImage = image
             tabBar.backgroundColor = AppConstants.Colors.tabBarColor
         }
-        let lineView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1))
+        let lineView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: AppConstants.UIElements.tabBarLineHeight))
         lineView.backgroundColor = AppConstants.Colors.tabBarBorder
         self.tabBar.addSubview(lineView)
         self.tabBar.backgroundColor = AppConstants.Colors.tabBarBorder
