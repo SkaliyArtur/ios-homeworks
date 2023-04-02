@@ -6,10 +6,12 @@
       "scale" : "1x"
     },
     {
+      "filename" : "touchID2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "touchID3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

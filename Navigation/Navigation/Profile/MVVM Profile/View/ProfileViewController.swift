@@ -11,23 +11,23 @@ import FirebaseAuth
 
 
 class ProfileViewController: UIViewController {
-    
+
     let tableView = UITableView.init(frame: .zero, style: .grouped)
-    let profileViewModel: ProfileViewModel
-    let photoCoordinator: PhotoCoordinator
+    let profileViewModel = ProfileViewModel(currentUser: .init(userLogin: "Krabs", userFullName: "Mr. Crabs", userAvatar: UIImage(named: "MrKrabs.png")!, userStatus: "1", userPassword: "1"))
+//    let photoCoordinator = PhotoCoordinator(navigationController: UINavigationController())
     let coreDataService = CoreDataService()
     
-    init(photoCoordinator: PhotoCoordinator, profileViewModel: ProfileViewModel) {
-        self.photoCoordinator = photoCoordinator
-        self.profileViewModel = profileViewModel
-        super.init(nibName: nil, bundle: nil)
-    }
+//    init(photoCoordinator: PhotoCoordinator, profileViewModel: ProfileViewModel) {
+//        self.photoCoordinator = photoCoordinator
+//        self.profileViewModel = profileViewModel
+//        super.init(nibName: nil, bundle: nil)
+//    }
 //    let profileHeaderView = ProfileHeaderView()
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//
     var timeOutCounter = 100
     var timer: Timer?
     
@@ -230,7 +230,7 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            photoCoordinator.startView()
+//            photoCoordinator.startView()
         }
     }
     
@@ -258,9 +258,9 @@ extension ProfileViewController: UITableViewDataSource {
                 do {
                     guard let data = data else { return }
                     let model = try JSONDecoder().decode(NewsJSONModel.self, from: data)
-                    for news in model.news {
-                        self.profileViewModel.postsData.append(.init(author: news.author ?? "no author", postDescription: news.title, image: news.image, likes: news.id, views: 0))
-                    }
+//                    for news in model.news {
+//                        self.profileViewModel.postsData.append(.init(author: news.author ?? "no author", postDescription: news.title, image: news.image, likes: news.id, views: 0))
+//                    }
                     group.leave()
                 } catch let error as NSError {
                         print("error: \(error.localizedDescription) OR \(error)")

@@ -18,7 +18,6 @@ class CustomButton: UIButton {
         self.titleLabel?.font = AppConstants.UIElements.textFontBold
         self.setTitleColor(titleColorEnable, for: .normal)
         self.setTitleColor(titleColorDisable, for: .disabled)
-        
         self.translatesAutoresizingMaskIntoConstraints = false
         self.clipsToBounds = true
         self.layer.cornerRadius = AppConstants.UIElements.cornerRadius

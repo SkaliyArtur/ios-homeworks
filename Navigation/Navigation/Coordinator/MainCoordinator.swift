@@ -14,7 +14,10 @@ protocol MainCoordinator {
 
 class MainCoordinatorImp: MainCoordinator {
     func startApplication() -> UIViewController {
-        return TabBarController()
+        let controller = LogInViewController()
+        controller.checkerService = CheckerService()
+        controller.localAuthService = LocalAuthorizationService()
+        return controller
     }
 
 

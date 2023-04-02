@@ -33,6 +33,9 @@ struct AppConstants {
         static let getNewsLogo = "getNewsLogo"
         static let faceID = "faceID"
         static let touchID = "touchID"
+        static let profile = "profile"
+        static let feeds = "feeds"
+        static let favorites = "favorites"
     }
     //цвета
     struct Colors {
@@ -61,6 +64,10 @@ struct AppConstants {
         static let textColorInverted = UIColor.createColor(
             lightMode: .white,
             darkMode: .black)
+        static let tabBarColor = UIColor.createColor(
+            lightMode: UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1),
+            darkMode: .black)
+        static let tabBarBorder = UIColor(red: 0.883, green: 0.888, blue: 1, alpha: 1)
         
     }
     //для UI элементов

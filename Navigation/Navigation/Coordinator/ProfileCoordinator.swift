@@ -21,9 +21,9 @@ class ProfileCoordinator {
     func startView() {
         
         let currentUserService = CurrentUserService()
-        let photoCoordinator = PhotoCoordinator(navigationController: navigationController)
+//        let photoCoordinator = PhotoCoordinator(navigationController: navigationController)
         let profileViewModel = ProfileViewModel(currentUser: currentUserService.user)
-        let profileVC = ProfileViewController(photoCoordinator: photoCoordinator, profileViewModel: profileViewModel)
+        let profileVC = ProfileViewController()
         navigationController.pushViewController(profileVC, animated: true)
     }
 }

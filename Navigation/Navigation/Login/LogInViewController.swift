@@ -10,16 +10,30 @@ import FirebaseAuth
 
 class LogInViewController: UIViewController {
     
-    let coordinator: ProfileCoordinator
+//    let coordinator: ProfileCoordinator
+//
+//    init(coordinator: ProfileCoordinator) {
+//        self.coordinator = coordinator
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
-    init(coordinator: ProfileCoordinator) {
-        self.coordinator = coordinator
-        super.init(nibName: nil, bundle: nil)
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    let coordinator = TabBarController()
     
+    //Основные элементы экрана
+    let loginScrollView: UIScrollView = {
+    let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
+        return scrollView
+    }()
+    let contentView: UIView = {
+       let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     let getNewsLogoImageView: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: AppConstants.Asssets.getNewsLogo)
@@ -38,13 +52,10 @@ class LogInViewController: UIViewController {
     }()
     let loginTextField = CustomTextField(placeHolder: AppConstants.UIElements.emailPlaceHolder)
     let passwordTextField = CustomTextField(placeHolder: AppConstants.UIElements.passwordPlaceHolder)
-    
     let loginButton = CustomButton(
             title: AppConstants.UIElements.loginButtonText,
             titleColorEnable: AppConstants.Colors.textColorInverted,
             titleColorDisable: AppConstants.Colors.darkPurpleSecondateColorNormal)
-    
- 
     let authTypeButton: UIButton = {
         let faceIdButton = UIButton()
         faceIdButton.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +69,8 @@ class LogInViewController: UIViewController {
     @objc func authTypeButtonTap() {
         localAuthService?.authorizeIfPossible() { doneWorking in
             if doneWorking {
-                self.coordinator.startView()
+                self.view.window?.rootViewController = self.coordinator
+                self.view.window?.makeKeyAndVisible()
             } else {
                 print("LOG IN ERROR")
             }
@@ -76,28 +88,18 @@ class LogInViewController: UIViewController {
     //Вызываем проверку
         checkerService?.checkCredentials(login: login, password: pass) { doneWorking in
             if doneWorking {
-                self.coordinator.startView()
+                self.view.window?.rootViewController = self.coordinator
+                self.view.window?.makeKeyAndVisible()
             } else {
                 
             }
         }
 }
     
-    let loginScrollView: UIScrollView = {
-    let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
-        return scrollView
-    }()
-    
-    let contentView: UIView = {
-       let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     
     
+    //Функции для показа/скрытия клавиатуры
     @objc func keyboardWillShow(Notification: NSNotification) {
         if let keyBoardSize = (Notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             loginScrollView.contentInset.bottom = keyBoardSize.height
@@ -108,14 +110,12 @@ class LogInViewController: UIViewController {
         loginScrollView.contentInset.bottom = .zero
         loginScrollView.verticalScrollIndicatorInsets = .zero
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -134,11 +134,11 @@ class LogInViewController: UIViewController {
             self.tap()
         }
     }
-    
+    //Настройка цветов кнопки, чтобы менялись в зависимсоти от состояния кнопки и темы приложения
     override func viewDidLayoutSubviews() {
         loginButton.setButtonColors()
     }
-    
+    //Настройка якорей
     func constraintSetup() {
         
         view.addSubview(loginScrollView)
@@ -171,7 +171,7 @@ class LogInViewController: UIViewController {
         authStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewWidth),
         authStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
-
+        //Проверяем какой тип биометри, от этого вставляем картинку и размеры. Если биометрии нет - картинки не будет, и кнопка логина растянется до конца
         switch localAuthService?.checkBiometryType() {
         case .face:
             authButtonSetup(image: UIImage(named: AppConstants.Asssets.faceID), height: AppConstants.ConstraintConstants.faceIDSizes.height, width: AppConstants.ConstraintConstants.faceIDSizes.width)
@@ -182,13 +182,14 @@ class LogInViewController: UIViewController {
             loginButton.trailingAnchor.constraint(equalTo: authStackView.trailingAnchor).isActive = true
         }
     }
+    //Настройка якорей кнопки Логина (которые не зависят от наличия биометрии)
     func loginButtonConstaintSetup() {
         loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: AppConstants.UIElements.verticalSpacing).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.buttonHeight).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: authStackView.leadingAnchor).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
-    
+    //Настройка якорей биометрии
     func authButtonSetup(image: UIImage?, height: CGFloat, width: CGFloat) {
         contentView.addSubview(authTypeButton)
         guard let img = image else {return}
