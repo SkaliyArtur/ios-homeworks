@@ -28,7 +28,10 @@ class FeedsViewController: UIViewController {
             titleColorDisable: AppConstants.Colors.darkPurpleSecondaryColorNormal)
     
     let feedsTableView = UITableView.init(frame: .zero, style: .grouped)
-    let coreDataService = CoreDataService()
+    
+    
+    
+    var feeds: [FeedsModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +59,9 @@ class FeedsViewController: UIViewController {
         feedsTableView.translatesAutoresizingMaskIntoConstraints = false
         feedsTableView.dataSource = self
         feedsTableView.delegate = self
+        feedsTableView.contentInset = AppConstants.UIElements.tableViewEdges
+        feedsTableView.backgroundColor = AppConstants.Colors.colorStandartInverted
+        feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: "FeedsTableViewCell")
         
         setupConstraints()
     }
@@ -66,12 +72,17 @@ class FeedsViewController: UIViewController {
             searchStackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             searchStackView.heightAnchor.constraint(equalToConstant: 40),
             searchStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewWidth),
-            getNewsButton.widthAnchor.constraint(equalToConstant: 49)
+            
+            getNewsButton.widthAnchor.constraint(equalToConstant: 49),
+            
+            feedsTableView.topAnchor.constraint(equalTo: searchStackView.bottomAnchor),
+            feedsTableView.leadingAnchor.constraint(equalTo: searchStackView.leadingAnchor),
+            feedsTableView.trailingAnchor.constraint(equalTo: searchStackView.trailingAnchor),
+            feedsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            
         ])
     }
-    
-    
-    
     
     func tap() {
         dataTaskNewsJSONDecoder()
@@ -81,15 +92,22 @@ class FeedsViewController: UIViewController {
     func dataTaskNewsJSONDecoder() {
         let session = URLSession.shared
         let group = DispatchGroup()
-        guard let url = URL(string: "https://api.worldnewsapi.com/search-news?api-key=cef09b93847f45e1b39d668fe205bdd6&text=batman") else {return}
+        guard let url = URL(string: "https://api.worldnewsapi.com/search-news?api-key=cef09b93847f45e1b39d668fe205bdd6&text=SpiderMan") else {return}
         group.enter()
             let task = session.dataTask(with: url) {data, _, error in
                 do {
                     guard let data = data else { return }
-                    let model = try JSONDecoder().decode(NewsJSONModel.self, from: data)
+                    let model = try JSONDecoder().decode(FeedsJSONModel.self, from: data)
                     for news in model.news {
-//                        self.profileViewModel.postsData.append(.init(author: news.author ?? "no author", postDescription: news.title, image: news.image, likes: news.id, views: 0))
+                        print("JSON: \(news.publishDate)")
+                        self.feeds.append(.init(
+                                        feedsTitle: news.title,
+                                        feedsText: news.text,
+                                        feedsImage: news.image ?? "getNewsLogo",
+                                        feedsDate: news.publishDate))
+       
                     }
+                    
                     group.leave()
                 } catch let error as NSError {
                         print("error: \(error.localizedDescription) OR \(error)")
@@ -97,36 +115,25 @@ class FeedsViewController: UIViewController {
             }
             task.resume()
         group.notify(queue: .main) {
-//            self.tableView.reloadData()
+            self.feedsTableView.reloadData()
         }
     }
-    
-//    @objc func addPost(_ sender: UITapGestureRecognizer) {
-//        guard let indexPath = tableView.indexPathForRow(at: sender.location(in: self.tableView)) else {return}
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
-////        cell.post = profileViewModel.postsData[indexPath.row]
-////        CoreDataService.coreManager.persistentContainer.viewContext.save()
-////        coreDataService.saveContext(
-////            postModel: .init(
-////                author: profileViewModel.postsData[indexPath.row].author,
-////                postDescription: profileViewModel.postsData[indexPath.row].postDescription,
-////                image: profileViewModel.postsData[indexPath.row].image,
-////                likes: profileViewModel.postsData[indexPath.row].likes,
-////                views: profileViewModel.postsData[indexPath.row].views)
-////        )
-//    }
-
-    
 }
 
 extension FeedsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+            return feeds.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
+        cell.feed = feeds[indexPath.row]
+        cell.layer.shadowColor = AppConstants.Colors.purpleSecondaryColorNormal.cgColor
+          cell.layer.shadowOffset = CGSize(width: 0, height: 1)
+          cell.layer.shadowOpacity = 1
+          cell.layer.shadowRadius = 0
+          cell.layer.masksToBounds = false
         return cell
     }
 }

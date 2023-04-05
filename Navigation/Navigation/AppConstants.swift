@@ -26,6 +26,7 @@ struct AppConstants {
         
         static let faceIDSizes = CGSize(width: 29, height: 29)
         static let touchIDSizes = CGSize(width: 23.29, height: 29.74)
+        static let favoritesSizes = CGSize(width: 22, height: 22)
         
     }
     //для файлов из папки Assets
@@ -36,6 +37,7 @@ struct AppConstants {
         static let profile = "profile"
         static let feeds = "feeds"
         static let favorites = "favorites"
+        static let favoritesFill = "favoritesFill"
     }
     //цвета
     struct Colors {
@@ -74,7 +76,9 @@ struct AppConstants {
     struct UIElements {
         static let cornerRadius: CGFloat = 4
         static let spacingBetweenElements: CGFloat = 8
-        static let tabBarLineHeight: CGFloat = 1 
+        static let tabBarLineHeight: CGFloat = 1
+        static let tableCellTop: CGFloat = 20
+        static let tableCellBottom: CGFloat = -14
         
         static let emailPlaceHolder = NSLocalizedString("Email", comment: "")
         static let passwordPlaceHolder = NSLocalizedString("Password", comment: "")
@@ -84,6 +88,15 @@ struct AppConstants {
         
         static let textFontRegular = UIFont(name: "OpenSans-Regular", size: 16)
         static let textFontBold = UIFont(name: "OpenSans-Bold", size: 16)
+        static let feedsTitleSemiBold = UIFont(name: "OpenSans-SemiBold", size: 16)
+        static let feedsTextRegular = UIFont(name: "OpenSans-Regular", size: 14)
+        static let feedsDateCountryRegular = UIFont(name: "OpenSans-Regular", size: 12)
+        
+        static let feedsZeroNumberLines = 0
+        static let feedsTextNumberLines = 3
+        
+        static let tableViewEdges = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
+        
         
     }
 

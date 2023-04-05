@@ -15,7 +15,7 @@ class ProfileViewController: UIViewController {
    
     let profileViewModel = ProfileViewModel(currentUser: .init(userLogin: "Krabs", userFullName: "Mr. Crabs", userAvatar: UIImage(named: "MrKrabs.png")!, userStatus: "1", userPassword: "1"))
 //    let photoCoordinator = PhotoCoordinator(navigationController: UINavigationController())
-    let coreDataService = CoreDataService()
+//    let coreDataService = CoreDataService()
     
 //    init(photoCoordinator: PhotoCoordinator, profileViewModel: ProfileViewModel) {
 //        self.photoCoordinator = photoCoordinator
@@ -211,8 +211,8 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
-            cell.post = profileViewModel.postsData[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! FeedsTableViewCell
+//            cell.post = profileViewModel.postsData[indexPath.row]
 //            let tap = UITapGestureRecognizer(target: self, action: #selector(addPost))
 //            tap.numberOfTapsRequired = 2
 //            cell.addGestureRecognizer(tap)

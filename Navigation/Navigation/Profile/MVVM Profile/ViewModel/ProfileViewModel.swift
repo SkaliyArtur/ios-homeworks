@@ -11,7 +11,7 @@ import UIKit
 class ProfileViewModel {
    
     let profileHeaderView = ProfileHeaderView()
-    var postsData: [ProfilePostModel] = []
+    var postsData: [FeedsModel] = []
     var currentUser: User
     init(currentUser: User) {
         self.currentUser = currentUser

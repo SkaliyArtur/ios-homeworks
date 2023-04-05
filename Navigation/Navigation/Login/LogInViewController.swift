@@ -125,8 +125,11 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         
         loginTextField.text = "1@1.ru"
-        passwordTextField.isSecureTextEntry = true
         passwordTextField.text = "123456"
+        
+        
+        passwordTextField.isSecureTextEntry = true
+        
         view.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         constraintSetup()
 

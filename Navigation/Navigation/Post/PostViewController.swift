@@ -12,17 +12,17 @@ import CoreData
 class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResultsControllerDelegate, UINavigationControllerDelegate {
 
     let tableView = UITableView.init(frame: .zero, style: .grouped)
-    let coreDataService = CoreDataService()
-    var savedPosts: [ProfilePostModel] = []
+//    let coreDataService = CoreDataService()
+    var savedPosts: [FeedsModel] = []
     var isSorted = false
     var filteredAuthor: String? = nil
     
-    let fetchResultController: NSFetchedResultsController<PostEntity> = {
-        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.coreManager.context, sectionNameKeyPath: nil, cacheName: nil)
-        return frc
-    }()
+//    let fetchResultController: NSFetchedResultsController<PostEntity> = {
+//        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
+//        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.coreManager.context, sectionNameKeyPath: nil, cacheName: nil)
+//        return frc
+//    }()
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         tableView.reloadData()
@@ -34,8 +34,8 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
         view.addSubview(tableView)
         
         navigationController?.delegate = self
-        fetchResultController.delegate = self
-        try? fetchResultController.performFetch()
+//        fetchResultController.delegate = self
+//        try? fetchResultController.performFetch()
         setupTableView()
         self.title = "Posts".localized
         self.view.backgroundColor = UIColor.createColor(lightMode: .green, darkMode: .black)
@@ -77,7 +77,7 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
     
     
     func setupTableView() {
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
+        tableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
@@ -95,7 +95,7 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        try? fetchResultController.performFetch()
+//        try? fetchResultController.performFetch()
         tableView.reloadData()
     }
     
@@ -104,19 +104,20 @@ class PostViewController: UIViewController, UITableViewDelegate, NSFetchedResult
 extension PostViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        returnPosts().count
-        return fetchResultController.sections?[section].numberOfObjects ?? 0
+//        return fetchResultController.sections?[section].numberOfObjects ?? 0
+        return 0
         
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
 //        cell.post = returnPosts()[indexPath.row]
-        let post = fetchResultController.object(at: indexPath)
-        cell.authorLablel.text = post.author
-        cell.descriptionLablel.text = post.postDescription
-        cell.imageImageView.image = UIImage(named: post.image ?? "logo.png")
-        cell.likesLablel.text = String(format: "Likes".localized, post.likes)
-        cell.viewsLablel.text = "Views: \(post.views)"
+//        let post = fetchResultController.object(at: indexPath)
+//        cell.feedsTitleLabel.text = post.author
+//        cell.feedsTextLabel.text = post.postDescription
+//        cell.feedsImageView.image = UIImage(named: post.image ?? "logo.png")
+//        cell.feedsDateLabel.text = String(format: "Likes".localized, post.likes as! CVarArg)
+//        cell.feedsCountryLabel.text = "Views: \(post.views)"
         return cell
     }
     
@@ -125,9 +126,9 @@ extension PostViewController: UITableViewDataSource {
 //            self.coreDataService.deleteContext(profilePostModel: self.returnPosts()[indexPath.row])
 //            tableView.reloadData()
 //            self.tableView.deleteRows(at: [indexPath], with: .none)
-            let post = self.fetchResultController.object(at: indexPath)
-            CoreDataService.coreManager.context.delete(post)
-            try? CoreDataService.coreManager.context.save()
+//            let post = self.fetchResultController.object(at: indexPath)
+//            CoreDataService.coreManager.context.delete(post)
+//            try? CoreDataService.coreManager.context.save()
             success(true)
         }
         action.backgroundColor = .red
