@@ -45,8 +45,9 @@ class Factory {
             navigationController.setViewControllers([controller], animated: true)
 
         case .favorites:
-            let controller = PostViewController()
+            let controller = FavoritesViewController()
             navigationController.tabBarItem = .init(title: NSLocalizedString("Favorties", comment: ""), image: UIImage(named: AppConstants.Asssets.favorites), tag: 2)
+            navigationController.setNavigationBarHidden(true, animated: false)
             navigationController.setViewControllers([controller], animated: true)
         }
     }

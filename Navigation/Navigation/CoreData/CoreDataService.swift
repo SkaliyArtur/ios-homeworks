@@ -15,7 +15,7 @@ class CoreDataService {
     static let coreManager = CoreDataService()
     
     var persistentContainer: NSPersistentContainer = {
-          let container = NSPersistentContainer(name: "PostModel")
+          let container = NSPersistentContainer(name: "FeedModel")
           container.loadPersistentStores(completionHandler: { (storeDescription, error) in
               if let error = error as NSError? {
                   fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -81,7 +81,8 @@ class CoreDataService {
         do {
             let savedFeeds = try persistentContainer.viewContext.fetch(feedFetch)
             for data in savedFeeds as [NSManagedObject] {
-//                savedPostsData.append(.init(feedsTitle: data.value(forKey: "author") as! String, feedsText: data.value(forKey: "postDescription") as! String, feedsImage: data.value(forKey: "image") as! String, feedsDate: data.value(forKey: "likes") as! Int, feedsCountry: data.value(forKey: "views") as! Int))
+                savedFeedsData.append(.init(feedsTitle: data.value(forKey: "feedsTitle") as! String, feedsText: data.value(forKey: "feedsText") as! String, feedsImage: data.value(forKey: "feedsImage") as! String, feedsDate: data.value(forKey: "feedsDate") as! String))
+//                savedFeedsData.append(.init(feedsTitle: data.value(forKey: "author") as! String, feedsText: data.value(forKey: "postDescription") as! String, feedsImage: data.value(forKey: "image") as! String, feedsDate: data.value(forKey: "likes") as! Int, feedsCountry: data.value(forKey: "views") as! Int))
             }
         } catch {
             print("error \(error.localizedDescription)")
@@ -105,7 +106,7 @@ class CoreDataService {
 //    }
     
     func deleteContext(FeedsModel: FeedsModel) {
-        let feedFetch: NSFetchRequest<PostEntity> = FeedEntity.fetchRequest()
+        let feedFetch: NSFetchRequest<FeedEntity> = FeedEntity.fetchRequest()
 //        postFetch.predicate = NSPredicate(format: "author == %@ AND postDescription == %@ AND image == %@", profilePostModel.author, profilePostModel.postDescription, profilePostModel.image)
         do {
             let results = try persistentContainer.viewContext.fetch(feedFetch) as [NSManagedObject]

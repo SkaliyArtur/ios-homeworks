@@ -37,13 +37,14 @@ class FeedsTableViewCell: UITableViewCell {
     let favoritesButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(tapFavoritesButton), for: .touchUpInside)
         return button
     }()
+
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
         setupFeedsTableViewCell()
+        
         
     }
     
@@ -91,19 +92,10 @@ class FeedsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func tapFavoritesButton(_ sender: UITapGestureRecognizer) {
-//        guard let indexPath = feedsTableView.indexPathForRow(at: sender.location(in: self.feedsTableView)) else {return}
-//        let cell = feedsTableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
-//        cell.feed = feeds[indexPath.row]
-//        CoreDataService.coreManager.persistentContainer.viewContext.save()
-//        coreDataService.saveContext(
-//            postModel: .init(
-//                author: profileViewModel.postsData[indexPath.row].author,
-//                postDescription: profileViewModel.postsData[indexPath.row].postDescription,
-//                image: profileViewModel.postsData[indexPath.row].image,
-//                likes: profileViewModel.postsData[indexPath.row].likes,
-//                views: profileViewModel.postsData[indexPath.row].views)
-//        )
-    }
+    
+    
+    
 
 }
+
+
