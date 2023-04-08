@@ -139,7 +139,7 @@ class ProfileViewController: UIViewController {
 //        }
 //    }
     
-    
+    var checkerService = CheckerService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,7 +154,15 @@ class ProfileViewController: UIViewController {
         setupExitButton()
         setupTableView()
 //        createTimer()
+//        profileHeaderView.nameLabel.text = "MAXIM"
+       
+         
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        exitButton.setButtonColors()
+        ProfileSettingTableViewCell().separatorLineImageView.image = UIColor.createOnePixelImage(AppConstants.Colors.purpleSecondaryColorNormal)()
     }
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
@@ -184,6 +192,7 @@ class ProfileViewController: UIViewController {
         profileTableView.translatesAutoresizingMaskIntoConstraints = false
         
         profileTableView.separatorStyle = .none
+        profileTableView.rowHeight = 44
         
         
         profileTableView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
@@ -232,12 +241,16 @@ extension ProfileViewController: UITableViewDataSource {
     
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = profileTableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
+//        let header = profileTableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
+        let header = profileHeaderView
+       
         return header
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
             return 272
     }
+    
+   
     
 //    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 //        let footer = exitButton.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")

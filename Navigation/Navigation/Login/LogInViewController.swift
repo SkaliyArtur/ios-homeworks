@@ -20,7 +20,7 @@ class LogInViewController: UIViewController {
 //        fatalError("init(coder:) has not been implemented")
 //    }
     
-    let coordinator = TabBarController()
+//    let coordinator = TabBarController()
     
     //Основные элементы экрана
     let loginScrollView: UIScrollView = {
@@ -63,13 +63,13 @@ class LogInViewController: UIViewController {
         return faceIdButton
     }()
     
-    var checkerService: CheckerServiceProtocol?
-    var localAuthService: LocalAuthorizationService?
+    var checkerService = CheckerService()
+    var localAuthService = LocalAuthorizationService()
     
     @objc func authTypeButtonTap() {
-        localAuthService?.authorizeIfPossible() { doneWorking in
+        localAuthService.authorizeIfPossible() { doneWorking in
             if doneWorking {
-                self.view.window?.rootViewController = self.coordinator
+                self.view.window?.rootViewController = TabBarController()
                 self.view.window?.makeKeyAndVisible()
             } else {
                 print("LOG IN ERROR")
@@ -86,9 +86,9 @@ class LogInViewController: UIViewController {
         }
         
     //Вызываем проверку
-        checkerService?.checkCredentials(login: login, password: pass) { doneWorking in
+        checkerService.checkCredentials(login: login, password: pass) { doneWorking in
             if doneWorking {
-                self.view.window?.rootViewController = self.coordinator
+                self.view.window?.rootViewController = TabBarController()
                 self.view.window?.makeKeyAndVisible()
             } else {
                 
@@ -176,7 +176,7 @@ class LogInViewController: UIViewController {
         authStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
         //Проверяем какой тип биометри, от этого вставляем картинку и размеры. Если биометрии нет - картинки не будет, и кнопка логина растянется до конца
-        switch localAuthService?.checkBiometryType() {
+        switch localAuthService.checkBiometryType() {
         case .face:
             authButtonSetup(image: UIImage(named: AppConstants.Asssets.faceID), height: AppConstants.ConstraintConstants.faceIDSizes.height, width: AppConstants.ConstraintConstants.faceIDSizes.width)
         case .touch:

@@ -44,6 +44,10 @@ struct AppConstants {
         static let feeds = "feeds"
         static let favorites = "favorites"
         static let favoritesFill = "favoritesFill"
+        static let defaultAvatar = "defaultAvatar"
+        static let editButton = "editButton"
+        static let editAvatar = "editAvatar"
+        
     }
     //цвета
     struct Colors {
@@ -94,6 +98,7 @@ struct AppConstants {
         static let statusPlaceHolder = NSLocalizedString("Write for status", comment: "")
         static let setStatusButtonText = NSLocalizedString("Set status", comment: "")
         static let exitButton = NSLocalizedString("Exit", comment: "")
+        static let namePlaceHolder = NSLocalizedString("Enter name", comment: "")
         
         static let textFontRegular = UIFont(name: "OpenSans-Regular", size: 16)
         static let textFontBold = UIFont(name: "OpenSans-Bold", size: 16)

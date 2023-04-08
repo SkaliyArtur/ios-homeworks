@@ -151,6 +151,7 @@ extension FeedsViewController: UITableViewDataSource {
           cell.layer.shadowOpacity = 1
           cell.layer.shadowRadius = 0
           cell.layer.masksToBounds = false
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapFavoritesButton(_:)))
         cell.favoritesButton.addGestureRecognizer(tapGestureRecognizer)
         

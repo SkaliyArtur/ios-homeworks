@@ -7,18 +7,7 @@
 
 import UIKit
 
-
-enum FullNameError: Error {
-    case noName
-    case longName
-    case notEnglish
-}
-
 class ProfileHeaderView: UITableViewHeaderFooterView {
-
-//     var avatarHeight: NSLayoutConstraint!
-//     var avatarWidth: NSLayoutConstraint!
-//    let userDefault: User = .init(userLogin: "Krabs", userFullName: "Mr. Crabs", userAvatar: UIImage(named: "MrKrabs.png")!, userStatus: "Спанч Боб", userPassword: "321")
     
     let avatarImageView: UIImageView = {
         let image = UIImageView()
@@ -32,104 +21,53 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     let nameLabel = CustomUILabel(font: AppConstants.UIElements.nameLabelSemiBold!, lines: AppConstants.UIElements.feedsZeroNumberLines)
     
-//        : UILabel = {
-//        let label = UILabel()
-////        nameLabel.text = "Mr. Crabs"
-//        label.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
-//        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-//        label.textAlignment = NSTextAlignment.center
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
     let statusLabel = CustomUILabel(font: AppConstants.UIElements.textFontRegular!, lines: AppConstants.UIElements.feedsZeroNumberLines)
-//        : UILabel = {
-//        let label = UILabel()
-////        statusLabel.text = "empty"
-//        label.textColor = UIColor.createColor(lightMode: .gray, darkMode: .white)
-//        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
+
     let statusTextField = CustomTextField(placeHolder: AppConstants.UIElements.statusPlaceHolder)
-        
-//        : UITextField = {
-//        let textField = UITextField()
-//        textField.placeholder = " Waiting for status".localized
-//        textField.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
-//        textField.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .systemGray4)
-//        textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-//        textField.layer.cornerRadius = 12
-//        textField.layer.borderWidth = 1
-//        textField.layer.borderColor = UIColor.black.cgColor
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        return textField
-//    }()
-    
-    //Задание 6: применил кастомную кнопку, сократил 4 строк кода ниже
+
     let setStatusButton = CustomButton(title: AppConstants.UIElements.setStatusButtonText, titleColorEnable: AppConstants.Colors.colorStandart, titleColorDisable: AppConstants.Colors.colorStandart)
     
-    let editImageView: UIImageView = {
-       let image = UIImageView()
-        image.image = UIImage(named: "edit")
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
+    let editButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(tapEdit), for: .touchUpInside)
+        return button
     }()
-        
-//        : UIButton = {
-//        let statusButton = UIButton()
-////        statusButton.setTitle("Set status", for: .normal)
-//        statusButton.backgroundColor = .systemBlue
-////        statusButton.layer.cornerRadius = 4
-//        statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        statusButton.layer.shadowRadius = 4
-//        statusButton.layer.shadowColor = UIColor.black.cgColor
-//        statusButton.layer.shadowOpacity = 0.7
-////        statusButton.translatesAutoresizingMaskIntoConstraints = false
-////        statusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-//        return statusButton
-//    }()
 
-    
-    //Задание 6: переделываю функцию, которая должна вызываться и передавать действия по нажатию кнопки
     func buttonPressed() {
-        
-        print("set status")
-        setStatusButton.actionHandler = { [self] in
         statusLabel.text = statusTextField.text
-        }
     }
     
-    
-    //для Задания 3: убрал предустоновленные значения профиля и сделал метод setUser, который присваивает значения свойствам профиля
-//    func setHeaderUser(userAvatar: UIImage, userFullName: String, userStatus: String ) throws {
-//        avatarImageView.image = userAvatar
-//        statusLabel.text = userStatus
-//        switch  userFullName.count {
-//        case _ where userFullName.count == 0:
-//            throw FullNameError.noName
-//        case _ where userFullName.count > 10:
-//            throw FullNameError.longName
-//        default:
-//            nameLabel.text = userFullName
-//        }
-//    }
-    
+    func editButtonSetup(image: UIImage?, height: CGFloat, width: CGFloat) {
+        guard let img = image else {return}
+        editButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
+        editButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
+    }
+
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupProfileHeaderView()
+        
         
     }
     override func layoutSubviews() {
         super.layoutSubviews()
         setStatusButton.setSecondButtonColors()
-//        avatarImageView.layer.cornerRadius = 110/2
-//        avatarImageView.clipsToBounds = true
+        setStatusButton.actionHandler = { [weak self] in
+            guard let self = self else { return }
+            self.buttonPressed()
+        }
+        
         
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
 }
-   
+    @objc func tapEdit() {
+        print("EDIT BUTTON")
+        UINavigationController().pushViewController(ProfileEditViewController(), animated: true)
+    }
+    
     func setupProfileHeaderView() {
         
         contentView.backgroundColor = AppConstants.Colors.colorStandartInverted
@@ -138,12 +76,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(statusLabel)
         contentView.addSubview(statusTextField)
         contentView.addSubview(setStatusButton)
-        contentView.addSubview(editImageView)
+        contentView.addSubview(editButton)
         
-        avatarImageView.image = UIImage(named: "defaultAvatar")
-        nameLabel.text = "Name"
+        avatarImageView.image = UIImage(named: AppConstants.Asssets.defaultAvatar)
+        nameLabel.text = CheckerService.shared.getUserName()
         statusLabel.text = "Status"
         setStatusButton.setSecondButtonColors()
+        editButtonSetup(image: UIImage(named: AppConstants.Asssets.editButton), height: 24, width: 24)
+        
+        
         
         NSLayoutConstraint.activate([
             
@@ -168,8 +109,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements),
             statusLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             
-            editImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            editImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            editButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            editButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
+    
+    
 }

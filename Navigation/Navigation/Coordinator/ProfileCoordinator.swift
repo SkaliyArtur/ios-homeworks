@@ -7,23 +7,13 @@
 
 import Foundation
 import UIKit
-import FirebaseAuth
 
 class ProfileCoordinator {
- 
-    let navigationController: UINavigationController
-    
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
-    
-    
+
+    let navigationController = UINavigationController()
+
     func startView() {
-        
-        let currentUserService = CurrentUserService()
-//        let photoCoordinator = PhotoCoordinator(navigationController: navigationController)
-        let profileViewModel = ProfileViewModel(currentUser: currentUserService.user)
-        let profileVC = ProfileViewController()
+        let profileVC = ProfileEditViewController()
         navigationController.pushViewController(profileVC, animated: true)
     }
 }

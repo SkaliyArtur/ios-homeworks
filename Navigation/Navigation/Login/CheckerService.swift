@@ -20,6 +20,7 @@ class CheckerService: CheckerServiceProtocol {
     
     //Признак успешного логина
     var isSingIn: Bool = false
+//    var userName: String = ""
     
     
     func checkCredentials(login: String, password: String, using completionHandler: @escaping (Bool)->()) {
@@ -43,7 +44,7 @@ class CheckerService: CheckerServiceProtocol {
                 //Если логин пароль валидны - меня признак логина
                 isSingIn = true
                 completionHandler(true)
-                currentUserData(login: login, password: password)
+//                currentUserData(login: login, password: password)
             }
         }
     }
@@ -59,11 +60,14 @@ class CheckerService: CheckerServiceProtocol {
             }
     }
     
-    func currentUserData(login: String, password: String){
+//    func currentUserData(login: String, password: String){
+//        let user = Auth.auth().currentUser
+//        userName = user?.displayName ?? "Name"
+//    }
+    
+    func getUserName() -> String? {
         let user = Auth.auth().currentUser
-        let email = user?.email
-        let displayName = user?.displayName
-        print("USER EMAIL: \(email), \(displayName)")
+        return user?.displayName ?? "No Name"
     }
 }
 
