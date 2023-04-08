@@ -35,6 +35,7 @@ class Factory {
 //            controller.localAuthService = LocalAuthorizationService()
             let controller = ProfileViewController()
             navigationController.tabBarItem = .init(title: NSLocalizedString("Profile", comment: ""), image: UIImage(named: AppConstants.Asssets.profile), tag: 0)
+            navigationController.setNavigationBarHidden(true, animated: false)
             navigationController.setViewControllers([controller], animated: true)
             
             

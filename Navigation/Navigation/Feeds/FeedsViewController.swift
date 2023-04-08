@@ -42,6 +42,7 @@ class FeedsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.delegate = self
         setupView()
     }
     
@@ -78,7 +79,7 @@ class FeedsViewController: UIViewController {
             searchStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchStackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             searchStackView.heightAnchor.constraint(equalToConstant: 40),
-            searchStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewWidth),
+            searchStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartWidth),
             
             getNewsButton.widthAnchor.constraint(equalToConstant: 49),
             
@@ -99,7 +100,7 @@ class FeedsViewController: UIViewController {
     func dataTaskNewsJSONDecoder() {
         let session = URLSession.shared
         let group = DispatchGroup()
-        guard let url = URL(string: "https://api.worldnewsapi.com/search-news?api-key=cef09b93847f45e1b39d668fe205bdd6&text=SpiderMan") else {return}
+        guard let url = URL(string: "https://api.worldnewsapi.com/search-news?api-key=cef09b93847f45e1b39d668fe205bdd6&text=Crypto") else {return}
         group.enter()
             let task = session.dataTask(with: url) {data, _, error in
                 do {
@@ -130,12 +131,9 @@ class FeedsViewController: UIViewController {
             guard let indexPath = feedsTableView.indexPathForRow(at: sender.location(in: self.feedsTableView)) else {return}
             let cell = feedsTableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
             cell.feed = feeds[indexPath.row]
-        guard let image = cell.feedsImageView.image else {return}
-        let jpegImageData = image.jpegData(compressionQuality: 1.0)
-        
 //            try? CoreDataService.coreManager.persistentContainer.viewContext.save()
             coreDataService.saveContext(feedModel: .init(feedsTitle: feeds[indexPath.row].feedsTitle, feedsText: feeds[indexPath.row].feedsText, feedsImage: feeds[indexPath.row].feedsImage, feedsDate: feeds[indexPath.row].feedsDate))
-        print("VCC")
+        self.feedsTableView.reloadData()
     }
 }
 
@@ -155,10 +153,25 @@ extension FeedsViewController: UITableViewDataSource {
           cell.layer.masksToBounds = false
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapFavoritesButton(_:)))
         cell.favoritesButton.addGestureRecognizer(tapGestureRecognizer)
+        
+        if coreDataService.checkFeedExists(feedModel: cell.feed!) == true {
+            cell.favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favoritesFill)?.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
+            cell.favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favoritesFill)?.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
+        } else {
+            cell.favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favorites)?.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
+            cell.favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favorites)?.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
+        }
+        
         return cell
     }
 }
 
 extension FeedsViewController: UITableViewDelegate {
     
+}
+
+extension FeedsViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        feedsTableView.reloadData()
+    }
 }

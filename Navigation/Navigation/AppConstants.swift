@@ -19,10 +19,16 @@ struct AppConstants {
         static let loginWidth: CGFloat = 219.49
         static let loginAuthStackViewTop: CGFloat = 192.26
         static let loginAuthStackViewHeight: CGFloat = 96
-        static let loginAuthStackViewWidth: CGFloat = 360
+        
+        //Заменить
+        static let elementStandartWidth: CGFloat = 360
+        static let elementStandartHeight: CGFloat = 44
+        
+        static let elementStandartSizes = CGSize(width: 360, height: 44)
+        static let avatarSizes = CGSize(width: 100, height: 100)
         
         static let leadingTrailing: CGFloat = 15
-        static let buttonHeight: CGFloat = 44
+        
         
         static let faceIDSizes = CGSize(width: 29, height: 29)
         static let touchIDSizes = CGSize(width: 23.29, height: 29.74)
@@ -85,12 +91,15 @@ struct AppConstants {
         static let loginButtonText = NSLocalizedString("Log in", comment: "")
         static let searchForFeedPlaceHolder = NSLocalizedString("Search for feeds", comment: "")
         static let searchForFeedText = NSLocalizedString("Get", comment: "")
+        static let statusPlaceHolder = NSLocalizedString("Write for status", comment: "")
+        static let setStatusButtonText = NSLocalizedString("Set status", comment: "")
         
         static let textFontRegular = UIFont(name: "OpenSans-Regular", size: 16)
         static let textFontBold = UIFont(name: "OpenSans-Bold", size: 16)
         static let feedsTitleSemiBold = UIFont(name: "OpenSans-SemiBold", size: 16)
         static let feedsTextRegular = UIFont(name: "OpenSans-Regular", size: 14)
         static let feedsDateCountryRegular = UIFont(name: "OpenSans-Regular", size: 12)
+        static let nameLabelSemiBold = UIFont(name: "OpenSans-SemiBold", size: 20)
         
         static let feedsZeroNumberLines = 0
         static let feedsTextNumberLines = 3

@@ -179,24 +179,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6605AB8228F0B4BF00EB89FA /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				6605AB7428ECBEE400EB89FA /* NetworkService.swift */,
-				6605AB7828ECC08900EB89FA /* AppConfiguration.swift */,
-				6605AB8328F0B4DE00EB89FA /* JSONModel.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		660FC25A29C8FE9E00B37A4B /* ToDelete */ = {
 			isa = PBXGroup;
 			children = (
+				66DF8977279F2AC70030F19F /* ProfilePostModel.swift */,
+				663965C427E286FE001675D8 /* CarsData.swift */,
 				66B5B14929789D8100BE2939 /* Map */,
 				667F95D728CA7D0500396212 /* LoginViewControllerDelegate.swift */,
+				667CAE5129CF8FCA00BA5F9C /* NewsNetworkService.swift */,
 				667F95DB28CA7F3800396212 /* LoginInspector.swift */,
+				6605AB7428ECBEE400EB89FA /* NetworkService.swift */,
+				6605AB7828ECC08900EB89FA /* AppConfiguration.swift */,
+				6605AB8328F0B4DE00EB89FA /* JSONModel.swift */,
 				667F95E428CA987500396212 /* MyLoginFactory.swift */,
+				66DF896F279F26990030F19F /* PostFeed.swift */,
 				667F95E028CA972900396212 /* LoginFactory.swift */,
+				663965BE27E2813D001675D8 /* PhotosViewController.swift */,
+				6661963C27B30721006C7690 /* PhotosTableViewCell.swift */,
+				663965C127E28251001675D8 /* PhotosCollectionViewCell.swift */,
 				66948D3426CD14B80080D3D6 /* InfoViewController.swift */,
 			);
 			path = ToDelete;
@@ -249,24 +249,6 @@
 			path = Favorites;
 			sourceTree = "<group>";
 		};
-		667F95CF28CA73DA00396212 /* Photo */ = {
-			isa = PBXGroup;
-			children = (
-				663965BE27E2813D001675D8 /* PhotosViewController.swift */,
-				6661963C27B30721006C7690 /* PhotosTableViewCell.swift */,
-				663965C127E28251001675D8 /* PhotosCollectionViewCell.swift */,
-			);
-			path = Photo;
-			sourceTree = "<group>";
-		};
-		667F95D028CA740900396212 /* Post */ = {
-			isa = PBXGroup;
-			children = (
-				66DF896F279F26990030F19F /* PostFeed.swift */,
-			);
-			path = Post;
-			sourceTree = "<group>";
-		};
 		667F95DF28CA96BD00396212 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				6689F76629D61D05004D684C /* Fonts */,
+				66948D0B26CC017D0080D3D6 /* AppDelegate.swift */,
 				667CAE5729D394AC00BA5F9C /* AppConstants.swift */,
 				66C36488297DD207007C3022 /* Extensions */,
 				667F95DF28CA96BD00396212 /* Login */,
@@ -319,15 +302,9 @@
 				667CAE5429D38F5400BA5F9C /* Feeds */,
 				66103A7529242E5D00D04ECF /* CoreData */,
 				667CAE5529D38F8700BA5F9C /* Favorites */,
-				66A2347D29CE47A40037D54A /* News */,
-				660FC25A29C8FE9E00B37A4B /* ToDelete */,
-				6605AB8228F0B4BF00EB89FA /* Network */,
-				667F95D028CA740900396212 /* Post */,
-				667F95CF28CA73DA00396212 /* Photo */,
-				66B00C7C28C67C0C00DF5CAB /* User */,
 				66948D3826D679A80080D3D6 /* Profile */,
-				66948D0B26CC017D0080D3D6 /* AppDelegate.swift */,
-				663965C427E286FE001675D8 /* CarsData.swift */,
+				66B00C7C28C67C0C00DF5CAB /* User */,
+				660FC25A29C8FE9E00B37A4B /* ToDelete */,
 				66948D1426CC01820080D3D6 /* Assets.xcassets */,
 				66948D1626CC01820080D3D6 /* LaunchScreen.storyboard */,
 				66948D1926CC01820080D3D6 /* Info.plist */,
@@ -339,17 +316,11 @@
 		66948D3826D679A80080D3D6 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				66E02EA328DB991800ECCD13 /* MVVM Profile */,
+				66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */,
+				66948D3D26D67AAD0080D3D6 /* ProfileViewController.swift */,
+				66E02E9228DB8DA900ECCD13 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		66A2347D29CE47A40037D54A /* News */ = {
-			isa = PBXGroup;
-			children = (
-				667CAE5129CF8FCA00BA5F9C /* NewsNetworkService.swift */,
-			);
-			path = News;
 			sourceTree = "<group>";
 		};
 		66B00C7C28C67C0C00DF5CAB /* User */ = {
@@ -386,41 +357,6 @@
 				6689F77D29DA277B004D684C /* UIImageViewExtension.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		66E02EA328DB991800ECCD13 /* MVVM Profile */ = {
-			isa = PBXGroup;
-			children = (
-				66E02EA528DB992A00ECCD13 /* ViewModel */,
-				66E02EA628DB993000ECCD13 /* View */,
-				66E02EA428DB992300ECCD13 /* Model */,
-			);
-			path = "MVVM Profile";
-			sourceTree = "<group>";
-		};
-		66E02EA428DB992300ECCD13 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				66DF8977279F2AC70030F19F /* ProfilePostModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		66E02EA528DB992A00ECCD13 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				66E02E9228DB8DA900ECCD13 /* ProfileViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		66E02EA628DB993000ECCD13 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				66948D3926D67A8E0080D3D6 /* ProfileHeaderView.swift */,
-				66948D3D26D67AAD0080D3D6 /* ProfileViewController.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

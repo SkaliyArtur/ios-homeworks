@@ -172,7 +172,7 @@ class LogInViewController: UIViewController {
             
         authStackView.topAnchor.constraint(equalTo: getNewsLogoImageView.bottomAnchor, constant: AppConstants.ConstraintConstants.loginAuthStackViewTop),
         authStackView.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewHeight),
-        authStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewWidth),
+        authStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartWidth),
         authStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
         //Проверяем какой тип биометри, от этого вставляем картинку и размеры. Если биометрии нет - картинки не будет, и кнопка логина растянется до конца
@@ -189,7 +189,7 @@ class LogInViewController: UIViewController {
     //Настройка якорей кнопки Логина (которые не зависят от наличия биометрии)
     func loginButtonConstaintSetup() {
         loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.buttonHeight).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartHeight).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: authStackView.leadingAnchor).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }

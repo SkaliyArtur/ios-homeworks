@@ -56,8 +56,7 @@ class FeedsTableViewCell: UITableViewCell {
         contentView.addSubview(feedsDateLabel)
         contentView.addSubview(favoritesButton)
         
-        favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favorites)?.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
-        favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favorites)?.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
+        
         
         feedsTitleLabel.setContentHuggingPriority(.required, for: .vertical)
         feedsTextLabel.setContentHuggingPriority(.required, for: .vertical)

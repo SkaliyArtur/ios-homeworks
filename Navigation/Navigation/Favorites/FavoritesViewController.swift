@@ -81,7 +81,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, NSFetchedR
         favoritesFeedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: "FeedsTableViewCell")
         favoritesFeedsTableView.translatesAutoresizingMaskIntoConstraints = false
         favoritesFeedsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        favoritesFeedsTableView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewWidth).isActive = true
+        favoritesFeedsTableView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartWidth).isActive = true
         favoritesFeedsTableView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         favoritesFeedsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
@@ -116,6 +116,15 @@ extension FavoritesViewController: UITableViewDataSource {
         cell.feedsTextLabel.text = feed.feedsText
         cell.feedsImageView.load(urlString: feed.feedsImage ?? "getNewsLogo")
         cell.feedsDateLabel.text = feed.feedsDate
+        
+        if coreDataService.checkFeedExists(feedModel: cell.feed!) == true {
+            cell.favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favoritesFill)?.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
+            cell.favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favoritesFill)?.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
+        } else {
+            cell.favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favorites)?.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
+            cell.favoritesButton.setBackgroundImage(UIImage(named: AppConstants.Asssets.favorites)?.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
+        }
+        
         return cell
     }
     
