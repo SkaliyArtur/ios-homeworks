@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import StorageService
 import FirebaseAuth
 
 public struct profileSettingsModel: Codable {
@@ -60,15 +59,7 @@ class ProfileViewController: UIViewController {
 //        return closeBtn
 //    }()
     
-//    var getBtn: UIButton = {
-//        let closeBtn = UIButton()
-//        let img1 = UIImage(systemName: "newspaper")
-//        closeBtn.setImage(img1, for: .normal)
-//        closeBtn.tintColor = .black
-//        closeBtn.translatesAutoresizingMaskIntoConstraints = false
-//        closeBtn.addTarget(self, action: #selector(getNews), for: .touchUpInside)
-//        return closeBtn
-//    }()
+    var exitButton = CustomButton(title: AppConstants.UIElements.exitButton, titleColorEnable: AppConstants.Colors.colorStandartInverted, titleColorDisable: AppConstants.Colors.darkPurpleSecondaryColorNormal)
     
     
     
@@ -156,9 +147,11 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = AppConstants.Colors.colorStandartInverted
         
         view.addSubview(profileTableView)
+        view.addSubview(exitButton)
 //        view.addSubview(getBtn)
 //        profileViewModel.setUser()
 //        profileViewModel.setPosts()
+        setupExitButton()
         setupTableView()
 //        createTimer()
         
@@ -182,58 +175,50 @@ class ProfileViewController: UIViewController {
 //    }
     
     func setupTableView() {
-//        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostTableViewCell")
+        profileTableView.register(ProfileSettingTableViewCell.self, forCellReuseIdentifier: "ProfileSettingTableViewCell")
         profileTableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
-//        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
-//
+        
+        
         profileTableView.backgroundColor = AppConstants.Colors.colorStandartInverted
-        profileTableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         
         profileTableView.translatesAutoresizingMaskIntoConstraints = false
         
+        profileTableView.separatorStyle = .none
+        
+        
+        profileTableView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        profileTableView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.width).isActive = true
         profileTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        profileTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        profileTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        profileTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        profileTableView.bottomAnchor.constraint(equalTo: exitButton.topAnchor).isActive = true
 
         profileTableView.dataSource = self
         profileTableView.delegate = self
-        
-//        profileTableView.sectionHeaderHeight = 212
+    }
+    
+    func setupExitButton() {
+        exitButton.setButtonColors()
+        NSLayoutConstraint.activate([
+            exitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -AppConstants.UIElements.tableCellTop),
+            exitButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.height),
+            exitButton.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.width),
+            exitButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
     }
 }
 
 extension ProfileViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 0
-        case 1:
             return profileSettingsModel.settings.count
-        default:
-            return 0
-        }
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
-        
-//        var cell: UITableViewCell!
-//        if indexPath.section == 2 {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! FeedsTableViewCell
-////            cell.post = profileViewModel.postsData[indexPath.row]
-////            let tap = UITapGestureRecognizer(target: self, action: #selector(addPost))
-////            tap.numberOfTapsRequired = 2
-////            cell.addGestureRecognizer(tap)
-//            return cell
-//        }
-        if indexPath.section == 1 {
-            cell.textLabel?.text = profileSettingsModel.settings[indexPath.row].setting
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileSettingTableViewCell", for: indexPath) as! ProfileSettingTableViewCell
+        cell.settingLabel.text = profileSettingsModel.settings[indexPath.row].setting
         return cell
     }
     
@@ -247,27 +232,23 @@ extension ProfileViewController: UITableViewDataSource {
     
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapProcess))
-//            self.profileViewModel.profileHeaderView.avatarImageView.addGestureRecognizer(tapGesture)
-            return profileHeaderView
-        }
-        else {
-            return nil
-        }
+        let header = profileTableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
+        return header
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            let headerView = UIView.init(frame: CGRect(x: 0, y: 0, width: profileHeaderView.frame.size.width, height: profileHeaderView.frame.size.height))
-            
-            return
-        }
-        else {
-            return 0
-        }
+            return 272
     }
+    
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let footer = exitButton.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
+//        return header
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//            return 272
+//    }
 }
 
 class TableViewCell: UITableViewCell {
-
+    
 }

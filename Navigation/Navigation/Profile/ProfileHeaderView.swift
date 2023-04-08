@@ -66,7 +66,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 //    }()
     
     //Задание 6: применил кастомную кнопку, сократил 4 строк кода ниже
-    let setStatusButton = CustomButton(title: AppConstants.UIElements.setStatusButtonText, titleColorEnable: AppConstants.Colors.colorStandartInverted, titleColorDisable: AppConstants.Colors.colorStandart)
+    let setStatusButton = CustomButton(title: AppConstants.UIElements.setStatusButtonText, titleColorEnable: AppConstants.Colors.colorStandart, titleColorDisable: AppConstants.Colors.colorStandart)
+    
+    let editImageView: UIImageView = {
+       let image = UIImageView()
+        image.image = UIImage(named: "edit")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
         
 //        : UIButton = {
 //        let statusButton = UIButton()
@@ -110,15 +117,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setupProfileHeaderView()
-//        buttonPressed()
         
     }
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-////        avatarImageView.layer.cornerRadius = 110/2
-////        avatarImageView.clipsToBounds = true
-//        
-//    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setStatusButton.setSecondButtonColors()
+//        avatarImageView.layer.cornerRadius = 110/2
+//        avatarImageView.clipsToBounds = true
+        
+    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
 }
@@ -131,11 +138,12 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(statusLabel)
         contentView.addSubview(statusTextField)
         contentView.addSubview(setStatusButton)
+        contentView.addSubview(editImageView)
         
         avatarImageView.image = UIImage(named: "defaultAvatar")
         nameLabel.text = "Name"
         statusLabel.text = "Status"
-        setStatusButton.setButtonColors()
+        setStatusButton.setSecondButtonColors()
         
         NSLayoutConstraint.activate([
             
@@ -159,7 +167,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             
             statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements),
             statusLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-  
+            
+            editImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            editImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
 }

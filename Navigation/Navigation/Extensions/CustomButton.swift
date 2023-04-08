@@ -38,4 +38,10 @@ class CustomButton: UIButton {
         self.setBackground(AppConstants.Colors.purpleColorSelected, for: .selected)
         self.setBackground(AppConstants.Colors.colorDisabled, for: .disabled)
     }
+    
+    func setSecondButtonColors() {
+        self.setBackground(AppConstants.Colors.purpleSecondaryColorNormal, for: .normal)
+        self.setBackground(AppConstants.Colors.purpleSecondaryColorSelected, for: .selected)
+        
+    }
 }
