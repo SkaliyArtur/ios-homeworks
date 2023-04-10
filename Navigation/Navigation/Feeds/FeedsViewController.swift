@@ -50,7 +50,6 @@ class FeedsViewController: UIViewController {
         getNewsButton.setButtonColors()
     }
     
-    
     func setupView() {
         view.backgroundColor = AppConstants.Colors.colorStandartInverted
         
@@ -165,6 +164,34 @@ extension FeedsViewController: UITableViewDataSource {
         
         return cell
     }
+    
+//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath as IndexPath)
+//            return cell
+//        }
+////
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        let cell = tableView.cellForRow(at: indexPath as IndexPath) as! FeedsTableViewCell
+//        let profileVC = FeedViewController(
+//            feedsTitleLabel: cell.feedsTitleLabel,
+//            feedsTextLabel: cell.feedsTextLabel,
+//            feedsImageView: cell.feedsImageView,
+//            feedsDateLabel: cell.feedsDateLabel,
+//            favoritesButton: cell.favoritesButton)
+//        self.navigationController?.pushViewController(profileVC, animated: true)
+//        print("SELECTED!!")
+//        }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+////        let cell = tableView.cellForRow(at: indexPath) as! FeedsTableViewCell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
+        let profileVC = FeedViewController()
+        profileVC.feedsTitleLabel.text = feeds[indexPath.row].feedsTitle
+        profileVC.feedsTextLabel.text = feeds[indexPath.row].feedsText
+        profileVC.feedsImageView.load(urlString: feeds[indexPath.row].feedsImage)
+        profileVC.feedsDateLabel.text = feeds[indexPath.row].feedsDate
+        profileVC.modalPresentationStyle = .pageSheet
+        self.present(profileVC, animated: true, completion: nil)
+        }
 }
 
 extension FeedsViewController: UITableViewDelegate {

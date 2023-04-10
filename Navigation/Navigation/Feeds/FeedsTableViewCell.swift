@@ -25,7 +25,7 @@ class FeedsTableViewCell: UITableViewCell {
     
     let feedsImageView: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         image.backgroundColor = AppConstants.Colors.colorStandart
         image.layer.cornerRadius = AppConstants.UIElements.cornerRadius
         image.translatesAutoresizingMaskIntoConstraints = false

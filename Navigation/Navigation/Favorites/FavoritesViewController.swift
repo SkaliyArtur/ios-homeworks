@@ -128,6 +128,19 @@ extension FavoritesViewController: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+////        let cell = tableView.cellForRow(at: indexPath) as! FeedsTableViewCell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
+        let feed = fetchResultController.object(at: indexPath)
+        let profileVC = FeedViewController()
+        profileVC.feedsTitleLabel.text = feed.feedsTitle
+        profileVC.feedsTextLabel.text = feed.feedsText
+        profileVC.feedsImageView.load(urlString: feed.feedsImage ?? "getNewsLogo")
+        profileVC.feedsDateLabel.text = feed.feedsDate
+        profileVC.modalPresentationStyle = .pageSheet
+        self.present(profileVC, animated: true, completion: nil)
+        }
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Delete".localized) { (action, view, success) in
 //            self.coreDataService.deleteContext(profilePostModel: self.returnPosts()[indexPath.row])
