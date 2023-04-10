@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseAuth
 import UIKit
+import FirebaseFirestore
+import FirebaseStorage
 
 protocol CheckerServiceProtocol {
     func checkCredentials(login: String, password: String, using complition: @escaping (Bool)->())
@@ -44,7 +46,7 @@ class CheckerService: CheckerServiceProtocol {
                 //Если логин пароль валидны - меня признак логина
                 isSingIn = true
                 completionHandler(true)
-//                currentUserData(login: login, password: password)
+                currentUserData(login: login, password: password)
             }
         }
     }
@@ -60,14 +62,53 @@ class CheckerService: CheckerServiceProtocol {
             }
     }
     
-//    func currentUserData(login: String, password: String){
-//        let user = Auth.auth().currentUser
-//        userName = user?.displayName ?? "Name"
-//    }
+    func currentUserData(login: String, password: String){
+        let user = Auth.auth().currentUser
+        print("PHOTO \(user?.photoURL) and ID \(user?.uid)")
+    }
     
     func getUserName() -> String? {
         let user = Auth.auth().currentUser
         return user?.displayName ?? "No Name"
+    }
+    
+    func saveUserName(userName: String) {
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = userName
+        changeRequest?.commitChanges { error in
+          // ...
+        }
+
+    }
+    
+    func setUsersPhotoURL(withImage: UIImage, andFileName: String) {
+        let user = Auth.auth().currentUser
+        guard let imageData = withImage.jpegData(compressionQuality: 0.5) else { return }
+        let storageRef = Storage.storage().reference()
+        let thisUserPhotoStorageRef = storageRef.child("\(user?.uid)").child(andFileName)
+
+        let uploadTask = thisUserPhotoStorageRef.putData(imageData, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                print("error while uploading")
+                return
+            }
+
+            thisUserPhotoStorageRef.downloadURL { (url, error) in
+                print(metadata.size) // Metadata contains file metadata such as size, content-type.
+                thisUserPhotoStorageRef.downloadURL { (url, error) in
+                    guard let downloadURL = url else {
+                        print("an error occured after uploading and then getting the URL")
+                        return
+                    }
+
+                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                    changeRequest?.photoURL = downloadURL
+                    changeRequest?.commitChanges { (error) in
+                        //handle error
+                    }
+                }
+            }
+        }
     }
 }
 

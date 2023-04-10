@@ -10,7 +10,7 @@ import FirebaseAuth
 
 class LogInViewController: UIViewController {
     
-//    let coordinator: ProfileCoordinator
+
 //
 //    init(coordinator: ProfileCoordinator) {
 //        self.coordinator = coordinator

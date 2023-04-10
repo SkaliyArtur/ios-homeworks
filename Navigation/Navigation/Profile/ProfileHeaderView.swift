@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol editDelegate {
+    func editButton()
+}
+
 class ProfileHeaderView: UITableViewHeaderFooterView {
+    
+    
+    var deleagate: editDelegate?
     
     let avatarImageView: UIImageView = {
         let image = UIImageView()
@@ -57,6 +64,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             guard let self = self else { return }
             self.buttonPressed()
         }
+        nameLabel.text = CheckerService.shared.getUserName()
         
         
     }
@@ -64,8 +72,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
 }
     @objc func tapEdit() {
-        print("EDIT BUTTON")
-        UINavigationController().pushViewController(ProfileEditViewController(), animated: true)
+        
+        deleagate?.editButton()
+        
     }
     
     func setupProfileHeaderView() {
@@ -79,7 +88,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(editButton)
         
         avatarImageView.image = UIImage(named: AppConstants.Asssets.defaultAvatar)
-        nameLabel.text = CheckerService.shared.getUserName()
+//        nameLabel.text = CheckerService.shared.getUserName()
         statusLabel.text = "Status"
         setStatusButton.setSecondButtonColors()
         editButtonSetup(image: UIImage(named: AppConstants.Asssets.editButton), height: 24, width: 24)

@@ -16,7 +16,7 @@ public struct profileSettingsModel: Codable {
         profileSettingsModel(setting: "Profile"), profileSettingsModel(setting: "Settings"), profileSettingsModel(setting: "Favorites")]
 }
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, editDelegate {
 
    
 //    let profileViewModel = ProfileViewModel(currentUser: .init(userLogin: "Krabs", userFullName: "Mr. Crabs", userAvatar: UIImage(named: "MrKrabs.png")!, userStatus: "1", userPassword: "1"))
@@ -155,19 +155,40 @@ class ProfileViewController: UIViewController {
         setupTableView()
 //        createTimer()
 //        profileHeaderView.nameLabel.text = "MAXIM"
-       
+        exitButton.actionHandler = { [weak self] in
+            guard let self = self else { return }
+            self.tapExitButton()
+        }
          
         
     }
+        
+    func tapExitButton() {
+      do {
+        try Auth.auth().signOut()
+        CheckerService.shared.isSingIn = false
+        self.view.window?.rootViewController = MainCoordinatorImp().startApplication()
+        self.view.window?.makeKeyAndVisible()
+      } catch {
+        print("Неизвестная ошибка")
+      }
+    }
+        func editButton() {
+            let profileVC = ProfileEditViewController()
+            self.navigationController?.pushViewController(profileVC, animated: true)
+        }
     
     override func viewDidLayoutSubviews() {
         exitButton.setButtonColors()
         ProfileSettingTableViewCell().separatorLineImageView.image = UIColor.createOnePixelImage(AppConstants.Colors.purpleSecondaryColorNormal)()
+        
     }
-//    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
+        self.profileTableView.reloadData()
+        self.view.layoutSubviews()
 //        super.viewWillAppear(animated)
 //        navigationController?.setNavigationBarHidden(true, animated: animated)
-//    }
+    }
 //
 //    override func viewWillDisappear(_ animated: Bool) {
 //        super.viewWillDisappear(animated)
@@ -232,9 +253,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.section == 1 {
-////            photoCoordinator.startView()
-//        }
+      
     }
 
 }
@@ -243,6 +262,8 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //        let header = profileTableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
         let header = profileHeaderView
+        //инициализировали делегата, чтобы по нажатию открывалась другая вью
+        header.deleagate = self
        
         return header
     }

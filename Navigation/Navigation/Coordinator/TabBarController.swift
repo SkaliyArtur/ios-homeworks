@@ -9,7 +9,7 @@ import UIKit
 
 class TabBarController: UITabBarController {
 
-    private let proflesViewController = Factory(navigationController: UINavigationController(), viewController: .profile)
+    private let profileViewController = Factory(navigationController: UINavigationController(), viewController: .profile)
     private let feedsViewController = Factory(navigationController: UINavigationController(), viewController: .feeds)
     private let favoritesViewController = Factory(navigationController: UINavigationController(), viewController: .favorites)
     
@@ -21,7 +21,7 @@ class TabBarController: UITabBarController {
     
     func setControllers() {
         viewControllers = [
-            proflesViewController.navigationController,
+            profileViewController.navigationController,
             feedsViewController.navigationController,
             favoritesViewController.navigationController
         ]

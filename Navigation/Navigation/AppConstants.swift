@@ -99,6 +99,8 @@ struct AppConstants {
         static let setStatusButtonText = NSLocalizedString("Set status", comment: "")
         static let exitButton = NSLocalizedString("Exit", comment: "")
         static let namePlaceHolder = NSLocalizedString("Enter name", comment: "")
+        static let saveButtonText = NSLocalizedString("Save", comment: "")
+        static let closeButtonText = NSLocalizedString("Close", comment: "")
         
         static let textFontRegular = UIFont(name: "OpenSans-Regular", size: 16)
         static let textFontBold = UIFont(name: "OpenSans-Bold", size: 16)
