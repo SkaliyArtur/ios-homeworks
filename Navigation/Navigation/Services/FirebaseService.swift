@@ -79,34 +79,3 @@ class FirebaseService: FirebaseServiceProtocol {
         }
     }
 }
-    
-//    func setUsersPhotoURL(withImage: UIImage, andFileName: String) {
-//        let user = Auth.auth().currentUser
-//        guard let imageData = withImage.jpegData(compressionQuality: 0.5) else { return }
-//        let storageRef = Storage.storage().reference()
-//        let thisUserPhotoStorageRef = storageRef.child("\(user?.uid)").child(andFileName)
-//
-//        let uploadTask = thisUserPhotoStorageRef.putData(imageData, metadata: nil) { (metadata, error) in
-//            guard let metadata = metadata else {
-//                print("error while uploading")
-//                return
-//            }
-//
-//            thisUserPhotoStorageRef.downloadURL { (url, error) in
-//                print(metadata.size) // Metadata contains file metadata such as size, content-type.
-//                thisUserPhotoStorageRef.downloadURL { (url, error) in
-//                    guard let downloadURL = url else {
-//                        print("an error occured after uploading and then getting the URL")
-//                        return
-//                    }
-//
-//                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-//                    changeRequest?.photoURL = downloadURL
-//                    changeRequest?.commitChanges { (error) in
-//                        //handle error
-//                    }
-//                }
-//            }
-//        }
-//    }
-

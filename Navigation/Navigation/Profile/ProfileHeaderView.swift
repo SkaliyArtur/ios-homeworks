@@ -13,7 +13,7 @@ protocol editDelegate {
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
-    
+    static let shared = ProfileHeaderView()
     var deleagate: editDelegate?
     
     let avatarImageView: UIImageView = {
@@ -65,7 +65,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             self.buttonPressed()
         }
         nameLabel.text = FirebaseService.shared.getUserName()
-        
         
     }
     required init?(coder: NSCoder) {

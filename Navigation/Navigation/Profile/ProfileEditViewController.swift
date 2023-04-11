@@ -11,6 +11,7 @@ import Foundation
 
 class ProfileEditViewController: UIViewController {
     
+    
     let avatarImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +72,6 @@ class ProfileEditViewController: UIViewController {
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        print("Hello World")
         showImagePickerOptions()
     }
     

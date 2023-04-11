@@ -94,8 +94,8 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         
         //Автозаполнили поля для удобства тестирования
-        loginTextField.text = "1@1.ru"
-        passwordTextField.text = "123456"
+//        loginTextField.text = "1@1.ru"
+//        passwordTextField.text = "123456"
         
         //Свойства, для правильной работы кнопки Log in
         checkLoginButtonEnable()
