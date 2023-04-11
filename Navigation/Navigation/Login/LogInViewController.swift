@@ -10,19 +10,9 @@ import FirebaseAuth
 
 class LogInViewController: UIViewController {
     
-
-//
-//    init(coordinator: ProfileCoordinator) {
-//        self.coordinator = coordinator
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    static let shared = LogInViewController()
     
-//    let coordinator = TabBarController()
-    
-    //Основные элементы экрана
+    //MARK: Основные элементы экрана
     let loginScrollView: UIScrollView = {
     let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,24 +53,24 @@ class LogInViewController: UIViewController {
         return faceIdButton
     }()
     
-    var checkerService = CheckerService()
+    //MARK: Инициализация сервисов для проверки логина и биометрии
+    var checkerService = FirebaseService()
     var localAuthService = LocalAuthorizationService()
     
     @objc func authTypeButtonTap() {
         localAuthService.authorizeIfPossible() { doneWorking in
             if doneWorking {
-                self.view.window?.rootViewController = TabBarController()
-                self.view.window?.makeKeyAndVisible()
+                self.startTabBar(topView: self)
             } else {
-                print("LOG IN ERROR")
+                print(AppConstants.UIElements.unknownError)
             }
             
         }
     }
 
-    func tap() {
-        //Проверяем, что поля не пустые
-        guard let login = self.loginTextField.text, let pass = self.passwordTextField.text, !login.isEmpty, !pass.isEmpty else {
+    func loginButtonTap() {
+        //Проверяем, что поля не пустые, на случай, если логика активности кнопки Log in не работает
+        guard let login = loginTextField.text, let pass = passwordTextField.text, !login.isEmpty, !pass.isEmpty else {
             AlertErrorSample.shared.alert(alertTitle: NSLocalizedString("Fill error", comment: ""), alertMessage: NSLocalizedString("Email and password fields must be filled", comment: ""))
             return
         }
@@ -88,18 +78,47 @@ class LogInViewController: UIViewController {
     //Вызываем проверку
         checkerService.checkCredentials(login: login, password: pass) { doneWorking in
             if doneWorking {
-                self.view.window?.rootViewController = TabBarController()
-                self.view.window?.makeKeyAndVisible()
+                self.startTabBar(topView: self)
             } else {
-                
+                print(AppConstants.UIElements.unknownError)
             }
         }
-}
+    }
     
+    //Функция перехода на TabBar
+    func startTabBar(topView: UIViewController) {
+        topView.view.window?.rootViewController = TabBarController()
+        topView.view.window?.makeKeyAndVisible()
+    }
+    //MARK: Вызов основных функий View
+    override func viewDidLoad() {
+        
+        //Автозаполнили поля для удобства тестирования
+        loginTextField.text = "1@1.ru"
+        passwordTextField.text = "123456"
+        
+        //Свойства, для правильной работы кнопки Log in
+        checkLoginButtonEnable()
+        loginTextField.delegate = self
+        passwordTextField.delegate = self
+        //Скрываем пароль
+        passwordTextField.isSecureTextEntry = true
+        
+        view.backgroundColor = AppConstants.Colors.colorStandartInverted
+        
+        constraintSetup()
+
+        loginButton.actionHandler = { [weak self] in
+            guard let self = self else { return }
+            self.loginButtonTap()
+        }
+    }
+    //Настройка цветов кнопки, чтобы менялись в зависимсоти от состояния кнопки и темы приложения
+    override func viewDidLayoutSubviews() {
+        loginButton.setButtonColors()
+    }
     
-    
-    
-    //Функции для показа/скрытия клавиатуры
+    //MARK: Функции для показа/скрытия клавиатуры
     @objc func keyboardWillShow(Notification: NSNotification) {
         if let keyBoardSize = (Notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             loginScrollView.contentInset.bottom = keyBoardSize.height
@@ -122,27 +141,7 @@ class LogInViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidLoad() {
-        
-        loginTextField.text = "1@1.ru"
-        passwordTextField.text = "123456"
-        
-        
-        passwordTextField.isSecureTextEntry = true
-        
-        view.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
-        constraintSetup()
-
-        loginButton.actionHandler = { [weak self] in
-            guard let self = self else { return }
-            self.tap()
-        }
-    }
-    //Настройка цветов кнопки, чтобы менялись в зависимсоти от состояния кнопки и темы приложения
-    override func viewDidLayoutSubviews() {
-        loginButton.setButtonColors()
-    }
-    //Настройка якорей
+    //MARK: Настройка якорей
     func constraintSetup() {
         
         view.addSubview(loginScrollView)
@@ -172,7 +171,7 @@ class LogInViewController: UIViewController {
             
         authStackView.topAnchor.constraint(equalTo: getNewsLogoImageView.bottomAnchor, constant: AppConstants.ConstraintConstants.loginAuthStackViewTop),
         authStackView.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewHeight),
-        authStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartWidth),
+        authStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.width),
         authStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
         //Проверяем какой тип биометри, от этого вставляем картинку и размеры. Если биометрии нет - картинки не будет, и кнопка логина растянется до конца
@@ -188,14 +187,17 @@ class LogInViewController: UIViewController {
     }
     //Настройка якорей кнопки Логина (которые не зависят от наличия биометрии)
     func loginButtonConstaintSetup() {
-        loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartHeight).isActive = true
-        loginButton.leadingAnchor.constraint(equalTo: authStackView.leadingAnchor).isActive = true
-        loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+        loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements),
+        loginButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.height),
+        loginButton.leadingAnchor.constraint(equalTo: authStackView.leadingAnchor),
+        loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
     //Настройка якорей биометрии
     func authButtonSetup(image: UIImage?, height: CGFloat, width: CGFloat) {
         contentView.addSubview(authTypeButton)
+        
         guard let img = image else {return}
         authTypeButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
         authTypeButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
@@ -207,5 +209,31 @@ class LogInViewController: UIViewController {
         authTypeButton.widthAnchor.constraint(equalToConstant: width).isActive = true
         authTypeButton.heightAnchor.constraint(equalToConstant: height).isActive = true
         authTypeButton.trailingAnchor.constraint(equalTo: authStackView.trailingAnchor).isActive = true
+    }
+}
+
+//MARK: Расширения для активации кнопки Log In
+extension LogInViewController: UITextFieldDelegate {
+    
+    //Функция проверят заполненность текстовых полей из от этого активирует кнопку или нет
+    func checkLoginButtonEnable() {
+        guard let login = loginTextField.text else {return}
+        guard let pass = passwordTextField.text else {return}
+        
+        if !login.isEmpty && !pass.isEmpty {
+            loginButton.isEnabled = true
+        } else if login.isEmpty || pass.isEmpty {
+            loginButton.isEnabled = false
+        }
+    }
+    //Проверка на редактирование текста
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        checkLoginButtonEnable()
+        return true
+    }
+    //Проверка на конец редактирования текста
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        checkLoginButtonEnable()
+        return true
     }
 }

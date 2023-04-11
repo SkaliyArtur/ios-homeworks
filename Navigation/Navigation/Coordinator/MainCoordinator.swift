@@ -15,10 +15,6 @@ protocol MainCoordinator {
 class MainCoordinatorImp: MainCoordinator {
     func startApplication() -> UIViewController {
         let controller = LogInViewController()
-//        controller.checkerService = CheckerService()
-//        controller.localAuthService = LocalAuthorizationService()
         return controller
     }
-
-
 }

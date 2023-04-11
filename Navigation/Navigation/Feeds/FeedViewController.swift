@@ -10,24 +10,6 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-//    var feedsTitleLabel: UILabel
-//    var feedsTextLabel: UILabel
-//    var feedsImageView: UIImageView
-//    var feedsDateLabel: UILabel
-//    var favoritesButton: UIButton
-//
-//    init(feedsTitleLabel: UILabel, feedsTextLabel: UILabel, feedsImageView: UIImageView, feedsDateLabel: UILabel, favoritesButton: UIButton) {
-//        self.feedsTitleLabel = feedsTitleLabel
-//        self.feedsTextLabel = feedsTextLabel
-//        self.feedsImageView = feedsImageView
-//        self.feedsDateLabel = feedsDateLabel
-//        self.favoritesButton = favoritesButton
-//        super.init(nibName: nil, bundle: nil)
-//       }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
     let feedScrollView: UIScrollView = {
     let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +87,6 @@ class FeedViewController: UIViewController {
             feedsImageView.topAnchor.constraint(equalTo: feedsTitleLabel.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements),
             feedsImageView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
             feedsImageView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
-//            feedsImageView.widthAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.widthAnchor),
             feedsImageView.heightAnchor.constraint(equalTo: feedsImageView.widthAnchor),
             
             feedsTextLabel.topAnchor.constraint(equalTo: feedsImageView.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements),

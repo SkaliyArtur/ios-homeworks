@@ -26,21 +26,10 @@ class CoreDataService {
     
     lazy var context: NSManagedObjectContext = persistentContainer.viewContext
     
-    
-    
-    
-//    let fetchResultController: NSFetchedResultsController<PostEntity> = {
-//        let fetchRequest: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
-//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "author", ascending: false)]
-//        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.coreManager.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-//        return frc
-//    }()
-    
     func saveContext(feedModel: FeedsModel) {
         if checkFeedExists(feedModel: feedModel) == true {
             AlertErrorSample.shared.alert(alertTitle: NSLocalizedString("Double post", comment: ""), alertMessage: NSLocalizedString("Post already exists", comment: ""))
         } else {
-//        persistentContainer.performBackgroundTask { context in
         let feed = FeedEntity(context: context)
             feed.feedsTitle = feedModel.feedsTitle
             feed.feedsText = feedModel.feedsText
@@ -52,7 +41,6 @@ class CoreDataService {
             } catch let error as NSError {
                 print("Unresolved error \(error), \(error.userInfo)")
             }
-//        }
         }
     }
     
@@ -82,7 +70,6 @@ class CoreDataService {
             let savedFeeds = try persistentContainer.viewContext.fetch(feedFetch)
             for data in savedFeeds as [NSManagedObject] {
                 savedFeedsData.append(.init(feedsTitle: data.value(forKey: "feedsTitle") as! String, feedsText: data.value(forKey: "feedsText") as! String, feedsImage: data.value(forKey: "feedsImage") as! String, feedsDate: data.value(forKey: "feedsDate") as! String))
-//                savedFeedsData.append(.init(feedsTitle: data.value(forKey: "author") as! String, feedsText: data.value(forKey: "postDescription") as! String, feedsImage: data.value(forKey: "image") as! String, feedsDate: data.value(forKey: "likes") as! Int, feedsCountry: data.value(forKey: "views") as! Int))
             }
         } catch {
             print("error \(error.localizedDescription)")
@@ -90,24 +77,8 @@ class CoreDataService {
         return savedFeedsData
     }
     
-//    func getContextByAuthor(author: String) -> [FeedsModel]{
-//        let postFetch: NSFetchRequest<PostEntity> = PostEntity.fetchRequest()
-//        postFetch.predicate = NSPredicate(format: "author == %@", author)
-//        var savedPostsData: [FeedsModel] = []
-//        do {
-//            let savedPosts = try persistentContainer.viewContext.fetch(postFetch)
-//            for data in savedPosts as [NSManagedObject] {
-////                savedPostsData.append(.init(feedsTitle: data.value(forKey: "author") as! String, feedsText: data.value(forKey: "postDescription") as! String, feedsImage: data.value(forKey: "image") as! String, feedsDate: data.value(forKey: "likes") as! Int, feedsCountry: data.value(forKey: "views") as! Int))
-//            }
-//        } catch {
-//            print("error \(error.localizedDescription)")
-//        }
-//        return savedPostsData
-//    }
-    
     func deleteContext(FeedsModel: FeedsModel) {
         let feedFetch: NSFetchRequest<FeedEntity> = FeedEntity.fetchRequest()
-//        postFetch.predicate = NSPredicate(format: "author == %@ AND postDescription == %@ AND image == %@", profilePostModel.author, profilePostModel.postDescription, profilePostModel.image)
         do {
             let results = try persistentContainer.viewContext.fetch(feedFetch) as [NSManagedObject]
             for data in results {

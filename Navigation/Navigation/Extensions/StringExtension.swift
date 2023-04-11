@@ -8,6 +8,7 @@
 import Foundation
 
 extension String {
+    //Для локазлизации
     var localized: String {
         NSLocalizedString(self, comment: "")
     }

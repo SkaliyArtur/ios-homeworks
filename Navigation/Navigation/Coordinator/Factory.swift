@@ -27,12 +27,6 @@ class Factory {
         
         switch viewController {
         case .profile:
-            
-//            let profileCoordinator = ProfileCoordinator(navigationController: navigationController)
-//            let controller = LogInViewController(coordinator: profileCoordinator)
-//            controller.loginDelegate = MyLoginFactory().makeLoginInspector()
-//            controller.checkerService = CheckerService()
-//            controller.localAuthService = LocalAuthorizationService()
             let controller = ProfileViewController()
             navigationController.tabBarItem = .init(title: NSLocalizedString("Profile", comment: ""), image: UIImage(named: AppConstants.Asssets.profile), tag: 0)
             navigationController.setNavigationBarHidden(true, animated: false)

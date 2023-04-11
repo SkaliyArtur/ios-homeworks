@@ -40,7 +40,7 @@ class ProfileEditViewController: UIViewController {
             self.tapCloseButton()
         }
         
-        nameTextField.text = CheckerService.shared.getUserName()
+        nameTextField.text = FirebaseService.shared.getUserName()
         
         avatarSetup()
     }
@@ -52,7 +52,7 @@ class ProfileEditViewController: UIViewController {
    
     
     func tapSaveButton() {
-        CheckerService.shared.saveUserName(userName: nameTextField.text ?? "No Name")
+        FirebaseService.shared.saveUserName(userName: nameTextField.text ?? "No Name")
         let alert = UIAlertController(title: "Profile have changed", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] _ in
             self.navigationController?.popViewController(animated: true)

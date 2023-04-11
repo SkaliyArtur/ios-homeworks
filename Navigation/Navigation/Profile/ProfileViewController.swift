@@ -17,129 +17,14 @@ public struct profileSettingsModel: Codable {
 }
 
 class ProfileViewController: UIViewController, editDelegate {
-
-   
-//    let profileViewModel = ProfileViewModel(currentUser: .init(userLogin: "Krabs", userFullName: "Mr. Crabs", userAvatar: UIImage(named: "MrKrabs.png")!, userStatus: "1", userPassword: "1"))
     
     let profileHeaderView = ProfileHeaderView()
     
     let profileTableView = UITableView.init(frame: .zero, style: .grouped)
 
-//    let photoCoordinator = PhotoCoordinator(navigationController: UINavigationController())
-//    let coreDataService = CoreDataService()
-    
-//    init(photoCoordinator: PhotoCoordinator, profileViewModel: ProfileViewModel) {
-//        self.photoCoordinator = photoCoordinator
-//        self.profileViewModel = profileViewModel
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    let profileHeaderView = ProfileHeaderView()
-    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//    var timeOutCounter = 100
-//    var timer: Timer?
-    
-//    var backgroundView: UIView = {
-//    let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-    
-//    var closeBtn: UIButton = {
-//        let closeBtn = UIButton()
-//        let img1 = UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
-//        closeBtn.setImage(img1, for: .normal)
-//        closeBtn.tintColor = .white
-//        closeBtn.translatesAutoresizingMaskIntoConstraints = false
-//        closeBtn.alpha = 0
-//        closeBtn.addTarget(self, action: #selector(closeAvatar), for: .touchUpInside)
-//        return closeBtn
-//    }()
-    
     var exitButton = CustomButton(title: AppConstants.UIElements.exitButton, titleColorEnable: AppConstants.Colors.colorStandartInverted, titleColorDisable: AppConstants.Colors.darkPurpleSecondaryColorNormal)
-    
-    
-    
-//    @objc func getNews() {
-////        dataTaskNewsJSONDecoder()
-//        print("Button TAPPED")
-//
-//    }
-    
-    
-    
-//    func setupBackgroundView() {
-//        view.addSubview(backgroundView)
-//        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-//        backgroundView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//        backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-//        backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-//        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-//
-//        backgroundView.addSubview(profileViewModel.profileHeaderView.avatarImageView)
-//
-//        backgroundView.addSubview(closeBtn)
-//        closeBtn.topAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
-//        closeBtn.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -15).isActive = true
-//    }
-    
-//    @objc private func tapProcess() {
-//        let avatar = profileViewModel.profileHeaderView.avatarImageView
-//        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
-//            self.setupBackgroundView()
-//            if UIDevice.current.orientation.isPortrait{
-//            NSLayoutConstraint.activate([
-//                avatar.widthAnchor.constraint(equalTo: self.view.widthAnchor),
-//                avatar.heightAnchor.constraint(equalTo: self.view.widthAnchor),
-//                avatar.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-//                avatar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-//            ])
-//            }
-//            else {
-//                NSLayoutConstraint.activate([
-//                    avatar.widthAnchor.constraint(equalTo: self.view.heightAnchor),
-//                    avatar.heightAnchor.constraint(equalTo: self.view.heightAnchor),
-//                    avatar.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-//                    avatar.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-//                ])
-//            }
-//            self.view.layoutIfNeeded()
-//        } completion: { finished in
-//            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-//                self.closeBtn.alpha = 1
-//                self.profileViewModel.profileHeaderView.avatarImageView.layer.cornerRadius = 0
-//            }
-//        }
-//    }
-    
-
-//    @objc private func closeAvatar() {
-//
-//        print("closed")
-//
-//        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-//                self.closeBtn.alpha = 0
-//            self.profileViewModel.profileHeaderView.avatarImageView.layer.cornerRadius = 110/2
-//            self.view.layoutIfNeeded()
-//        } completion: { finished in
-//            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
-//                self.profileViewModel.profileHeaderView.addSubview(self.profileViewModel.profileHeaderView.avatarImageView)
-//
-//                self.profileViewModel.profileHeaderView.avatarImageView.leftAnchor.constraint(equalTo: self.profileViewModel.profileHeaderView.leftAnchor, constant: 16).isActive = true
-//                self.profileViewModel.profileHeaderView.avatarImageView.topAnchor.constraint(equalTo: self.profileViewModel.profileHeaderView.topAnchor, constant: 16).isActive = true
-//                self.profileViewModel.profileHeaderView.avatarImageView.widthAnchor.constraint(equalToConstant: 110).isActive = true
-//                self.profileViewModel.profileHeaderView.avatarImageView.heightAnchor.constraint(equalToConstant: 110).isActive = true
-//                self.backgroundView.removeFromSuperview()
-//
-//                self.view.layoutIfNeeded()
-//            }
-//        }
-//    }
-    
-    var checkerService = CheckerService()
+ 
+    var checkerService = FirebaseService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,25 +33,18 @@ class ProfileViewController: UIViewController, editDelegate {
         
         view.addSubview(profileTableView)
         view.addSubview(exitButton)
-//        view.addSubview(getBtn)
-//        profileViewModel.setUser()
-//        profileViewModel.setPosts()
         setupExitButton()
         setupTableView()
-//        createTimer()
-//        profileHeaderView.nameLabel.text = "MAXIM"
         exitButton.actionHandler = { [weak self] in
             guard let self = self else { return }
             self.tapExitButton()
         }
-         
-        
     }
         
     func tapExitButton() {
       do {
         try Auth.auth().signOut()
-        CheckerService.shared.isSingIn = false
+        FirebaseService.shared.isSingIn = false
         self.view.window?.rootViewController = MainCoordinatorImp().startApplication()
         self.view.window?.makeKeyAndVisible()
       } catch {
@@ -186,22 +64,7 @@ class ProfileViewController: UIViewController, editDelegate {
     override func viewWillAppear(_ animated: Bool) {
         self.profileTableView.reloadData()
         self.view.layoutSubviews()
-//        super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(false, animated: animated)
-//
-//        //Если выходим с профиля - считаем что пользователь разлогинелся
-//        do {
-//            try Auth.auth().signOut()
-//            CheckerService.shared.isSingIn = false
-//        } catch {
-//            print("Неизвестная ошибка")
-//        }
-//    }
     
     func setupTableView() {
         profileTableView.register(ProfileSettingTableViewCell.self, forCellReuseIdentifier: "ProfileSettingTableViewCell")
@@ -260,7 +123,6 @@ extension ProfileViewController: UITableViewDataSource {
     
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let header = profileTableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
         let header = profileHeaderView
         //инициализировали делегата, чтобы по нажатию открывалась другая вью
         header.deleagate = self
@@ -270,17 +132,6 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
             return 272
     }
-    
-   
-    
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let footer = exitButton.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
-//        return header
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//            return 272
-//    }
 }
 
 class TableViewCell: UITableViewCell {

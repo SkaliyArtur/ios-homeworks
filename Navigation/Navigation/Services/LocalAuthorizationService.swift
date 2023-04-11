@@ -13,7 +13,7 @@ enum BiometricType {
     case touch
     case face
 }
-
+//Сервис работы с биометрией
 class LocalAuthorizationService {
     
     let context = LAContext()
@@ -21,6 +21,7 @@ class LocalAuthorizationService {
     var error: NSError?
     var canUseBiometrics = false
     
+    //метод проверки авторизации по биометрии
     func authorizeIfPossible(_ authorizationFinished: @escaping (Bool) -> Void) {
         
         canUseBiometrics = context.canEvaluatePolicy(policy, error: &error)
@@ -51,6 +52,7 @@ class LocalAuthorizationService {
             }
         }
     }
+    //метод получения поддерживаемой авторизации
     func checkBiometryType() -> BiometricType {
             if #available(iOS 11, *) {
                 let _ = context.canEvaluatePolicy(policy, error: nil)

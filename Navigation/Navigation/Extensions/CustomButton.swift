@@ -33,15 +33,15 @@ class CustomButton: UIButton {
         actionHandler?()
     }
     
+    //Задаём цвета кнопок
     func setButtonColors() {
         self.setBackground(AppConstants.Colors.purpleColorNormal, for: .normal)
         self.setBackground(AppConstants.Colors.purpleColorSelected, for: .selected)
         self.setBackground(AppConstants.Colors.colorDisabled, for: .disabled)
     }
-    
+    //Задаём вторую политру цвета кнопок
     func setSecondButtonColors() {
         self.setBackground(AppConstants.Colors.purpleSecondaryColorNormal, for: .normal)
         self.setBackground(AppConstants.Colors.purpleSecondaryColorSelected, for: .selected)
-        
     }
 }

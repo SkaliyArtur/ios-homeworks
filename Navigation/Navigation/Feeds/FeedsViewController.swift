@@ -9,10 +9,6 @@ import UIKit
 
 class FeedsViewController: UIViewController {
 
-    
-    
-    
-    
     let searchStackView: UIStackView = {
        let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +28,13 @@ class FeedsViewController: UIViewController {
     
     let feedsTableView = UITableView.init(frame: .zero, style: .grouped)
     
-    
+    let activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .large)
+        view.color = .black
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.hidesWhenStopped = true
+        return view
+    }()
     
     var feeds: [FeedsModel] = []
     
@@ -43,6 +45,11 @@ class FeedsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.delegate = self
+        
+        searchForFeedsTextField.delegate = self
+        getNewsButton.setButtonColors()
+        checkFeedButtonEnable()
+        
         setupView()
     }
     
@@ -57,9 +64,12 @@ class FeedsViewController: UIViewController {
         searchStackView.addArrangedSubview(searchForFeedsTextField)
         searchStackView.addArrangedSubview(getNewsButton)
         
+        
         getNewsButton.actionHandler = { [weak self] in
             guard let self = self else { return }
-            self.tap()
+            self.getNewsButtonTap()
+            
+            
         }
         
         view.addSubview(feedsTableView)
@@ -70,6 +80,7 @@ class FeedsViewController: UIViewController {
         feedsTableView.backgroundColor = AppConstants.Colors.colorStandartInverted
         feedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: "FeedsTableViewCell")
         
+        view.addSubview(activityIndicator)
         setupConstraints()
     }
     
@@ -78,7 +89,7 @@ class FeedsViewController: UIViewController {
             searchStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchStackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             searchStackView.heightAnchor.constraint(equalToConstant: 40),
-            searchStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartWidth),
+            searchStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.width),
             
             getNewsButton.widthAnchor.constraint(equalToConstant: 49),
             
@@ -87,42 +98,23 @@ class FeedsViewController: UIViewController {
             feedsTableView.trailingAnchor.constraint(equalTo: searchStackView.trailingAnchor),
             feedsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
+            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+            
             
         ])
     }
     
-    func tap() {
-        dataTaskNewsJSONDecoder()
-        print("Button TAPPED")
-    }
     
-    func dataTaskNewsJSONDecoder() {
-        let session = URLSession.shared
-        let group = DispatchGroup()
-        guard let url = URL(string: "https://api.worldnewsapi.com/search-news?api-key=cef09b93847f45e1b39d668fe205bdd6&text=Crypto") else {return}
-        group.enter()
-            let task = session.dataTask(with: url) {data, _, error in
-                do {
-                    guard let data = data else { return }
-                    let model = try JSONDecoder().decode(FeedsJSONModel.self, from: data)
-                    for news in model.news {
-                        print("JSON: \(news.publishDate)")
-                        self.feeds.append(.init(
-                                        feedsTitle: news.title,
-                                        feedsText: news.text,
-                                        feedsImage: news.image ?? "getNewsLogo",
-                                        feedsDate: news.publishDate))
-       
-                    }
-                    
-                    group.leave()
-                } catch let error as NSError {
-                        print("error: \(error.localizedDescription) OR \(error)")
-                }
-            }
-            task.resume()
-        group.notify(queue: .main) {
+    func getNewsButtonTap() {
+        
+        guard let text = searchForFeedsTextField.text else {return}
+        
+        activityIndicator.startAnimating()
+        JSONService().dataTaskNewsJSONDecoder(searchText: text) {news in
+            self.feeds = news
             self.feedsTableView.reloadData()
+            self.activityIndicator.stopAnimating()
         }
     }
     
@@ -130,7 +122,6 @@ class FeedsViewController: UIViewController {
             guard let indexPath = feedsTableView.indexPathForRow(at: sender.location(in: self.feedsTableView)) else {return}
             let cell = feedsTableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
             cell.feed = feeds[indexPath.row]
-//            try? CoreDataService.coreManager.persistentContainer.viewContext.save()
             coreDataService.saveContext(feedModel: .init(feedsTitle: feeds[indexPath.row].feedsTitle, feedsText: feeds[indexPath.row].feedsText, feedsImage: feeds[indexPath.row].feedsImage, feedsDate: feeds[indexPath.row].feedsDate))
         self.feedsTableView.reloadData()
     }
@@ -150,7 +141,6 @@ extension FeedsViewController: UITableViewDataSource {
           cell.layer.shadowOpacity = 1
           cell.layer.shadowRadius = 0
           cell.layer.masksToBounds = false
-        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapFavoritesButton(_:)))
         cell.favoritesButton.addGestureRecognizer(tapGestureRecognizer)
         
@@ -165,25 +155,7 @@ extension FeedsViewController: UITableViewDataSource {
         return cell
     }
     
-//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath as IndexPath)
-//            return cell
-//        }
-////
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let cell = tableView.cellForRow(at: indexPath as IndexPath) as! FeedsTableViewCell
-//        let profileVC = FeedViewController(
-//            feedsTitleLabel: cell.feedsTitleLabel,
-//            feedsTextLabel: cell.feedsTextLabel,
-//            feedsImageView: cell.feedsImageView,
-//            feedsDateLabel: cell.feedsDateLabel,
-//            favoritesButton: cell.favoritesButton)
-//        self.navigationController?.pushViewController(profileVC, animated: true)
-//        print("SELECTED!!")
-//        }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-////        let cell = tableView.cellForRow(at: indexPath) as! FeedsTableViewCell
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
         let profileVC = FeedViewController()
         profileVC.feedsTitleLabel.text = feeds[indexPath.row].feedsTitle
         profileVC.feedsTextLabel.text = feeds[indexPath.row].feedsText
@@ -201,5 +173,27 @@ extension FeedsViewController: UITableViewDelegate {
 extension FeedsViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         feedsTableView.reloadData()
+    }
+}
+
+//MARK: Расширения для активации кнопки Get
+extension FeedsViewController: UITextFieldDelegate {
+    
+  
+    
+    func checkFeedButtonEnable() {
+        guard let searchText = self.searchForFeedsTextField.text else {return}
+        if !searchText.isEmpty {
+            getNewsButton.isEnabled = true
+        } else {
+            getNewsButton.isEnabled = false
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let searchText = self.searchForFeedsTextField.text else {return false}
+        _ = (searchText as NSString).replacingCharacters(in: range, with: string)
+        checkFeedButtonEnable()
+        return true
     }
 }

@@ -14,8 +14,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, NSFetchedR
     let favoritesFeedsTableView = UITableView.init(frame: .zero, style: .grouped)
     let coreDataService = CoreDataService()
     var favoritesFeeds: [FeedsModel] = []
-//    var isSorted = false
-//    var filteredAuthor: String? = nil
     
     let fetchResultController: NSFetchedResultsController<FeedEntity> = {
         let fetchRequest: NSFetchRequest<FeedEntity> = FeedEntity.fetchRequest()
@@ -41,47 +39,14 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, NSFetchedR
         self.view.backgroundColor = AppConstants.Colors.colorStandartInverted
         favoritesFeedsTableView.backgroundColor = AppConstants.Colors.colorStandartInverted
         favoritesFeedsTableView.contentInset = AppConstants.UIElements.tableViewEdges
-//        let authorFilterBtn = UIBarButtonItem(image: UIImage(systemName: "eye"), style: .plain, target: self, action: #selector(authorSearch))
-//        let clearFilterBtn = UIBarButtonItem(image: UIImage(systemName: "eye.slash"), style: .plain, target: self, action: #selector(clearFilter))
-//        navigationItem.leftBarButtonItems = [authorFilterBtn, clearFilterBtn]
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(tap))
     }
     
-//    func returnFeeds() -> [FeedsModel] {
-//        if isSorted == false {
-//            favoritesFeeds = coreDataService.getContext()
-//        } else {
-//            favoritesFeeds = coreDataService.getContextByAuthor(author: filteredAuthor!)
-//        }
-//        return favoritesFeeds
-//    }
-    
-//    @objc func authorSearch() {
-//        let alert = UIAlertController(title: "Search by author".localized, message: nil, preferredStyle: .alert)
-//        alert.addTextField { (textField) in
-//            textField.placeholder = "Author name".localized
-//        }
-//        alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel))
-//        alert.addAction(UIAlertAction(title: "Apply".localized, style: .default, handler: { [self] _ in
-//            guard let textField = alert.textFields?[0].text else {return}
-//            filteredAuthor = textField
-//            isSorted = true
-//            favoritesFeedsTableView.reloadData()
-//        }))
-//        self.present(alert, animated: true, completion: nil)
-//    }
-//    @objc func clearFilter() {
-//        isSorted = false
-//        filteredAuthor = nil
-//        favoritesFeedsTableView.reloadData()
-//    }
-    
-    
+
     func setupTableView() {
         favoritesFeedsTableView.register(FeedsTableViewCell.self, forCellReuseIdentifier: "FeedsTableViewCell")
         favoritesFeedsTableView.translatesAutoresizingMaskIntoConstraints = false
         favoritesFeedsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        favoritesFeedsTableView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartWidth).isActive = true
+        favoritesFeedsTableView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.width).isActive = true
         favoritesFeedsTableView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         favoritesFeedsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
@@ -102,10 +67,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, NSFetchedR
 
 extension FavoritesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        returnPosts().count
         return fetchResultController.sections?[section].numberOfObjects ?? 0
-//        return 0
-        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -129,8 +91,7 @@ extension FavoritesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-////        let cell = tableView.cellForRow(at: indexPath) as! FeedsTableViewCell
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedsTableViewCell", for: indexPath) as! FeedsTableViewCell
+
         let feed = fetchResultController.object(at: indexPath)
         let profileVC = FeedViewController()
         profileVC.feedsTitleLabel.text = feed.feedsTitle
@@ -143,9 +104,6 @@ extension FavoritesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Delete".localized) { (action, view, success) in
-//            self.coreDataService.deleteContext(profilePostModel: self.returnPosts()[indexPath.row])
-//            tableView.reloadData()
-//            self.tableView.deleteRows(at: [indexPath], with: .none)
             let feed = self.fetchResultController.object(at: indexPath)
             CoreDataService.coreManager.context.delete(feed)
             try? CoreDataService.coreManager.context.save()

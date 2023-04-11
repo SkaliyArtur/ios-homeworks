@@ -41,4 +41,13 @@ class AlertErrorSample {
         alert.addAction(actionOne)
         UIApplication.topViewController()!.present(alert, animated: true, completion: nil)
     }
+    
+    func alertWithComplition(alertTitle: String, alertMessage: String, using completionHandler: @escaping ()->()) {
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            completionHandler()
+                }))
+        UIApplication.topViewController()!.present(alert, animated: true, completion: nil)
+    }
+    
 }

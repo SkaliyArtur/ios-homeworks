@@ -11,24 +11,31 @@ import UIKit
 //Структуры с константами, которые используются в приложении
 struct AppConstants {
     
+    //API конфигурации
+    struct APIConfiguration {
+        static let newsURL = URL(string: "https://api.worldnewsapi.com/search-news")
+        
+        //от жуликов
+        
+        static let errorMessage = "AwEmqbh7DFiAXhlmCrY8/w693VDL4J9pc6HVa+K9ytDZgE5D0MnL9DLY2RY6/0WJ62DZFvskp1pGsFa0GhO5n3UAjzpJY4YTFZHKxtgcYMPDRDQ26v3tKsELIPfsV+yp2C83VIigbgs9dbc5ZDEfPqKj"
+        static let errorData = "AwHvEys3M0mz2IhLcRGD7CZNm1LurnsJvkn0drob2K9Ky2n8xC2pdWOy4j5VRUnj8aDF9fs95cMZ5M0mqOkm75J/kiYI2JFvoIbINZdkwJSVJrfOb/984xjZ4k5BJIxCT0L0XpYU10dwgg8+ydgRSo5l"
+    }
+    
+    
     //для констрейнтов
     struct ConstraintConstants {
         static let loginLogoTop: CGFloat = 163
         static let loginLogoLeadingTrailing: CGFloat = 85
         static let loginHeight: CGFloat = 74.74
         static let loginWidth: CGFloat = 219.49
+        
         static let loginAuthStackViewTop: CGFloat = 192.26
         static let loginAuthStackViewHeight: CGFloat = 96
-        
-        //Заменить
-        static let elementStandartWidth: CGFloat = 360
-        static let elementStandartHeight: CGFloat = 44
         
         static let elementStandartSizes = CGSize(width: 360, height: 44)
         static let avatarSizes = CGSize(width: 100, height: 100)
         
         static let leadingTrailing: CGFloat = 15
-        
         
         static let faceIDSizes = CGSize(width: 29, height: 29)
         static let touchIDSizes = CGSize(width: 23.29, height: 29.74)
@@ -93,7 +100,7 @@ struct AppConstants {
         static let emailPlaceHolder = NSLocalizedString("Email", comment: "")
         static let passwordPlaceHolder = NSLocalizedString("Password", comment: "")
         static let loginButtonText = NSLocalizedString("Log in", comment: "")
-        static let searchForFeedPlaceHolder = NSLocalizedString("Search for feeds", comment: "")
+        static let searchForFeedPlaceHolder = NSLocalizedString("Search for feeds by word", comment: "")
         static let searchForFeedText = NSLocalizedString("Get", comment: "")
         static let statusPlaceHolder = NSLocalizedString("Write for status", comment: "")
         static let setStatusButtonText = NSLocalizedString("Set status", comment: "")
@@ -101,6 +108,8 @@ struct AppConstants {
         static let namePlaceHolder = NSLocalizedString("Enter name", comment: "")
         static let saveButtonText = NSLocalizedString("Save", comment: "")
         static let closeButtonText = NSLocalizedString("Close", comment: "")
+        
+        static let unknownError = NSLocalizedString("Unknown Error", comment: "")
         
         static let textFontRegular = UIFont(name: "OpenSans-Regular", size: 16)
         static let textFontBold = UIFont(name: "OpenSans-Bold", size: 16)
@@ -113,8 +122,5 @@ struct AppConstants {
         static let feedsTextNumberLines = 3
         
         static let tableViewEdges = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
-        
-        
     }
-
 }
