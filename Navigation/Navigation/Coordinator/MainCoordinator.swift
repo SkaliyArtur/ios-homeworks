@@ -14,8 +14,7 @@ protocol MainCoordinator {
 
 class MainCoordinatorImp: MainCoordinator {
     func startApplication() -> UIViewController {
-        return TabBarController()
+        let controller = LogInViewController()
+        return controller
     }
-
-
 }

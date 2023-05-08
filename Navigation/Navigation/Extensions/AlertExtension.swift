@@ -7,10 +7,14 @@
 
 import Foundation
 import UIKit
-
 //Расширение, которое позволяет вызвать Alert на текущем (показываемом) UIViewController
 extension UIApplication {
-    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+    
+    var keyWindowInConnectedScenes: UIWindow? {
+        return windows.first(where: { $0.isKeyWindow })
+    }
+    
+    class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindowInConnectedScenes?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
         }
@@ -22,7 +26,6 @@ extension UIApplication {
         if let presented = controller?.presentedViewController {
             return topViewController(controller: presented)
         }
-        
         return controller
     }
 }
@@ -38,4 +41,13 @@ class AlertErrorSample {
         alert.addAction(actionOne)
         UIApplication.topViewController()!.present(alert, animated: true, completion: nil)
     }
+    
+    func alertWithComplition(alertTitle: String, alertMessage: String, using completionHandler: @escaping ()->()) {
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            completionHandler()
+                }))
+        UIApplication.topViewController()!.present(alert, animated: true, completion: nil)
+    }
+    
 }

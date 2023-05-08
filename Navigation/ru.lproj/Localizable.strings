@@ -14,8 +14,8 @@
 "Double post" = "Дубль поста";
 "Post already exists" = "Такой пост уже существует";
 "Photo Gallery" = "Фото Галерея";
-" Email or phone" = " Email или телефон";
-" Password" = "Пароль";
+"Email" = "Email";
+"Password" = "Пароль";
 "Log in" = "Войти";
 "Fill error" = "Ошибка заполнение";
 "Email and password fields must be filled" = "Поля email и пароль должны быть заполнены";
@@ -40,6 +40,7 @@
 "Set Status" = "Установить статус";
 "Hello world" = "Привет мир";
 "Check" = "Проверить";
+"Search for feeds" = "Поиск новостей";
 
 
 

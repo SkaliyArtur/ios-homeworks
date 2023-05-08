@@ -11,9 +11,8 @@ import UIKit
 class Factory {
     enum Views {
         case profile
-        case feed
-        case postFeed
-        case map
+        case feeds
+        case favorites
     }
     
     let navigationController: UINavigationController
@@ -24,35 +23,27 @@ class Factory {
         self.viewController = viewController
         startModule()
     }
-    
     func startModule() {
         
         switch viewController {
         case .profile:
-            
-            let profileCoordinator = ProfileCoordinator(navigationController: navigationController)
-            let controller = LogInViewController(coordinator: profileCoordinator)
-//            controller.loginDelegate = MyLoginFactory().makeLoginInspector()
-            controller.checkerService = CheckerService()
-            controller.localAuthService = LocalAuthorizationService()
-            navigationController.tabBarItem = .init(title: NSLocalizedString("Profile", comment: ""), image: UIImage(systemName: "person"), tag: 0)
+            let controller = ProfileViewController()
+            navigationController.tabBarItem = .init(title: NSLocalizedString("Profile", comment: ""), image: UIImage(named: AppConstants.Asssets.profile), tag: 0)
+            navigationController.setNavigationBarHidden(true, animated: false)
             navigationController.setViewControllers([controller], animated: true)
             
-        case .feed:
-            let controller = FeedViewController()
-            navigationController.tabBarItem = .init(title: NSLocalizedString("Feed", comment: ""), image: UIImage(systemName: "list.bullet"), tag: 1)
-            navigationController.setViewControllers([controller], animated: true)
             
-        case .postFeed:
-            let controller = PostViewController()
-            navigationController.tabBarItem = .init(title: NSLocalizedString("Posts", comment: ""), image: UIImage(systemName: "star"), tag: 2)
+        case .feeds:
+            let controller = FeedsViewController()
+            navigationController.tabBarItem = .init(title: NSLocalizedString("Feeds", comment: ""), image: UIImage(named: AppConstants.Asssets.feeds), tag: 1)
+            navigationController.setNavigationBarHidden(true, animated: false)
             navigationController.setViewControllers([controller], animated: true)
-            
-        case .map:
-            let controller = MapViewController()
-            navigationController.tabBarItem = .init(title: NSLocalizedString("Map", comment: ""), image: UIImage(systemName: "map"), tag: 3)
+
+        case .favorites:
+            let controller = FavoritesViewController()
+            navigationController.tabBarItem = .init(title: NSLocalizedString("Favorties", comment: ""), image: UIImage(named: AppConstants.Asssets.favorites), tag: 2)
+            navigationController.setNavigationBarHidden(true, animated: false)
             navigationController.setViewControllers([controller], animated: true)
-            
         }
     }
 }

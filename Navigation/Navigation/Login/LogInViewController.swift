@@ -8,138 +8,117 @@
 import UIKit
 import FirebaseAuth
 
-extension UIImage {
-
-    func alpha(_ value:CGFloat) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        draw(at: CGPoint.zero, blendMode: .normal, alpha: value)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage!
-    }
-}
-
-
 class LogInViewController: UIViewController {
     
-    let coordinator: ProfileCoordinator
+    static let shared = LogInViewController()
     
-    init(coordinator: ProfileCoordinator) {
-        self.coordinator = coordinator
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    
-    let vkLogo: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "logo.png")
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
-    let authorizationWindow: UIStackView = {
-       let authWindow = UIStackView()
-        authWindow.translatesAutoresizingMaskIntoConstraints = false
-        authWindow.layer.borderColor = UIColor.lightGray.cgColor
-        authWindow.layer.borderWidth = 0.5
-        authWindow.layer.cornerRadius = 10
-        authWindow.axis = .vertical
-        authWindow.distribution = .fillEqually
-        authWindow.clipsToBounds = true
-        return authWindow
-    }()
-    let loginTextField: UITextField = {
-        let login = UITextField()
-        login.placeholder = NSLocalizedString(" Email or phone", comment: "")
-        login.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
-        login.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
-        login.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        login.autocapitalizationType = .none
-        login.layer.borderWidth = 0.5
-        login.layer.borderColor = UIColor.lightGray.cgColor
-        login.leftViewMode = .always
-        login.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        login.translatesAutoresizingMaskIntoConstraints = false
-        return login
-    }()
-    let passwordTextField: UITextField = {
-        let pass = UITextField()
-        pass.placeholder = NSLocalizedString(" Password", comment: "")
-        pass.textColor = UIColor.createColor(lightMode: .black, darkMode: .white)
-        pass.backgroundColor = UIColor.createColor(lightMode: .systemGray6, darkMode: .systemGray3)
-        pass.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        pass.autocapitalizationType = .none
-        pass.isSecureTextEntry = true
-        pass.leftViewMode = .always
-        pass.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-        pass.translatesAutoresizingMaskIntoConstraints = false
-        return pass
-    }()
-    
-    
-    let loginButton: CustomButton = {
-        let loginButton = CustomButton(title: NSLocalizedString("Log in", comment: ""), titleColor: .white)
-        let img1 = UIImage(named: "blue_pixel")!.alpha(1)
-        let img2 = UIImage(named: "blue_pixel")!.alpha(0.8)
-        loginButton.setBackgroundImage(img1, for: .normal)
-        loginButton.setBackgroundImage(img2, for: .selected)
-        loginButton.setBackgroundImage(img2, for: .highlighted)
-        loginButton.setBackgroundImage(img2, for: .disabled)
-        return loginButton
-    }()
-    
-    let faceIdButton: UIButton = {
-        let faceIdButton = UIButton()
-        faceIdButton.translatesAutoresizingMaskIntoConstraints = false
-        faceIdButton.addTarget(self, action: #selector(faceIdButtonTap), for: .touchUpInside)
-        return faceIdButton
-    }()
-    
-    var checkerService: CheckerServiceProtocol?
-    var localAuthService: LocalAuthorizationService?
-    
-    @objc func faceIdButtonTap() {
-        localAuthService?.authorizeIfPossible() { doneWorking in
-            if doneWorking {
-                self.coordinator.startView()
-            } else {
-                print("LOG IN ERROR")
-            }
-            
-        }
-    }
-
-    func tap() {
-        //Проверяем, что поля не пустые
-        guard let login = self.loginTextField.text, let pass = self.passwordTextField.text, !login.isEmpty, !pass.isEmpty else {
-            AlertErrorSample.shared.alert(alertTitle: NSLocalizedString("Fill error", comment: ""), alertMessage: NSLocalizedString("Email and password fields must be filled", comment: ""))
-            return
-        }
-        
-    //Вызываем проверку
-        checkerService?.checkCredentials(login: login, password: pass) { doneWorking in
-            if doneWorking {
-                self.coordinator.startView()
-            } else {
-                
-            }
-        }
-}
-    
+    //MARK: Основные элементы экрана
     let loginScrollView: UIScrollView = {
     let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
         return scrollView
     }()
+    let contentView: UIView = {
+       let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    let getNewsLogoImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: AppConstants.Asssets.getNewsLogo)
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    let authStackView: UIStackView = {
+       let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.layer.cornerRadius = AppConstants.UIElements.cornerRadius
+        stackView.axis = .vertical
+        stackView.spacing = AppConstants.UIElements.spacingBetweenElements
+        stackView.distribution = .fillEqually
+        stackView.clipsToBounds = true
+        return stackView
+    }()
+    let loginTextField = CustomTextField(placeHolder: AppConstants.UIElements.emailPlaceHolder)
+    let passwordTextField = CustomTextField(placeHolder: AppConstants.UIElements.passwordPlaceHolder)
+    let loginButton = CustomButton(
+            title: AppConstants.UIElements.loginButtonText,
+            titleColorEnable: AppConstants.Colors.colorStandartInverted,
+            titleColorDisable: AppConstants.Colors.darkPurpleSecondaryColorNormal)
+    let authTypeButton: UIButton = {
+        let faceIdButton = UIButton()
+        faceIdButton.translatesAutoresizingMaskIntoConstraints = false
+        faceIdButton.addTarget(self, action: #selector(authTypeButtonTap), for: .touchUpInside)
+        return faceIdButton
+    }()
     
-    let contentView = UIView()
+    //MARK: Инициализация сервисов для проверки логина и биометрии
+    var checkerService = FirebaseService()
+    var localAuthService = LocalAuthorizationService()
     
+    @objc func authTypeButtonTap() {
+        localAuthService.authorizeIfPossible() { doneWorking in
+            if doneWorking {
+                self.startTabBar(topView: self)
+            } else {
+                print(AppConstants.UIElements.unknownError)
+            }
+            
+        }
+    }
+
+    func loginButtonTap() {
+        //Проверяем, что поля не пустые, на случай, если логика активности кнопки Log in не работает
+        guard let login = loginTextField.text, let pass = passwordTextField.text, !login.isEmpty, !pass.isEmpty else {
+            AlertErrorSample.shared.alert(alertTitle: NSLocalizedString("Fill error", comment: ""), alertMessage: NSLocalizedString("Email and password fields must be filled", comment: ""))
+            return
+        }
+        
+    //Вызываем проверку
+        checkerService.checkCredentials(login: login, password: pass) { doneWorking in
+            if doneWorking {
+                self.startTabBar(topView: self)
+            } else {
+                print(AppConstants.UIElements.unknownError)
+            }
+        }
+    }
     
+    //Функция перехода на TabBar
+    func startTabBar(topView: UIViewController) {
+        topView.view.window?.rootViewController = TabBarController()
+        topView.view.window?.makeKeyAndVisible()
+    }
+    //MARK: Вызов основных функий View
+    override func viewDidLoad() {
+        
+        //Автозаполнили поля для удобства тестирования
+//        loginTextField.text = "1@1.ru"
+//        passwordTextField.text = "123456"
+        
+        //Свойства, для правильной работы кнопки Log in
+        checkLoginButtonEnable()
+        loginTextField.delegate = self
+        passwordTextField.delegate = self
+        //Скрываем пароль
+        passwordTextField.isSecureTextEntry = true
+        
+        view.backgroundColor = AppConstants.Colors.colorStandartInverted
+        
+        constraintSetup()
+
+        loginButton.actionHandler = { [weak self] in
+            guard let self = self else { return }
+            self.loginButtonTap()
+        }
+    }
+    //Настройка цветов кнопки, чтобы менялись в зависимсоти от состояния кнопки и темы приложения
+    override func viewDidLayoutSubviews() {
+        loginButton.setButtonColors()
+    }
+    
+    //MARK: Функции для показа/скрытия клавиатуры
     @objc func keyboardWillShow(Notification: NSNotification) {
         if let keyBoardSize = (Notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             loginScrollView.contentInset.bottom = keyBoardSize.height
@@ -150,100 +129,111 @@ class LogInViewController: UIViewController {
         loginScrollView.contentInset.bottom = .zero
         loginScrollView.verticalScrollIndicatorInsets = .zero
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidLoad() {
-        
-        loginTextField.text = "1@1.ru"
-        passwordTextField.text = "123456"
-        
-        view.backgroundColor = UIColor.createColor(lightMode: .white, darkMode: .black)
+    //MARK: Настройка якорей
+    func constraintSetup() {
         
         view.addSubview(loginScrollView)
-
-        loginButton.actionHandler = { [weak self] in
-            guard let self = self else { return }
-            self.tap()
-        }
-        
-       
-
+        loginScrollView.addSubview(contentView)
+        contentView.addSubview(getNewsLogoImageView)
+        contentView.addSubview(authStackView)
+        contentView.addSubview(loginButton)
+        authStackView.addArrangedSubview(loginTextField)
+        authStackView.addArrangedSubview(passwordTextField)
         
         NSLayoutConstraint.activate([
         loginScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
         loginScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
         loginScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        loginScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        loginScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        
+        contentView.leadingAnchor.constraint(equalTo: loginScrollView.leadingAnchor),
+        contentView.topAnchor.constraint(equalTo: loginScrollView.topAnchor),
+        contentView.bottomAnchor.constraint(equalTo: loginScrollView.bottomAnchor),
+        contentView.trailingAnchor.constraint(equalTo: loginScrollView.trailingAnchor),
+        contentView.widthAnchor.constraint(equalTo: loginScrollView.widthAnchor),
+            
+        getNewsLogoImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: AppConstants.ConstraintConstants.loginLogoTop),
+        getNewsLogoImageView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginWidth),
+        getNewsLogoImageView.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginHeight),
+        getNewsLogoImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+        authStackView.topAnchor.constraint(equalTo: getNewsLogoImageView.bottomAnchor, constant: AppConstants.ConstraintConstants.loginAuthStackViewTop),
+        authStackView.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.loginAuthStackViewHeight),
+        authStackView.widthAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.width),
+        authStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
-        
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        loginScrollView.addSubview(contentView)
-        
-        NSLayoutConstraint.activate([
-            contentView.leadingAnchor.constraint(equalTo: loginScrollView.leadingAnchor),
-            contentView.topAnchor.constraint(equalTo: loginScrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: loginScrollView.bottomAnchor),
-            contentView.trailingAnchor.constraint(equalTo: loginScrollView.trailingAnchor),
-            contentView.widthAnchor.constraint(equalTo: loginScrollView.widthAnchor)
-        ])
-        
-        contentView.addSubview(vkLogo)
-        vkLogo.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 120).isActive = true
-        vkLogo.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        vkLogo.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        vkLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        
-        contentView.addSubview(authorizationWindow)
-        authorizationWindow.addArrangedSubview(loginTextField)
-        authorizationWindow.addArrangedSubview(passwordTextField)
-        authorizationWindow.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120).isActive = true
-        authorizationWindow.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        authorizationWindow.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
-        authorizationWindow.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
-        
-        contentView.addSubview(loginButton)
-        
-        
-        
-        switch localAuthService?.checkBiometryType() {
+        //Проверяем какой тип биометри, от этого вставляем картинку и размеры. Если биометрии нет - картинки не будет, и кнопка логина растянется до конца
+        switch localAuthService.checkBiometryType() {
         case .face:
-            faceIdButton.setBackgroundImage(UIImage(systemName: "faceid"), for: .normal)
-            buttonSetup()
+            authButtonSetup(image: UIImage(named: AppConstants.Asssets.faceID), height: AppConstants.ConstraintConstants.faceIDSizes.height, width: AppConstants.ConstraintConstants.faceIDSizes.width)
         case .touch:
-            faceIdButton.setBackgroundImage(UIImage(systemName: "touchid"), for: .normal)
-            buttonSetup()
+            authButtonSetup(image: UIImage(named: AppConstants.Asssets.touchID), height: AppConstants.ConstraintConstants.touchIDSizes.height, width: AppConstants.ConstraintConstants.touchIDSizes.width)
         default:
-            loginButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
-            loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            loginButton.leadingAnchor.constraint(equalTo: authorizationWindow.leadingAnchor).isActive = true
-            loginButton.trailingAnchor.constraint(equalTo: authorizationWindow.trailingAnchor).isActive = true
-            loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+            loginButtonConstaintSetup()
+            loginButton.trailingAnchor.constraint(equalTo: authStackView.trailingAnchor).isActive = true
         }
+    }
+    //Настройка якорей кнопки Логина (которые не зависят от наличия биометрии)
+    func loginButtonConstaintSetup() {
+        NSLayoutConstraint.activate([
+        loginButton.topAnchor.constraint(equalTo: authStackView.bottomAnchor, constant: AppConstants.UIElements.spacingBetweenElements),
+        loginButton.heightAnchor.constraint(equalToConstant: AppConstants.ConstraintConstants.elementStandartSizes.height),
+        loginButton.leadingAnchor.constraint(equalTo: authStackView.leadingAnchor),
+        loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    }
+    //Настройка якорей биометрии
+    func authButtonSetup(image: UIImage?, height: CGFloat, width: CGFloat) {
+        contentView.addSubview(authTypeButton)
         
+        guard let img = image else {return}
+        authTypeButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorNormal), for: .normal)
+        authTypeButton.setBackgroundImage(img.withTintColor(AppConstants.Colors.purpleColorSelected), for: .selected)
+        
+        loginButtonConstaintSetup()
+        loginButton.trailingAnchor.constraint(equalTo: authTypeButton.leadingAnchor, constant: -AppConstants.UIElements.spacingBetweenElements).isActive = true
+        
+        authTypeButton.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor).isActive = true
+        authTypeButton.widthAnchor.constraint(equalToConstant: width).isActive = true
+        authTypeButton.heightAnchor.constraint(equalToConstant: height).isActive = true
+        authTypeButton.trailingAnchor.constraint(equalTo: authStackView.trailingAnchor).isActive = true
+    }
+}
+
+//MARK: Расширения для активации кнопки Log In
+extension LogInViewController: UITextFieldDelegate {
+    
+    //Функция проверят заполненность текстовых полей из от этого активирует кнопку или нет
+    func checkLoginButtonEnable() {
+        guard let login = loginTextField.text else {return}
+        guard let pass = passwordTextField.text else {return}
+        
+        if !login.isEmpty && !pass.isEmpty {
+            loginButton.isEnabled = true
+        } else if login.isEmpty || pass.isEmpty {
+            loginButton.isEnabled = false
         }
-    func buttonSetup() {
-        contentView.addSubview(faceIdButton)
-        loginButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        loginButton.leadingAnchor.constraint(equalTo: authorizationWindow.leadingAnchor).isActive = true
-        loginButton.trailingAnchor.constraint(equalTo: faceIdButton.leadingAnchor, constant: -10).isActive = true
-        loginButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        faceIdButton.topAnchor.constraint(equalTo: authorizationWindow.bottomAnchor, constant: 16).isActive = true
-        faceIdButton.widthAnchor.constraint(equalToConstant: 55).isActive = true
-        faceIdButton.trailingAnchor.constraint(equalTo: authorizationWindow.trailingAnchor).isActive = true
-        faceIdButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        
     }
+    //Проверка на редактирование текста
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        checkLoginButtonEnable()
+        return true
     }
+    //Проверка на конец редактирования текста
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        checkLoginButtonEnable()
+        return true
+    }
+}
